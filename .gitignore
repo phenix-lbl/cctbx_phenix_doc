@@ -1,0 +1,2 @@
+# ignore settings.py, which may have server-specific information
+settings.py
