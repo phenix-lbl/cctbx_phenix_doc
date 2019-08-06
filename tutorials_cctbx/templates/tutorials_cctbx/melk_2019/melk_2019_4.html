@@ -1,0 +1,232 @@
+{% extends "tutorials_cctbx/header.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<h2 style="text-align:center">Part 4: Miller arrays</h2>
+
+<h4 class="mt-5 mb-4">Files</h4>
+<ul>
+  <li><a href="{% static '/files/melk/tutorial_4_v0.py' %}" style="text-decoration: underline; color: blue" download>tutorial_4_v0.py</a></li>
+  <li><a href="{% static '/files/melk/4zyp.mtz' %}" style="text-decoration: underline; color: blue" download>4zyp.mtz</a></li>
+</ul>
+
+<h4 class="mt-5 mb-4">Reading an MTZ file</h4>
+
+<p>Miller arrays are containers for experimental (or calculated data). A miller array contains the crystal symmetry, an array of Miller indices (h,k,l), a boolean flag indicating anomalous pairs and a flex array containing data (X-ray amplitudes or intensities, experimental sigmas, etc.). <br>
+Note that the Miller arrays do not necessarily correspond to a single column of data in a reflection file. There are several major differences:</p>
+<ul>
+  <li>Friedel mates (F(+) and F(-) from an MTZ) file become a single array with both (h,k,l) and (-h,-k,-l) present as distinct items. (Note that one consequence of this behavior is that the number of reflections will appear to double-count acentric reflections for which both Friedel mates are present.)</li>
+  <li>For experimental data (I or F), the array also stores the corresponding sigmas. In combination with the treatment of anomalous data, this means that a single Miller array can represent the combination of columns I(+),SIGI(+),I(-),SIGI(-) from a file.</li>
+  <li>Weighted map coefficients such as FWT,DELFWT or 2FOFCWT,PH2FOFCWT are treated as a single array.</li>
+</ul>
+
+<p>The code below (<code>tutorial_4_v0.py</code>) shows how to obtain a miller array from a reflection file:</p>
+
+<div><textarea class="code">
+from __future__ import division, print_function
+import sys
+from iotbx import reflection_file_reader
+
+def run(args):
+  if (len(args) != 1):
+    raise RuntimeError("Please specify one reflection file name.")
+  reflection_file_name = args[0]
+  miller_arrays = reflection_file_reader.any_reflection_file(
+    file_name = reflection_file_name).as_miller_arrays()
+
+if (__name__ == "__main__"):
+  run(sys.argv[1:])</textarea></div>
+
+<h4 class="mt-5 mb-4">Information about miller arrays</h4>
+
+<p>Let's first see what data are in the input file.</p>
+
+<div class="card  ml-5 mr-5 mt-3" id="accordionOne">
+  <div class="card-header bg-blue-DL" id="headingOne">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <b>TASK</b>
+        </div>
+        <div class="col-8">
+          Loop through the miller_arrays and print the name of the labels in the array. To obtain the labels, use <code>ma.info().label_string()</code>.
+        </div>
+        <div class="col">
+          <button class="btn-sm btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded  ="  false" aria-controls="collapseOne">
+            Show answer
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionOne">
+    <div class="card-body">
+      <pre class="bg-light" style="font-size: 12px"><code>FOBS,SIGFOBS
+IOBS,SIGIOBS
+DANO,SIGDANO
+R-free-flags
+F(+),SIGF(+),F(-),SIGF(-)
+I(+),SIGI(+),I(-),SIGI(-)</code></pre>
+    </div>
+  </div>
+</div>
+
+<p class="mt-3">Let's focus on the FOBS,SIGFOBS miller array. We know the data in this array are amplitudes. But what is the resolution, the completeness and the spacegroup? Use the following methods to learn more about this array:
+  <ul>
+    <li><code>d_max_min()</code></li>
+    <li><code>space_group_info()</code></li>
+    <li><code>f_obs.completeness()</code></li>
+    <li><code>size()</code></li>
+    <li><code>f_obs.show_summary()</code> (This will print the output on the screen, so no need to use the python print() function)</li>
+  </ul>
+</p>
+
+<div class="card  ml-5 mr-5 mt-3" id="accordionTwo">
+  <div class="card-header bg-blue-DL" id="headingTwo">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <b>TASK</b>
+        </div>
+        <div class="col-8">
+          Print out some more information of the miller array FOBS,SIGFOBS.
+        </div>
+        <div class="col">
+          <button class="btn-sm btn-link" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded  ="  false" aria-controls="collapseTwo">
+            Show answer
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionTwo">
+    <div class="card-body">
+      <pre class="bg-light" style="font-size: 12px"><code>Resolution limits:  (49.59133498239787, 5.5000670861140355)
+
+Space group:  P 1 21 1
+
+Completeness:  0.970842392819
+
+Size:  17414
+
+Miller array info: 4zyp.mtz:FOBS,SIGFOBS
+Observation type: xray.amplitude
+Type of data: double, size=17414
+Type of sigmas: double, size=17414
+Number of Miller indices: 17414
+Anomalous flag: False
+Unit cell: (114.38, 210.29, 118.2, 90, 100.46, 90)
+Space group: P 1 21 1 (No. 4)</code></pre>
+    </div>
+  </div>
+</div>
+
+<p class="mt-3">We saw in the first exercise that there is also an Rfree array in the MTZ file. Let's have a closer look at that array.</p>
+
+<div class="card  ml-5 mr-5 mt-3" id="accordionThree">
+  <div class="card-header bg-blue-DL" id="headingThree">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <b>TASK</b>
+        </div>
+        <div class="col-8">
+          Print out the result of the <code>size()</code> method for the Rfree miller array.
+        </div>
+        <div class="col">
+          <button class="btn-sm btn-link" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded  ="  false" aria-controls="collapseThree">
+            Show answer
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionThree">
+    <div class="card-body">
+      <pre class="bg-light" style="font-size: 12px"><code>Size R-free array:  17937</code></pre>
+    </div>
+  </div>
+</div>
+
+<p class="mt-3">The size of the miller arrays FOBS,SIGFOBS and R-free-flags is not the same. In other words, the number of hkl indices with corresponding data or R-free-flag differs in the two arrays. This situation occurs rather frequently, even with deposited data in the PDB. For example, the mismatch can occur when R-free-flags are copied from another data set.<p>
+<p>Programs dealing with data has to address this mismatch. Let's say we want to calculate R-factors. If a reflection with an associated intensity does not have an R-free flag, it can't be assigned neither to the working set nor the the test set of reflections. It is therefore useful to obtain a common set of reflections. Let's try to obtain such a common set for out test data set.</p>
+<p>It is instructive to determine how many reflections are mismatched. The miller class has the method <code>match_indices</code>, which will do all the work. Use <code>dir()</code> to see which methods are available for the result of match_indices. You can use the method as in this example:</p>
+
+<div><textarea class="code">
+match_result = f_obs.match_indices(r_free)</textarea></div>
+
+<p class="mt-3">Here, <code>f_obs</code> and <code>r_free</code> are miller array objects.<br>
+  We will now figure out how many reflections are "single" in each of these two miller arrays, i.e. we determine how many reflections don't have an equivalent in the other array. The result object of <code>match_indices</code> has the methods <code>pairs()</code> and <code>singles()</code>, which are all we need to get this information. </p>
+
+<div class="card  ml-5 mr-5 mt-3" id="accordionFour">
+  <div class="card-header bg-blue-DL" id="headingFour">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <b>TASK</b>
+        </div>
+        <div class="col-8">
+          Determine how many reflections are common or single for the FOBS,SIGFOBS and R-free-flags array.
+        </div>
+        <div class="col">
+          <button class="btn-sm btn-link" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded  ="  false" aria-controls="collapseFour">
+            Show answer
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+  TIP:
+  <ul>
+    <li>Access the length of the arrays with <code>size()</code></li>
+    <li><code>singles()</code> needs an argument: 0 for the array on which match_indices is performed, and 1 for the array which is the argument of match_indices.</li>
+  </ul>
+  </div>
+  <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionFour">
+    <div class="card-body">
+      <pre class="bg-light" style="font-size: 12px"><code>Common reflections:  17414
+
+Single reflections in FOBS,SIGFOBS:  0
+
+Single reflections in R-free-flags:  523</code></pre>
+    </div>
+  </div>
+</div>
+
+<p class="mt-3">We just found out that the R-free-flags array has about 500 additional miller indices. Note that <code>match_indices</code> is a low level method and is typicially not used. It is nevertheless instructive for this example. Practically, to obtain a common set of reflections, the <code>common_sets()</code> method can be used:</p>
+
+<div><textarea class="code">
+f_obs, r_free_flags = f_obs.common_sets(r_free_flags)</textarea></div>
+
+<div class="card  ml-5 mr-5 mt-3" id="accordionFive">
+  <div class="card-header bg-blue-DL" id="headingFive">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <b>TASK</b>
+        </div>
+        <div class="col-8">
+          Use <code>common_sets()</code> to create two arrays with the same hkl indices. Use the <code>size()</code> method to double check the result.
+        </div>
+        <div class="col">
+          <button class="btn-sm btn-link" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded  ="  false" aria-controls="collapseFive">
+            Show answer
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionFive">
+    <div class="card-body">
+      <pre class="bg-light" style="font-size: 12px"><code>After using common_sets:
+Size FOBS,SIGFOBS:  17414
+Size R-free-flags:  17414</code></pre>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
