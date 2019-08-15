@@ -85,7 +85,7 @@ f_model = mmtbx.f_model.manager(
   xray_structure = xray_structure)
 f_model.update_all_scales()</textarea></div>
 
-<p class="mt-3">You can see that neither the <code>model</code> object nor the <code>pdb_hierarchy</code> are passed to <code>f_model</code>. The reason is that both obects are too "large", containing way more infomation than necessary to calculate structure factors. F.ex. the <code>model</code> object may carry restraint information, while the <code>pdb_hierarchy</code> is a complicated data structure conveying the hierarchical levels of the input model. To calculate structure factors, neither is needed. The minimal structural information is contained in the <code>xray_structure</code> object, which is obtained from model:</p>
+<p class="mt-3">You can see that neither the <code>model</code> object nor the <code>pdb_hierarchy</code> are passed to <code>f_model</code>. The reason is that both obects are too "large", containing way more infomation than necessary to calculate structure factors. For example the <code>model</code> object may carry restraint information, while the <code>pdb_hierarchy</code> is a complicated data structure conveying the hierarchical levels of the input model. To calculate structure factors, neither is needed. The minimal structural information is contained in the <code>xray_structure</code> object, which is obtained from model:</p>
 
 <div><textarea class="code">model.get_xray_structure()</textarea></div>
 
