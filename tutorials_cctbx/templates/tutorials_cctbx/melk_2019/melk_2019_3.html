@@ -37,7 +37,7 @@ ATOM   3920  SG BCYS B 111      24.645  38.257  14.039  0.50 29.86           S</
     Our script will only truncate the CYS residue, but it would be better if it also truncated the non-standard CSD residue in the A alternative conformation. Let's find out what it takes to achieve this.</p>
 
 <p>One way would be to add the 3 letter code for all modified amino acids to the dictionary. This however relies on the completeness of the dictionary; what happens if the 3 letter code changes or if other entries are added?<br>
-  Another possibility is to check if there is at least one amino acid in a residue group, and if so, apply the truncation to all residues in the group, even if they don't have a standard residue name. This means, for each residue group we have to loop over the atom groups twice, first to scan for at least one standard amino-acid residue name, and if there is one, a second time to do the truncation. This will double effort (and computing time), but it is required to accomodate all posssible cases.</p>
+  Another possibility is to check if there is at least one amino acid in a residue group, and if so, apply the truncation to all residues in the group, even if they don't have a standard residue name. This means, for each residue group we have to loop over the atom groups twice, first to scan for at least one standard amino-acid residue name, and if there is one, a second time to do the truncation. This will double effort (and computing time), but it is required to accomodate all possible cases.</p>
 
 <p>This is the part of the script we have to work on:</p>
 
