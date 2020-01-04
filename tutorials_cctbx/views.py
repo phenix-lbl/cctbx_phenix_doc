@@ -23,3 +23,6 @@ def melk_2019_5(request):
 
 def melk_2019_intro(request):
   return render(request, 'tutorials_cctbx/melk_2019/melk_2019_intro.html')
+
+def flex_array(request):
+  return render(request, 'tutorials_cctbx/flex_array/flex_array.html')

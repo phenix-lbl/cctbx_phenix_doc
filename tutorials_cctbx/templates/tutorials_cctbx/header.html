@@ -17,6 +17,8 @@
     <script type="text/javascript" src="{% static 'js/codemirror.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/matchbrackets.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/python.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+
 
     <!-- <link rel=stylesheet href="./lib/docs.css"> -->
 
@@ -69,7 +71,7 @@
                 </li>
                 <li class="active">
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Melk 2019</a>
-                    <ul class=" list-unstyled" id="homeSubmenu"> <!-- add class collapse to make it collapsed -->
+                    <ul class=" list-unstyled" id="homeSubmenu" class="collapse"> <!-- add class collapse to make it collapsed -->
                        <li>
                          <a href="{% url 'melk_2019_intro' %}">Introduction</a>
                        </li>
@@ -89,6 +91,9 @@
                           <a href="{% url 'melk_2019_5' %}">Part 5: R-factors</a>
                         </li>
                     </ul>
+                </li>
+                <li>
+                  <a href="{% url 'flex_array' %}">Flex arrays</a>
                 </li>
 <!--                <li>
                     <a href="#">About</a>
