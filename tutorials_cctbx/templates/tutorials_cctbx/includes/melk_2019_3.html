@@ -1,12 +1,10 @@
-{% extends "tutorials_cctbx/header.html" %}
-
-{% load static %}
+{% load staticfiles %}
 
 {% block content %}
 
-<h2 style="text-align:center">Part 3: Truncate to Poly-Ala - Improved</h2>
+<h3>Truncate to Poly-Ala - Improved</h3>
 
-<h4 class="mt-5 mb-4">Files</h4>
+<h4 class="mt-4 mb-2">Files</h4>
 <ul>
   <li><a href="https://gitcdn.link/repo/phenix-lbl/cctbx_tutorial_files/master/2019_melk/resname_mix.pdb" style="text-decoration: underline; color: blue" download>resname_mix.pdb</a></li>
 </ul>
@@ -41,31 +39,22 @@ ATOM   3920  SG BCYS B 111      24.645  38.257  14.039  0.50 29.86           S</
 
 <p>This is the part of the script we have to work on:</p>
 
-<div><textarea class="code">
+<div class="mb-4"><textarea class="code">
 for ag in rg.atom_groups():
   if (ag.resname in aa_resnames):
     for atom in ag.atoms():
       if (atom.name not in ala_atom_names):
         ag.remove_atom(atom=atom)</textarea></div>
 
-<div class="card ml-5 mr-5 mb-5 mt-3">
-  <div class="card-header bg-blue-DL">
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <b>TASK</b>
-        </div>
-        <div class="col-8">
-          Modify the script so that it also truncates CSD.
-        </div>
-        <div class="col"></div>
-      </div>
-    </div>
-  </div>
-  <div class="card-body">
-    <b>TIP:</b> Replace the if-statement in line 2 (above) with a function that returns True if the residue_group contains at least one amino-acid (and False otherwise).
-  </div>
-</div>
+<span class="task mt-5">
+<span class="badge badge-secondary mybadge">Task</span>
+<span class="taskspan">
+  Modify the script so that it also truncates CSD.
+</span>
+</span>
+<p class="mt-3">
+  <b>TIP: </b> Replace the if-statement in line 2 (above) with a function that returns True if the residue_group contains at least one amino-acid (and False otherwise).
+</p>
 
 <h4 class="mt-5 mb-4">Refining the script</h4>
 
@@ -97,40 +86,31 @@ n_atoms_removed = 0</textarea></div>
 
 <p class="mt-3">Since we can now easily find out if no atoms were removed (e.g. because someone passed in a DNA model), we should take advantage of it and write the output PDB file only if there are changes. For example:</p>
 
-<div class="card  ml-5 mr-5 mt-3" id="accordionThree">
-  <div class="card-header bg-blue-DL" id="headingThree">
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <b>TASK</b>
-        </div>
-        <div class="col-8">
+<div style="background-color: #c4cced; margin-left:10px; margin-right:10px;" class="row justify-content-md task">
+  <div class="col-1">
+    <span class="badge badge-secondary mybadge">Task</span>
+  </div>
+  <div class="col-8">
           Modify the script:
           <ul>
             <li>Print the counts</li>
             <li>Pass the crystal symmetry parameter to <code>write_pdb_file</code> (what changes if we do this?).</li>
             <li>Write the output only if the input contains amino acid residues.</li>
           </ul>
-        </div>
-        <div class="col">
-          <button class="btn-sm btn-link" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded  ="  false" aria-controls="collapseThree">
-            Show output
-          </button>
-        </div>
-      </div>
-    </div>
   </div>
-  <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionThree">
-    <div class="card-body">
+  <div class="col-3">
+    <button style="margin-left: 10px;"class="btn btn-outline-secondary btn-sm" type="button" data-toggle="collapse" data-target="#collapse3a" aria-expanded="false" aria-controls="collapse3a">
+      Show output
+    </button>
+  </div>
+</div>
+<div class="collapse" id="collapse3a" style="margin-left:10px; margin-right:10px;">
+  <div class="card card-body">
         <pre class="bg-light" style="font-size: 12px"><code>Number of amino acid residues: 3
 Number of other residues: 0
 Number of atoms removed: 11
 Writing file:  resname_mix_truncated_to_ala.pdb</code></pre>
-    </div>
   </div>
 </div>
-
-
-
 
 {% endblock %}

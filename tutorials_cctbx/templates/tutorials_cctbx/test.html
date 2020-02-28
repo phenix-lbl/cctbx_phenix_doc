@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>CCTBX documentation</title>
+    <title>CCTBX tutorials</title>
 
     {% load staticfiles %}
 
@@ -52,49 +52,31 @@
         {% block sidebar %}
         <nav id="sidebar">
             <div class="sidebar-header">
-                <a href="{% url 'index' %}">Computational Crystallography Toolbox</a>
-                <h3 class="mt-3">CCTBX</h3>
+                <a href="{% url 'index' %}">CCTBX Documentation</a>
+                <h3>CCTBX Documentation</h3>
             </div>
 
             <div class="sidenav">
                 <ul class="list-unstyled components">
                     <!-- Sidebar  -->
                     <li>
-                      <a href="{% url 'index' %}">About</a>
-                    </li>
-                    <li>
-                      <a href="{% url 'index' %}">Download</a>
-                    </li>
-                    <li>
-                      <a href="{% url 'index' %}">Installation</a>
+                      <a href="{% url 'index' %}">Download & Installation</a>
                     </li>
                     <!-- Sidebar  -->
                     <li>
-                        <a href="{% url 'tutorials' %}" class="dropdown-btn">Tutorials
+                        <a href="#toto"class="dropdown-btn">Tutorials
                           <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
                           <i class="fa fa-caret-down"></i>
                         </a>
-                        <div class="dropdown-container" style="{{  is_active  }}">
-                          <a style="padding-left: 24px;" href="{% url 'melk_2019_intro' %}">Melk 2019</a>
+                        <div class="dropdown-container">
+                          <a style="padding-left: 24px;" href="#">Melk 2019</a>
                           <a style="padding-left: 24px;" href="#">Link 2</a>
                           <a style="padding-left: 24px;" href="#">Link 3</a>
                         </div>
                     </li>
-                    <!-- Sidebar  -->
-                    <li>
-                        <a href="#" class="dropdown-btn">Documentation
-                          <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
-                          <i class="fa fa-caret-down"></i>
-                        </a>
-                        <div class="dropdown-container" style="{{  is_active_doc  }}">
-                          <a style="padding-left: 24px;" href="{% url 'flex_array' %}">Flex arrays</a>
-                          <a style="padding-left: 24px;" href="#">Link 2</a>
-                          <a style="padding-left: 24px;" href="#">Link 3</a>
-                        </div>
-                    </li>
+
                  </ul>
             </div>
-
 
         </nav>
         {% endblock %}

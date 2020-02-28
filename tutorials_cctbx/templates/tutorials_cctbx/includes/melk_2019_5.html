@@ -1,12 +1,10 @@
-{% extends "tutorials_cctbx/header.html" %}
-
 {% load static %}
 
 {% block content %}
 
-<h2 style="text-align:center">Part 5: R-factors</h2>
+<h3>R-factors</h3>
 
-<h4 class="mt-5 mb-4">Files</h4>
+<h4 class="mt-4 mb-2">Files</h4>
 <ul>
   <li><a href="https://gitcdn.link/repo/phenix-lbl/cctbx_tutorial_files/master/2019_melk/1aba_model.pdb" style="text-decoration: underline; color: blue" download>1aba_model.pdb</a></li>
   <li><a href="https://gitcdn.link/repo/phenix-lbl/cctbx_tutorial_files/master/2019_melk/1aba_reflections.mtz" style="text-decoration: underline; color: blue" download>1aba_reflections.mtz</a></li>
@@ -17,62 +15,44 @@
 <p>We have learned how to open a model and reflection files and how to obtain the corresponding CCTBX objects. Let's put this together to calcualte R-factors.<br>
 We'll have to make a script which opens a PDB file and a MTZ file. Using the scripts from the previous parts as template, write a basic script that obtains the PDB and mtz file names from the input arguments. Use the <code>os</code> module to get the extension of a file in order to decide if a file is a model file or a reflection file.</p>
 
-<div class="card  ml-5 mr-5 mt-3" id="accordionOne">
-  <div class="card-header bg-blue-DL" id="headingOne">
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <b>TASK</b>
-        </div>
-        <div class="col-8">
-          Write a script that opens a model file (<code>1aba_model.pdb</code>) and a reflection file (<code>1aba_reflections.mtz</code>) and prints out the filenames. The goal here is to correctly assign the filetype to the input arguments of the script; it should work regardless of the order of the files.
-        </div>
-        <div class="col">
-          <button class="btn-sm btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded  ="  false" aria-controls="collapseOne">
-            Show output
-          </button>
-        </div>
-      </div>
-    </div>
+<div style="background-color: #c4cced; margin-left:10px; margin-right:10px;" class="row justify-content-md task mt-3">
+  <div class="col-1">
+    <span class="badge badge-secondary mybadge">Task</span>
   </div>
-  <div class="card-body">
-    <b>TIP:</b> <code>filename, extension = os.path.splitext('/path/to/somefile.ext')</code> yields '/path/to/somefile' for filename and '.ext' for extension. Use this to decide if a file is a pdb file or a mtz file.
+  <div class="col-8">
+    Write a script that opens a model file (<code>1aba_model.pdb</code>) and a reflection file (<code>1aba_reflections.mtz</code>) and prints out the filenames. The goal here is to correctly assign the filetype to the input arguments of the script; it should work regardless of the order of the files.
   </div>
-  <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionOne">
-    <div class="card-body">
-      <pre class="bg-light" style="font-size: 12px"><code>Model file name:  1aba_model.pdb
-Reflection file name:  1aba_reflections.mtz</code></pre>
-    </div>
+  <div class="col-3">
+    <button style="margin-left: 10px;"class="btn btn-outline-secondary btn-sm" type="button" data-toggle="collapse" data-target="#collapse5a" aria-expanded="false" aria-controls="collapse5a">
+      Show output
+    </button>
   </div>
 </div>
+<div class="collapse" id="collapse5a" style="margin-left:10px; margin-right:10px;">
+  <div class="card card-body">
+    <pre class="bg-light" style="font-size: 12px"><code>Model file name:  1aba_model.pdb
+Reflection file name:  1aba_reflections.mtz</code></pre>
+  </div>
+</div>
+<p class="mt-2">
+  <b>TIP:</b> <code>filename, extension = os.path.splitext('/path/to/somefile.ext')</code> yields '/path/to/somefile' for filename and '.ext' for extension. Use this to decide if a file is a pdb file or a mtz file.
+</p>
+
 
 <p class="mt-3">This approach to decide about filetype is quite simplistic, but it should be sufficient for "personal" use, i.e. for scripts where we know the input format. For general use however, a more elaborate approach would be necessary. For example, the script will fail for compressed pdb files (model.pdb.gz), which can be opened with <code>iotbx.pdb</code>, for model files in CIF format or for reflection fils in other formats (we won't cover this here).</p>
 <p>The next step is to create model objects and miller arrays.</p>
 
-<div class="card  ml-5 mr-5 mt-3" id="accordionTwo">
-  <div class="card-header bg-blue-DL" id="headingTwo">
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <b>TASK</b>
-        </div>
-        <div class="col-8">
+<div style="background-color: #c4cced; margin-left:10px; margin-right:10px;" class="task row">
+  <div class="col-1">
+    <span class="badge badge-secondary mybadge">Task</span>
+  </div>
+  <div class="col-11">
           In your script, create:
           <ul>
             <li>a model object</li>
             <li>a miller array for FOBS,SIGFOBS</li>
             <li>a miller array for FreeR_flag</li>
           </ul>
-        </div>
-        <div class="col">
-        </div>
-      </div>
-    </div>
-  </div>
-  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionTwo">
-    <div class="card-body">
-      <pre class="bg-light" style="font-size: 12px"><code></code></pre>
-    </div>
   </div>
 </div>
 
@@ -93,36 +73,29 @@ f_model.update_all_scales()</textarea></div>
 
 <p class="mt-3">The <code>f_model</code> object has the methods <code>r_free()</code> and <code>r_work()</code> to calculate R-factors.</p>
 
-<div class="card  ml-5 mr-5 mt-3" id="accordionThree">
-  <div class="card-header bg-blue-DL" id="headingThree">
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <b>TASK</b>
-        </div>
-        <div class="col-8">
-          Create <code>f_model</code> and print R-factors.
-        </div>
-        <div class="col">
-          <button class="btn-sm btn-link" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded  ="  false" aria-controls="collapseThree">
-            Show output
-          </button>
-        </div>
-      </div>
-    </div>
+<div style="background-color: #c4cced; margin-left:10px; margin-right:10px;" class="row justify-content-md task mt-3">
+  <div class="col-1">
+    <span class="badge badge-secondary mybadge">Task</span>
   </div>
-  <div class="card-body">
-    <b>TIP:</b> Got an assertion error? Investigate the content of the miller arrays to find out if there is any mismatch.
+  <div class="col-8">
+    Create <code>f_model</code> and print R-factors.
   </div>
-  <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionThree">
-    <div class="card-body">
+  <div class="col-3">
+    <button style="margin-left: 10px;"class="btn btn-outline-secondary btn-sm" type="button" data-toggle="collapse" data-target="#collapse5b" aria-expanded="false" aria-controls="collapse5b">
+      Show output
+    </button>
+  </div>
+</div>
+<div class="collapse" id="collapse5b" style="margin-left:10px; margin-right:10px;">
+  <div class="card card-body">
       <pre class="bg-light" style="font-size: 12px"><code>Rwork:  0.180265172752
 
 Rfree: 0.19096914483</code></pre>
-    </div>
   </div>
 </div>
-
+<p class="mt-2">
+  <b>TIP:</b> Got an assertion error? Investigate the content of the miller arrays to find out if there is any mismatch.
+</p>
 
 
 {% endblock %}

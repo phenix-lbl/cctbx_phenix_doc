@@ -18,3 +18,251 @@
 .bg-code-DL{
   background-color: #e6e6ff;
 }
+
+.mybadge {
+  font-size: 18px !important;
+  background-color: #7386d5;
+}
+
+.taskspan {
+  font-size: 16px;
+  margin-left: 10px;
+
+
+}
+
+.task {
+/*  border:2px;
+  border-style:solid;
+  border-color:#7386d5;
+  border-radius: 4px 4px 4px 4px ; */
+  padding: 10px;
+  background-color: #c4cced;
+  font-size: 16px;
+}
+
+body {
+    /*font-family: 'Poppins', sans-serif;
+    background: #fafafa;*/
+}
+
+p {
+    /*font-family: 'Poppins', sans-serif;
+    font-size: 1.1em;
+    font-weight: 300;
+    line-height: 1.7em;
+    color: #999;*/
+}
+
+a,
+a:hover,
+a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed #ddd;
+    margin: 40px 0;
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+}
+
+#sidebar {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 999;
+    background: #7386D5;
+    color: #fff;
+    transition: all 0.3s;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #6d7fcc;
+}
+
+.sidebar-header a{
+  text-decoration: none !important;
+  color: #fff;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid #47748b;
+}
+
+#sidebar ul p {
+    color: #fff;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+    color: #fff;
+}
+
+#sidebar ul li a:hover {
+    color: #7386D5;
+    background: #fff;
+    text-decoration: none !important
+}
+
+#sidebar ul li.active>a,
+a[aria-expanded="true"] {
+    color: #fff;
+    background: #6d7fcc;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #6d7fcc;
+}
+
+ul.CTAs {
+    padding: 20px;
+}
+
+ul.CTAs a {
+    text-align: center;
+    font-size: 0.9em !important;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+/* Fixed sidenav, full height */
+/*.sidenav {
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+}*/
+
+/* Style the sidenav links and the dropdown button */
+/*.sidenav a, .dropdown-btn {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #818181;
+  display: block;
+  border: none;
+  background: none;
+  width:100%;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+}*/
+
+/* On mouse-over */
+/*.sidenav a:hover, .dropdown-btn:hover {
+  color: #f1f1f1;
+}*/
+
+/* Main content */
+/*.main {
+  margin-left: 200px; /* Same as the width of the sidenav */
+/*  font-size: 20px; /* Increased text to enable scrolling */
+/*  padding: 0px 10px;
+} */
+
+/* Add an active class to the active dropdown button */
+.myactive {
+  background-color: #6d7fcc;
+  color: #fff;
+}
+
+/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+.dropdown-container {
+  display: none;
+  color: #fff;
+  background-color: #6d7fcc;
+  font-size: 0.9em;
+/*  padding-left: 16px;*/
+}
+
+.dropdown-container a {
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
+
+
+/* Optional: Style the caret down icon */
+.fa-caret-down {
+  float: right;
+  padding-right: 8px;
+}
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+
+#content {
+    width: calc(100% - 250px);
+    padding: 40px;
+    min-height: 100vh;
+    transition: all 0.3s;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#content.active {
+    width: 100%;
+}
+
+
+/* ---------------------------------------------------
+    TABS
+----------------------------------------------------- */
+
+/* change border radius for the tab , apply corners on top*/
+#exTab3 .nav-pills > li > a {
+  border-radius: 4px 4px 0 0 ;
+}
+#exTab3 .tab-content {
+  color : black;
+  background-color: #ebeef9;
+  padding : 5px 15px;
+}
+
+.myblue > li > a.active {
+  background-color: #ebeef9 !important;
+  color: black !important;
+}
+
+.myblue > li > a:hover {
+  color: #7386d5 !important;
+}
+
+.nav-link-color {
+  color: black;
+}

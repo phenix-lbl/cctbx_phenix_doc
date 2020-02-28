@@ -6,6 +6,7 @@ from . import views
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^flex_array', views.flex_array, name='flex_array'),
+    url(r'^tutorials', views.tutorials, name='tutorials'),
     url(r'^melk_2019_1', views.melk_2019_1, name='melk_2019_1'),
     url(r'^melk_2019_2', views.melk_2019_2, name='melk_2019_2'),
     url(r'^melk_2019_3', views.melk_2019_3, name='melk_2019_3'),

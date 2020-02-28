@@ -1,0 +1,308 @@
+{% load staticfiles %}
+
+{% block content %}
+
+<div id="tab2">
+
+<h3>Truncate to Poly-Ala - Basic</h3>
+
+<h4 class="mt-4 mb-2">Files</h4>
+<ul>
+  <li><a href="https://gitcdn.link/repo/phenix-lbl/cctbx_tutorial_files/master/2019_melk/tutorial_2_v0.py" style="text-decoration: underline; color: blue" download>tutorial_2_v0.py</a></li>
+  <li><a href="https://gitcdn.link/repo/phenix-lbl/cctbx_tutorial_files/master/2019_melk/1aba_pieces.pdb"  style="text-decoration: underline; color: blue" download>1aba_pieces.pdb</a></li>
+</ul>
+
+<h4 class="mt-5 mb-4">The PDB hierarchy</h4>
+
+<p>Let's continue working with the model file <code>1aba_pieces.pdb</code>. We will write a basic script to truncate all amino acids in the model to Poly-Ala. To achieve this, we will use the pdb_hierarchy object, which is a five-deep nested data structure:</p>
+
+<pre class="bg-light" style="font-size: 12px"><code>model
+  chain
+    residue_group
+      atom_group
+        atom</code></pre>
+
+<p>The hierarchy object is obtained with the get_hierarchy method of the model class:</p>
+
+<div><textarea class="code">pdb_hierarchy = model.get_hierarchy()</textarea></div>
+
+<p class="mt-3">The model, chain, and atom levels of the hierarchy object are probably immediately obvious to someone familiar with the content of model files (such as a PDB file). Note that that is no 'residue type' in the data structure. Instead, there are the two types residue_group and atom_group. They are related to alternative conformations. If there are no alternative conformations in the model, all residue groups contain exactly one atom group, which contains all the atoms of a residue. A file with alternative conformations will lead to residue groups with multiple atom groups, one for each conformer. (Note: about a quarter of the files in the PDB database contain alternative conformations).</p>
+
+<p>To truncate amino-acid residues to alanine, we need to know which residues are amino-acids, and the atom names. A more detailed presentation of the hierarchy object shows where we can find this information:</p>
+
+<pre class="bg-light" style="font-size: 12px"><code>model(s)
+  id
+  chain(s)
+    id
+    residue_group(s)
+      resid
+      atom_group(s)
+        altloc, resname
+        atom(s)
+          name
+          segid
+          element
+          charge
+          xyz
+          occ
+          b
+          uij</code></pre>
+
+<p>(The list under each level is not exhaustive.)</p>
+
+  <h4 class="mt-5 mb-4">Loop over the hierarchy</h4>
+
+  <p>Before doing the truncation, let's see what is actually in the levels of the hierarchy. Loop through all the levels of the hierarchy and print out:
+    <ul>
+      <li>Chain ID</li>
+      <li>Residue name</li>
+      <li>Altloc</li>
+      <li>Atomname</li>
+    </ul>
+  The code below shows how to print the chain ID for each chain.</p>
+
+  <div><textarea class="code">
+from __future__ import division, print_function
+import sys
+import mmtbx.model
+import iotbx.pdb
+
+def run(args):
+  if (len(args) != 1):
+    raise RuntimeError("Please specify one pdb file name.")
+  model_filename = args[0]
+  pdb_inp = iotbx.pdb.input(file_name=model_filename)
+  model = mmtbx.model.manager(model_input = pdb_inp)
+  model.composition().show(log=sys.stdout)
+
+  pdb_hierarchy = model.get_hierarchy()
+
+  print('\nLoop over hierarchy:')
+  for model in pdb_hierarchy.models():
+    for chain in model.chains():
+      print('Chain: ', chain.id)
+      for rg in chain.residue_groups():
+        pass # Add your code here
+
+if (__name__ == "__main__"):
+  run(sys.argv[1:])</textarea></div>
+
+  <p class="mt-3">Output:</p>
+
+  <pre class="bg-light" style="font-size: 12px"><code>Loop over hierarchy
+Chain:  A
+Chain:  B</code></pre>
+
+<div style="background-color: #c4cced; margin-left:10px; margin-right:10px;" class="row justify-content-md task">
+  <div class="col-1">
+    <span class="badge badge-secondary mybadge">Task</span>
+  </div>
+  <div class="col-8">
+    <span>Complete the loops through the hierarchy levels to print out atom names in the different atom_groups.</span>
+  </div>
+  <div class="col-3">
+    <button style="margin-left: 10px;"class="btn btn-outline-secondary btn-sm" type="button" data-toggle="collapse" data-target="#collapse2b" aria-expanded="false" aria-controls="collapse2b">
+      Show output
+    </button>
+  </div>
+</div>
+
+
+<div class="collapse" id="collapse2b" style="margin-left:10px; margin-right:10px;">
+  <div class="card card-body">
+<pre class="bg-light" style="font-size: 12px"><code>Loop over hierarchy:
+Chain:  A
+  Resnumber:     3
+    Resname: LYS, Altloc:
+       N
+       CA
+       C
+       O
+       CB
+       CG
+       CD
+       CE
+       NZ
+  Resnumber:     4
+    Resname: VAL, Altloc:
+       N
+       CA
+       C
+       O
+       CB
+       CG1
+       CG2
+  Resnumber:     5
+    Resname: TYR, Altloc:
+       N
+       CA
+       C
+       O
+       CB
+       CG
+       CD1
+       CD2
+       CE1
+       CE2
+       CZ
+       OH
+  Resnumber:     6
+    Resname: GLY, Altloc:
+       N
+       CA
+       C
+       O
+  Resnumber:     7
+    Resname: TYR, Altloc:
+       N
+       CA
+       C
+       O
+       CB
+       CG
+       CD1
+       CD2
+       CE1
+       CE2
+       CZ
+       OH
+Chain:  B
+  Resnumber:    96
+    Resname: HOH, Altloc:
+       O
+  Resnumber:   161
+    Resname: HOH, Altloc:
+       O
+  Resnumber:   169
+    Resname: HOH, Altloc:
+       O
+  Resnumber:   193
+    Resname: HOH, Altloc:
+       O
+</code></pre>
+  </div>
+</div>
+<p class="mt-3">
+  <b>TIP: </b> You can see the attributes and methods of each level by using the <code>dir</code> method to return a list of valid attributes of the object, for example, replace line 21 with <code>print(dir(rg))</code>. Don't get confused if there are many methods/attributes. Look out for something ressembling residue names, altlocs and atom names.
+</p>
+
+
+<p class="mt-3">Let's look at Tyr 85, which has an alternate conformation for the side chain. This example highlights the usefulness of residue groups and atom groups. Tyr 85 has three atom groups, one for the altloc " " (blank), one for "A" and one for "B".</p>
+
+<pre class="bg-light" style="font-size: 12px"><code>Resnumber:    85
+    Resname: TYR, Altloc:
+      N, CA, C, O, CB
+    Resname: TYR, Altloc: A
+      CG, CD1, CD2, CE1, CE2, CZ, OH
+    Resname: TYR, Altloc: B
+      CG, CD1, CD2, CE1, CE2, CZ, OH</code></pre>
+
+<h4 class="mt-5 mb-4">Simple truncation</h4>
+
+<p>We have residue names and atom names now, but to perform the truncation, we need to know which residues are amino acids (because we only want to truncate amino acids), and which atom names we want to keep.<br>
+  The <code>iotbx.pdb</code> module contains the sub-module <code>amino_acid_codes</code>. This sub-module contains two Python dictionaries, one of which is (shortened):</p>
+
+<pre class="bg-light" style="font-size: 12px"><code>one_letter_given_three_letter = {
+"ALA": "A",
+"ARG": "R",
+...
+"TYR": "Y",
+"VAL": "V"}</code></pre>
+
+<p class="mt-3">We don't need the one-letter codes, but we can re-use the keys of this dictionary to efficently decide if a residue name corresponds to an amino acid. Here are the relevant lines to add in your script.</p>
+
+<div><textarea class="code">
+import iotbx.pdb.amino_acid_codes
+...
+aa_resnames = iotbx.pdb.amino_acid_codes.one_letter_given_three_letter
+...
+if (ag.resname in aa_resnames):
+  # do something</textarea></div>
+
+<p class="mt-3">For the atom names, we use a Python set. Here are the relevant lines to add in your script.</p>
+
+<div><textarea class="code">
+ala_atom_names = set([" N  ", " CA ", " C  ", " O  ", " CB "])
+...
+if (atom.name not in ala_atom_names):
+  #do something</textarea></div>
+
+<p class="mt-3">We use a Python set because it uses hashing techniques for element lookup when processing the "in" in the if statement. For a small list like here it doesn't really matter, but in Python it is so easy to use advanced hashing techniques, simply by converting the list of atom names to a set, there is no reason not to take advantage of them.</p>
+
+<div style="background-color: #c4cced; margin-left:10px; margin-right:10px;" class="row justify-content-md task">
+  <div class="col-1">
+    <span class="badge badge-secondary mybadge">Task</span>
+  </div>
+  <div class="col-8">
+    <span> Modify your script so that it only prints out atom names that are NOT in the poly-alanine set and wich are in amino acid residues.</span>
+  </div>
+  <div class="col-3">
+    <button style="margin-left: 10px;"class="btn btn-outline-secondary btn-sm" type="button" data-toggle="collapse" data-target="#collapse2c" aria-expanded="false" aria-controls="collapse2c">
+      Show output
+    </button>
+  </div>
+</div>
+<div class="collapse" id="collapse2c" style="margin-left:10px; margin-right:10px;">
+  <div class="card card-body">
+<pre class="bg-light" style="font-size: 12px"><code>Loop over hierarchy:
+Chain:  A
+  Resnumber:     3
+    Resname: LYS, Altloc:
+       CG
+       CD
+       CE
+       NZ
+  Resnumber:     4
+    Resname: VAL, Altloc:
+       CG1
+       CG2
+  Resnumber:     5
+    Resname: TYR, Altloc:
+       CG
+       CD1
+       CD2
+       CE1
+       CE2
+       CZ
+       OH
+  Resnumber:     6
+    Resname: GLY, Altloc:
+  Resnumber:     7
+    Resname: TYR, Altloc:
+       CG
+       CD1
+       CD2
+       CE1
+       CE2
+       CZ
+       OH
+Chain:  B
+  Resnumber:    96
+  Resnumber:   161
+  Resnumber:   169
+  Resnumber:   193
+</code></pre>
+  </div>
+</div>
+
+
+<p class="mt-3">Now that we know which residues we want to truncate, and which atom names we want to keep, we just need one more line to remove the side chain atoms:</p>
+
+<div><textarea class="code">ag.remove_atom(atom=atom)</textarea></div>
+
+<p class="mt-3">This removes the atom from the atom group (note that atom stands for the object).<br>
+    Now let's save the modified hierarchy to a file. The method to write a PDB file from the hierarchy is <code>write_pdb_file</code>.</p>
+
+<span class="task mt-5">
+<span class="badge badge-secondary mybadge">Task</span>
+<span class="taskspan">
+  Modify the script to save the modified hierarchy in a PDB file. Use a molecular viewer to look at the output. Did it work correctly?
+</span>
+</span>
+<p class="mt-3">
+  <b>TIP: </b> To use the method, you'll need to pass a file name. Use the <code>help</code> method to find out what the parameter name for the file name is.
+</p>
+
+</div>
+
+{% endblock %}
