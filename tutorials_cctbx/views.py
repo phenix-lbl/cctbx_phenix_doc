@@ -8,7 +8,7 @@ def index(request):
 
 def tutorials(request):
   args = {'is_active': 'display: block;'}
-  return render(request, 'tutorials_cctbx/tutorials.html', args)
+  return render(request, 'tutorials_cctbx/tutorials/tutorials.html', args)
 
 def melk_2019_intro(request):
   args = {'is_active': 'display: block;'}
