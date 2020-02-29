@@ -30,42 +30,21 @@ $(document).ready(function () {
 
   $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
 
-  //window.alert($(e.target).parent().index())
   ind = $(e.target).parent().index()
   //window.alert(shown)
-
   if (ind==0 && shown==true) {
     return;
   }
-
   shown=false
-
-
   $('.CodeMirror').each(function(i, el){
       el.CodeMirror.toTextArea();
   });
 
-
-
-  //window.alert('haha')
-
-
-//  if (shown[ind]) {
-//    return;
-//    };
-//  //window.alert(shown[index])
-//  shown[ind] = true
-
   //CM = document.getElementById('CMEditor');
   //CM.CodeMirror.toTextArea();
-
-
-
   //$('.CodeMirror').each(function(i, el){
   //    el.CodeMirror.refresh();
   //});
-
-
 
   $('.code').each(function(index, elem){
 

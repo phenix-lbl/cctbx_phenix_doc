@@ -37,7 +37,7 @@ a:focus {
     box-shadow: none;
     outline: none !important;
     border: none;
-}*/
+}
 
 .line {
     width: 100%;
@@ -151,7 +151,6 @@ a.article:hover {
 #content {
     width: calc(100% - 250px);
     padding: 40px;
-    margin-left: 250px;
     min-height: 100vh;
     transition: all 0.3s;
     position: absolute;
