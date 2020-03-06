@@ -16,5 +16,5 @@ def melk_2019_intro(request):
 
 def flex_array(request):
   args = {'is_active_doc': 'display: block;'}
-  return render(request, 'tutorials_cctbx/flex_array.html', args)
+  return render(request, 'tutorials_cctbx/documentation/flex_array.html', args)
 
