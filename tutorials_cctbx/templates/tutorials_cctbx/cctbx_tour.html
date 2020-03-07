@@ -4,8 +4,330 @@
 
 {% block content %}
 
-<p>
-  Tour
-</p>
+
+
+<h2><center>Tour of the <i>CCTBX</i></center></h2>
+
+<!-- https://www.tipsandtricks-hq.com/simple-table-of-contents-toc-using-pure-html-and-css-code-9217 -->
+<div id="toc_container" class="mt-4">
+<p class="toc_title" id="Contents">Contents</p>
+<ul class="toc_list">
+  <li><a href="#First_Point_Header">1. The beach in the box</a></li>
+  <li><a href="#Second_Point_Header">2. At the very bottom</a></li>
+  <li><a href="#Third_Point_Header">3. scitbx.array_family.flex</a></li>
+  <li><a href="#Fourth_Point_Header">4. cctbx.array_family.flex</a></li>
+  <li><a href="#Fifth_Point_Header">5. A balancing act</a></li>
+  <li><a href="#Sixth_Point_Header">6. Hybrid systems</a></li>
+  <li><a href="#Seventh_Point_Header">7. Building bridges</a></li>
+  <li><a href="#Eigth_Point_Header">8. Thinking hybrid</a></li>
+</ul>
+</div>
+
+<h3 id="First_Point_Header" class="mt-4"> <a href="#Contents">1. The beach in the box</a></h3>
+<p class="mt-3">If you go to the beach you will find massive amounts of a material known to crystallographers as quartz, which in this case is just a fancy word for sand. As an example here is the cctbx way of playing in the sandbox:</p>
+<div><textarea class="code" name="code">
+from cctbx import xray
+from cctbx import crystal
+from cctbx.array_family import flex
+
+quartz_structure = xray.structure(
+  special_position_settings=crystal.special_position_settings(
+    crystal_symmetry=crystal.symmetry(
+      unit_cell=(5.01,5.01,5.47,90,90,120),
+      space_group_symbol="P6222")),
+  scatterers=flex.xray_scatterer([
+    xray.scatterer(
+      label="Si",
+      site=(1/2.,1/2.,1/3.),
+      u=0.2),
+    xray.scatterer(
+      label="O",
+      site=(0.197,-0.197,0.83333),
+      u=0)]))
+
+quartz_structure.show_summary().show_scatterers()</textarea></div>
+
+<p class="mt-3">Running this script with Python produces the output:</p>
+<div><textarea class="code" name="code">
+Number of scatterers: 2
+It special positions: 2
+Unit cell: (5.01, 5.01, 5.47, 90, 90, 120)
+Space group: P 62 2 2 (No. 180)
+Label  M  Coordinates            Occ  Uiso or Ustar
+Si     3  0.5000  0.5000  0.3333 1.00 0.2000
+O      6  0.1970 -0.1970  0.8333 1.00 0.0000</textarea></div>
+
+<p class="mt-3">Note that the script is pure Python, even though at first sight the format might appear to be specifically designed for crystallographic data. Now let’s give the <code>quartz_structure</code> a rest break at the beach:</p>
+<div><textarea class="code" name="code">
+from libtbx import easy_pickle
+easy_pickle.dump("beach", quartz_structure)</textarea></div>
+
+<p class="mt-3">This creates a file with the name beach containing all the information required for restoring the <code>quartz_structure</code> object, which is the technical term for the entire hierarchy of data referenced by the <code>quartz_structure</code> identifier in the Python script. A very important point to notice is that the easy_pickle module used for storing the <code>quartz_structure</code> is not specific to our object. easy_pickle will store and restore (almost) any user-defined Python object.</p>
+<p class="mt-3">Being automatically generated, the beach file is not pretty to look at, but this is not important because we can easily resurrect the original object to extract any information that we might be interested in. In a potentially different script on a potentially different computer with a potentially different operating system:</p>
+<div><textarea class="code" name="code">
+from libtbx import easy_pickle
+quartz_structure = easy_pickle.load("beach")</textarea></div>
+
+<p class="mt-3">Note that it is not necessary to explicitly import the relevant cctbx modules in this script. Python’s pickle module does it for us automatically after inspecting the beach file.</p>
+<p>In practice a “live object” in memory is much more valuable than information stored in a good-old file format because there are often many different questions one can ask about particular real-world objects. For example, we could ask: What are the site symmetries of the atoms in the quartz_structure? Here is how we ask that question in Python’s language:</p>
+<div><textarea class="code" name="code">
+for scatterer in quartz_structure.scatterers():
+  print "%s:" % scatterer.label, "%8.4f %8.4f %8.4f" % scatterer.site
+  site_symmetry = quartz_structure.site_symmetry(scatterer.site)
+  print "  point group type:", site_symmetry.point_group_type()
+  print "  special position operator:",  site_symmetry.special_op()</textarea></div>
+
+<p class="mt-3">Answer:</p>
+<div><textarea class="code" name="code">
+Si:   0.5000   0.5000   0.3333
+  point group type: 222
+  special position operator: 1/2,1/2,1/3
+O:   0.1970  -0.1970   0.8333
+  point group type: 2
+  special position operator: 1/2*x-1/2*y,-1/2*x+1/2*y,5/6</textarea></div>
+
+<p class="mt-3">Another question we could ask: What are the structure factors up to a resolution of d_min=2 Angstrom?</p>
+<div><textarea class="code" name="code">
+f_calc = quartz_structure.structure_factors(d_min=2).f_calc()
+f_calc.show_summary().show_array()</textarea></div>
+
+<p class="mt-3">Answer:</p>
+<div><textarea class="code" name="code">
+Miller array info: None
+Type of data: complex_double, size=7
+Type of sigmas: None
+Number of Miller indices: 7
+Anomalous flag: None
+Unit cell: (5.01, 5.01, 5.47, 90, 90, 120)
+Space group: P 62 2 2 (No. 180)
+(1, 0, 0) (-11.3483432953-3.90019504038e-16j)
+(1, 0, 1) (-14.9620947104-25.915108226j)
+(1, 0, 2) (1.46915343413-2.54464839202j)
+(1, 1, 0) (-12.8387095938+0j)
+(1, 1, 1) (5.39203951708-9.3392864j)
+(2, 0, 0) (-1.80942693741-2.84059649279e-16j)
+(2, 0, 1) (4.95031293935+8.57419352432j)</textarea></div>
+
+<p class="mt-3">Now we could turn our attention to the new f_calc object and start asking different questions. For example: What are the d-spacings?</p>
+<div><textarea class="code" name="code">
+f_calc.d_spacings().show_array()</textarea></div>
+
+<p class="mt-3">Answer:</p>
+<div><textarea class="code" name="code">
+(1, 0, 0) 4.33878727296
+(1, 0, 1) 3.39927502294
+(1, 0, 2) 2.31368408207
+(1, 1, 0) 2.505
+(1, 1, 1) 2.27753582331
+(2, 0, 0) 2.16939363648
+(2, 0, 1) 2.01658808355</textarea></div>
+
+<p class="mt-3">Sometimes questions alone are not enough. We actually want to do something. For example select only low-resolution intensities:</p>
+<div><textarea class="code" name="code">
+low_resolution_only = f_calc.select(f_calc.d_spacings().data() > 2.5)
+low_resolution_only.show_array()</textarea></div>
+
+<p class="mt-3">Answer:</p>
+<div><textarea class="code" name="code">
+(1, 0, 0) (-11.3483432953-3.90019504038e-16j)
+(1, 0, 1) (-14.9620947104-25.915108226j)
+(1, 1, 0) (-12.8387095938+0j)</textarea></div>
+
+<p class="mt-3"></p>
+<div><textarea class="code" name="code">
+</textarea></div>
+
+<p class="mt-3">Of course, the cctbx does not have a canned answer to every question, even if it is a reasonable question. Fortunately, by virtue of being a Python based system, the cctbx does lend itself to being extended and embedded in order to form answers to questions that one might come across. The cctbx has now reached a degree of completeness where this can quite often be done without venturing into the deeper and darker layers, the C++ core that we haven’t so far presented.</p>
+
+<h3 id="Second_Point_Header"><a href="#Contents">2. At the very bottom</a></h3>
+
+<p class="mt-3">Python is a great language for just about everything. It is just unfortunate that we do not currently have machines smart enough to turn any Python script into efficient machine language (but visit the <a href="http://psyco.sourceforge.net">PSYCO</a> web site to witness mankind stretching out its feelers in that direction). Certainly, future generations will pity us for having to resort to counting bits and bytes in order to get our work done (imagine yourself with a set of Beevers-Lipson strips getting ready for a structure factor calculation).</p>
+<p>Some core components of the cctbx started out as ‘C’ libraries (SgInfo, AtomInfo). Moving from ‘C’ to C++ including the Standard Template Library (STL) was a major step away from the bits-and-bytes counting era. For example, switching to C++ exception handling for dealing with errors reduced the source code size significantly and resulted in much improved readability. Equally important, using <code>std::vector</code>  for managing dynamically allocated memory was a huge improvement over using ‘C’ style raw memory allocation functions (<code>malloc()</code> and <code>free()</code>). However, the idea of using <code>std::vector</code> throughout the cctbx wasn’t very satisfactory: for small arrays such as 3x3 rotation matrices the dynamic memory allocation overhead can become a rate-limiting factor, and for large arrays the copy-semantics enforce a coding style that is difficult to follow. For example, consider a member function of a space group class that computes an array of multiplicities given an array of Miller indices. The scalar version of this function would certainly look like this:</p>
+<div><textarea class="code" name="code">
+int multiplicity(miller::index&lt;&gt; const& h);</textarea></div>
+
+<p class="mt-3">Here is the direct translation to a vector version:</p>
+<div><textarea class="code" name="code">
+std::vector&lt;int&gt; multiplicity(std::vector&lt;miller::index &lt;&gt; &gt; const& h);</textarea></div>
+
+<p class="mt-3">However, <code>std::vector</code> has deep-copy semantics (the same is true for <code>std::valarray</code>). This results in the following:</p>
+<div><textarea class="code" name="code">
+std::vector&lt;int&gt; multiplicity(std::vector&lt;miller::index &lt;&gt; &gt; const& h);
+{
+  std::vector&lt;int&gt; result; // Constructs the array.
+  result.reserve(h.size()); // Optional, but improves performance.
+  for(std::size_t i=0; i&lt;h.size();i++) { // Loops over all Miller indices.
+    result.push_back(multiplicity(h[i])); // Uses the scalar overload
+  }                                       // to do the actual work.
+  return result; // Ouch!
+}</textarea></div>
+
+<p class="mt-3">“Ouch” indicates that the entire array is copied when the function returns! While this might still be acceptable for arrays of Miller indices which are mostly of moderate size, it becomes a real burden when dealing with large maps. But returning to the example, in order to avoid the copying overhead the function above could be coded as:</p>
+<div><textarea class="code" name="code">
+void multiplicity(std::vector&lt;miller::index&lt;&gt; &gt; const& h,
+                  std::vector&lt;int>& result);</textarea></div>
+
+<p class="mt-3">Unfortunately this is not only harder to read, but also more difficult to use because the result has to be instantiated before the function is called. This prevents convenient chaining of the type used in the <code>quartz_structure</code> examples above.</p>
+<p>Other major problems are the absence of a multi-dimensional array type in the STL and limited support for algebraic array operations. We considered using <a href="http://www.oonumerics.org">Blitz++</a>, and <a href="https://www.boost.org/doc/libs/1_72_0/libs/multi_array/doc/">boost::multi_array</a>, but these do only partially meet our specific requirements. For small arrays we actively used <a href="https://www.boost.org/doc/libs/1_72_0/doc/html/array.html">boost::array</a> for some time, but this was also not entirely satisfactory due to the lack of convenient constructors which again prevents chaining. So eventually we started the major effort of implementing a family of small and large array types that address all our requirements and are as uniform as possible: the scitbx array family.</p>
+
+<h3 id="Third_Point_Header"><a href="#Contents">3. scitbx.array_family.flex</a></h3>
+
+<p class="mt-3">The scitbx array family forms the backbone of the cctbx project. Viewed from the C++ side the family is quite big and diverse, but viewed from the Python side things are a lot simpler, as usual. All small C++ array types are transparently mapped to standard Python tuples. This gives immediate access to the rich and familiar set of standard tools for manipulating tuples. All large array types are transparently and uniformly mapped to a group of Python types in the <code>scitbx.array_family.flex</code> module. For example:</p>
+<div><textarea class="code" name="code">
+from scitbx.array_family import flex
+flex.double(30) # a 1-dimensional array of 30 double-precision values
+flex.int(flex.grid(2,3)) # a 2-dimensional array of 2x3 integer values</textarea></div>
+
+<p class="mt-3">For numeric element types the <code>flex</code> type supports algebraic operations:</p>
+<div><textarea class="code" name="code">
+>>> a = flex.double([1,2,3])
+>>> b = flex.double([3,2,1])
+>>> tuple(a+b)
+(4.0, 4.0, 4.0)
+>>> tuple(flex.sqrt(a+b))
+(2.0, 2.0, 2.0)</textarea></div>
+
+<p class="mt-3">The flex type also supports a large number of other functions (abs, sin, pow, etc.), slicing, and as seen in the <code>quartz_structure</code> example above, pickling.</p>
+<p>If all this looks similar to the popular Numeric module: it is at the surface. However, there are two very important differences:</p>
+<ul>
+  <li>Under the hood the flex types are instantiations of a C++ array type that resembles familiar STL container types as much as possible. In contrast Numeric presents itself with a raw ‘C’ API.</li>
+  <li>It is straightforward to implement other flex types with custom user-defined element types, even outside the scitbx module. This would be extremely difficult to do with Numeric, and is virtually impossible if the user-defined types are implemented in C++.</li>
+</ul>
+
+<h3 id="Fourth_Point_Header"><a href="#Contents">4. cctbx.array_family.flex</a></h3>
+
+<p class="mt-3">The <code>cctbx.array_family.flex</code> inherits all <code>flex</code> types from the <code>scitbx.array_family.flex</code> module and adds a few types specific to the cctbx module, for example:</p>
+<div><textarea class="code" name="code">
+from cctbx.array_family import flex
+flex.miller_index(((1,2,3), (2,3,4)))
+flex.hendrickson_lattman(((1,2,3,4), (2,3,4,5)))</textarea></div>
+
+<p>Another example is <code>flex.xray_scatterer</code> used in the <code>quartz_structure</code> above. The cctbx specific C++ code for establishing these Python types is fairly minimal (about 470 lines for exposing 6 types, including full pickle support and all copyright statements). This approach can therefore be easily adopted for user-defined types in other modules.</p>
+
+
+<h3 id="Fifth_Point_Header"><a href="#Contents">5. A balancing act</a></h3>
+
+<p class="mt-3">Python’s convenience of use is directly related to the way the Python type system works: all type information is evaluated at runtime. For example consider this trivial function:</p>
+<div><textarea class="code" name="code">
+def plus(a, b):
+  return a + b</textarea></div>
+
+<p class="mt-3">It works instantly for many different argument types:</p>
+<div><textarea class="code" name="code">
+>>> plus(1, 2) # integer values
+3
+>>> plus(1+2j, 2+3j) # complex values
+(3+5j)
+>>> plus(['a', 'b'], ['c', 'd']) # lists
+['a', 'b', 'c', 'd']</textarea></div>
+
+<p class="mt-3">It works because the meaning of <code>a + b</code> is determined at runtime based on the actual types of <code>a</code> and <code>b</code>.</p>
+
+<p>The runtime efficiency of C++ code is directly related to the way the C++ type system works: type information is usually evaluated at compile-time (virtual functions are an exception which we will not consider here). Fortunately C++ has a very powerful mechanism that helps us avoid explicitly coding polymorphic functions over and over again:</p>
+<div><textarea class="code" name="code">
+template <typename T>
+T plus(T const& a, T const& b)
+{
+  return a + b;
+}</textarea></div>
+
+<p class="mt-3">This template function is automatically instantiated for a given type <code>T</code> as used:</p>
+<div><textarea class="code" name="code">
+int a = 1;
+int b = 2;
+int c = plus(a, b); // implicitly instantiates plus with T==int</textarea></div>
+
+<p class="mt-3">Given a system that is based on both Python and C++ we have the freedom of choosing the quick-and-easy runtime polymorphism offered by Python, or the more efficient compile-time polymorphism offered by C++.</p>
+
+<p>An important consideration in deciding which solution is the most appropriate for a given problem is that a polymorphic Python function requires very little memory at runtime. In contrast, each new instantiation of a template function eventually results in a complete copy of the corresponding machine language instructions tailored for the specific types involved. This point may seem subtle at first, but being overly generous with the use of C++ compile-time polymorphism can lead to very large executable sizes and excessive compile times.</p>
+
+<p>A comparison of the <code>plus</code> Python function and its C++ counterpart shows that the notational overhead of the C++ syntax can easily double the size of the source code. Therefore a programmer, given the choice, will naturally lean towards the Python solution until the runtime penalty due to the dynamic typing is prohibitive for a given application. However, when putting a dynamically typed system and a statically typed system together there are situations where it is important to carefully consider the best balance.</p>
+
+
+<h3 id="Sixth_Point_Header"><a href="#Contents">6. Hybrid systems</a></h3>
+
+<p class="mt-3">Considerations of the type discussed in the previous section directly lead to the following situation:</p>
+<div><textarea class="code" name="code">
+>>> a = flex.int((1,2,3))
+>>> b = flex.double((2,3,4))
+>>> a * b
+TypeError: unsupported operand type(s) for *:
+'scitbx_boost.array_family.flex_scitbx_ext.int' and
+'scitbx_boost.array_family.flex_scitbx_ext.double'</textarea></div>
+
+<p class="mt-3">In passing we note that there is a simple solution which will produce the desired result:</p>
+<div><textarea class="code" name="code">
+a.as_double() * b</textarea></div>
+
+<p class="mt-3">However, for the purpose of this discussion let’s pretend that this solution does not exist. Of course the first question is: what is the reason for the apparently stupid limitation?</p>
+
+<p>As mentioned before, the Python flex types are implemented as instantiations of C++ class templates. This ensures that all array operations are very fast. However, from the discussion in the previous section it follows that exposing the full class with its many member functions to Python for each element type (<code>int</code>, <code>double</code>, <code>miller::index&lt;&gt;</code>, etc.) creates very sizable object files. If only homogeneous operators (<code>int * int</code>, <code>double * double</code>, etc.) are used the combined size of the object files scales linearly with the number of element types involved. However, if the library is expanded to support heterogeneous operators (int * double, double * int, etc.) the combined object files grow proportional to the square of the number of array element types involved! With current technology this is simply prohibitive.</p>
+
+<p>Limitations of the kind discussed here will apply to any hybrid dynamically/statically typed system. In the broader picture the limitation shown above is just one typical example. If we want to enjoy the many benefits of using Python and have a system that produces results with a reasonable runtime efficiency we have to adopt the approach of sparsely sampling the space of possible C++ template instantiations. For this idea to work in practice we need a powerful and easy to use language-integration tool as discussed in the next section.</p>
+
+
+<h3 id="Seventh_Point_Header"><a href="#Contents">7. Building bridges</a></h3>
+
+<p class="mt-3">The cctbx project has evolved together with the <a href="https://www.boost.org/doc/libs/1_72_0/libs/python/doc/html/index.html">Boost.Python</a> library. All Python/C++ bindings in the cctbx project are implemented using this library. Here is a simplified example of how it works in practice:</p>
+<p>This is the C++ class that we want to use from Python:</p>
+<div><textarea class="code" name="code">
+//! Parallelepiped that contains an asymmetric unit.
+class brick
+{
+  public:
+    //! Constructor.
+    /*! Determines the parallelepiped given a space group type.
+     */
+    explicit
+    brick(space_group_type const& sg_type);
+
+    //! Formats the information about the brick as a string.
+    /*! Example: 0&lt;=x&lt;=1/8; -1/8&lt;=y&lt;=0; 1/8&lt;z&lt;7/8
+     */
+    std::string as_string() const;
+
+    //! Tests if a given point is inside the brick.
+    bool is_inside(tr_vec const& p) const;
+};</textarea></div>
+
+<p class="mt-3">These are the corresponding Boost.Python bindings:</p>
+<div><textarea class="code" name="code">
+class_&lt;brick&gt;("brick", no_init)
+  .def(init&lt;space_group_type const&&gt;())
+  .def("__str__", &brick::as_string)
+  .def("is_inside", &brick::is_inside)
+;</textarea></div>
+
+<p class="mt-3">And here is how the class is used in Python:</p>
+<div><textarea class="code" name="code">
+>>> from cctbx import sgtbx
+>>> brick = sgtbx.brick(sgtbx.space_group_type("I a -3 d"))
+>>> print brick
+0&lt;=x&lt;=1/8; -1/8&lt;=y&lt;=0; 1/8&lt;z&lt;7/8
+>>> brick.is_inside(sgtbx.tr_vec((0,0,0)))
+0</textarea></div>
+
+<p class="mt-3">Typically it only takes a few minutes to implement the Python bindings for a new class or function. Since it usually takes orders of magnitudes longer to implement C++ classes and functions the extra time spent on the Python bindings is in general negligible.</p>
+
+
+<h3 id="Eigth_Point_Header"><a href="#Contents">8. Thinking hybrid</a></h3>
+
+<p class="mt-3">Boost.Python’s ease of use enables us to think hybrid when developing new algorithms. We can conveniently start with a Python implementation. The rich set of precompiled tools included in the scitbx and the cctbx gives us a head start because many operations are already carried out at C++ speed even though we are only using Python to assemble the new functionality. If necessary, the working procedure can be used to discover the rate-limiting sub-algorithms. To maximize performance these can be reimplemented in C++, together with the Python bindings needed to tie them back into the existing higher-level procedure.</p>
+
+<p>To give an example, this approach was used in the development of the Euclidean model matching algorithm found in the cctbx (<code>cctbx/euclidean_model_matching.py</code>). This algorithm is used to compare heavy-atom substructures or anomalously scattering substructures from isomorphous replacement or anomalous diffraction experiments. The algorithm was first implemented in about 300 lines of pure Python. We wrote another 200 lines of comprehensive regression tests for thoroughly debugging the implementation. For a while the pure Python code actually worked fast enough for us, until we started to work with a very large substructure with 66 anomalous scatterers. Some simple optimizations of the Python implementation resulted only in a modest speedup, but after replacing about 30 lines of Python with a C++ implementation the algorithm runs about 50 times faster.</p>
+
+<p>Of course there is still more to gain by reimplementing the entire algorithm in C++. However, one has to keep in mind that developing C++ code is typically much more time-consuming than developing in Python. For example, the 30 lines of Python mentioned in the previous paragraph turned into more then 100 lines of C++, not counting the additional 13 lines for the Boost.Python bindings. It is also important to keep in mind that developing maintainable C++ code requires much more hard-earned working experience than developing useful Python code. C++ has many pitfalls that one must learn to avoid. In contrast the Python language is structured in a way that steers even the novice programmer onto safe routes. In fact, Python was originally conceived as a language for teaching programming. Amazingly this heritage is still preserved even though Python has grown to be a very richly featured language.</p>
+
+<p>Looking back, the cctbx started out mainly as a library of C++ classes with ‘C’ heritage, and for a while the growth was mainly concentrated on the C++ parts. However, a very important difference between the 1.0 release and the upcoming 2.0 release is that the Python parts now constitute a much more significant fraction of the total sources. We expect this trend to continue, as illustrated qualitatively in this figure:</p>
+
+<p>This figure shows the ratio of newly added C++ and Python code over time as new applications are implemented. We expect this ratio to level out near 70% Python. From an inside viewpoint the increasing ability to solve new problems mostly with the easy-to-use Python language rather than a necessarily more arcane statically typed language is the return on a major investment, namely our involvement in the development of Boost.Python. From an outside viewpoint we hope that the ability to solve some problems entirely using only Python will enable a larger group of scientist to participate in the rapid development of new algorithms. It is also important to notice that Python is an ideal language for integrating diverse existing tools, no matter which language they are written in. If portability is not an issue this can be a great solution to some problems. We are convinced that the cctbx can be very useful as an intelligent mediator between otherwise incompatible crystallographic applications.</p>
+
+<a href="#Contents">Contents</a>
+
+<!--
+<p class="mt-3"></p>
+<div><textarea class="code" name="code">
+</textarea></div>
+-->
 
 {% endblock %}
