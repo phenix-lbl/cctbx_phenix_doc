@@ -27,8 +27,6 @@
 .taskspan {
   font-size: 16px;
   margin-left: 10px;
-
-
 }
 
 .task {
@@ -81,14 +79,17 @@ p {
     left: 0;
     height: 100vh;
     z-index: 999;
-    background: #7386D5;
+    /*background: #7386D5;*/
+    background: #1a5a7c;
     color: #fff;
     transition: all 0.3s;
 }
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #6d7fcc;
+    /*background: #6d7fcc;*/
+    background: #adbd4d;
+    color: #1a5a7c;
 }
 
 .sidebar-header a{
@@ -122,7 +123,8 @@ p {
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
     color: #fff;
-    background: #6d7fcc;
+    /*background: #6d7fcc;*/
+    background: #1f6b93;
 }
 
 a[data-toggle="collapse"] {
@@ -140,7 +142,8 @@ a[data-toggle="collapse"] {
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #6d7fcc;
+    /*background: #6d7fcc;*/
+    background: #1f6b93;
 }
 
 ul.CTAs {
@@ -196,7 +199,7 @@ ul.CTAs a {
 
 /* Add an active class to the active dropdown button */
 .myactive {
-  background-color: #6d7fcc;
+  /*background: #6d7fcc;*/
   color: #fff;
 }
 
@@ -204,7 +207,8 @@ ul.CTAs a {
 .dropdown-container {
   display: none;
   color: #fff;
-  background-color: #6d7fcc;
+  /*background: #6d7fcc;*/
+  background: #1f6b93;
   font-size: 0.9em;
 /*  padding-left: 16px;*/
 }
@@ -283,8 +287,6 @@ ul.CTAs a {
     border: 1px solid #aaa;
     display: table;
     font-size: 95%;
-
-
     padding-top: 10px;
     padding-bottom: 10px;
     padding-right:30px;
