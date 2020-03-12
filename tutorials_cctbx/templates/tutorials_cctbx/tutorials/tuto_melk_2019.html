@@ -1,0 +1,48 @@
+{% extends "tutorials_cctbx/header.html" %}
+
+{% block content %}
+
+<h2 style="text-align:center">CCTBX tutorial Crystallographic computing school, Melk, 08/2019</h2>
+
+<p class="mt-5">Before you study any of the scripts below, install the cctbx. This will enable you to run the scripts. Each page lists the links for necessary files.</p>
+
+
+<div id="exTab3">
+<ul  class="nav nav-pills myblue" id="MelkTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="melk1-tab" href="#melk1" data-toggle="tab" role="tab" aria-controls="melk1" aria-selected="true">Part 1 (Read a model file)</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="melk2-tab" href="#melk2" data-toggle="tab" role="tab" aria-controls="melk2" aria-selected="false">Part 2 (polyala)</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="melk3-tab" href="#melk3" data-toggle="tab" role="tab" aria-controls="melk3" aria-selected="false">Part 3 (polyala cont.)</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="melk4-tab" href="#melk4" data-toggle="tab" role="tab" aria-controls="melk4" aria-selected="false">Part 4 (miller arrays)</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="melk5-tab" href="#melk5" data-toggle="tab" role="tab" aria-controls="melk5" aria-selected="false">Part 5 (R-factors)</a>
+      </li>
+    </ul>
+
+      <div class="tab-content clearfix" id="MelkTabContent">
+        <div class="tab-pane fade show active" id="melk1" role="tabpanel" aria-labelledby="melk1-tab">
+          {% include "tutorials_cctbx/includes/melk_2019_1.html" %}
+        </div>
+        <div class="tab-pane fade" id="melk2" role="tabpanel" aria-labelledby="melk2-tab">
+          {% include "tutorials_cctbx/includes/melk_2019_2.html" %}
+        </div>
+        <div class="tab-pane fade" id="melk3" role="tabpanel" aria-labelledby="melk3-tab">
+          {% include "tutorials_cctbx/includes/melk_2019_3.html" %}
+        </div>
+        <div class="tab-pane fade" id="melk4" role="tabpanel" aria-labelledby="melk4-tab">
+          {% include "tutorials_cctbx/includes/melk_2019_4.html" %}
+        </div>
+        <div class="tab-pane fade" id="melk5" role="tabpanel" aria-labelledby="melk5-tab">
+          {% include "tutorials_cctbx/includes/melk_2019_5.html" %}
+        </div>
+      </div>
+  </div>
+
+{% endblock %}
