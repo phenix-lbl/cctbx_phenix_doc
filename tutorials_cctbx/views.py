@@ -16,9 +16,13 @@ def tutorials(request):
   args = {'is_active': 'display: block;'}
   return render(request, 'tutorials_cctbx/tutorials/tutorials_intro.html', args)
 
-def melk_2019(request):
+def tuto_melk_2019(request):
   args = {'is_active': 'display: block;'}
-  return render(request, 'tutorials_cctbx/tutorials/melk_2019.html', args)
+  return render(request, 'tutorials_cctbx/tutorials/tuto_melk_2019.html', args)
+
+def tuto_rigid_body(request):
+  args = {'is_active': 'display: block;'}
+  return render(request, 'tutorials_cctbx/tutorials/tuto_rigid_body.html', args)
 
 def documentation_overview(request):
   args = {'is_active_doc': 'display: block;'}
@@ -27,4 +31,7 @@ def documentation_overview(request):
 def flex_array(request):
   args = {'is_active_doc': 'display: block;'}
   return render(request, 'tutorials_cctbx/documentation/flex_array.html', args)
+
+def newsletter_artcls(request):
+  return render(request, 'tutorials_cctbx/newsletter_artcls.html')
 

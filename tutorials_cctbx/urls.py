@@ -5,10 +5,12 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url(r'^tutorials', views.tutorials, name='tutorials_intro'),
     url(r'^download', views.download, name='download'),
     url(r'^cctbx_tour', views.cctbx_tour, name='cctbx_tour'),
     url(r'^documentation_overview', views.documentation_overview, name='documentation_overview'),
     url(r'^flex_array', views.flex_array, name='flex_array'),
-    url(r'^melk_2019', views.melk_2019, name='melk_2019'),
+    url(r'^tutorials', views.tutorials, name='tutorials_intro'),
+    url(r'^tuto_melk_2019', views.tuto_melk_2019, name='tuto_melk_2019'),
+    url(r'^tuto_rigid_body', views.tuto_rigid_body, name='tuto_rigid_body'),
+    url(r'^newsletter_artcls', views.newsletter_artcls, name='newsletter_artcls'),
 ]

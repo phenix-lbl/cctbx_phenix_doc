@@ -57,7 +57,7 @@
         <nav id="sidebar">
             <div class="sidebar-header">
                 <a href="{% url 'index' %}">Computational Crystallography Toolbox</a>
-                <h3 class="mt-3">CCTBX</h3>
+                <span class="mt-3" style="font-size: 24px;">CCTBX</span>
             </div>
 
             <div class="sidenav">
@@ -95,13 +95,14 @@
                           <i class="fa fa-caret-down"></i>
                         </a>
                         <div class="dropdown-container" style="{{  is_active  }}">
-                          <a style="padding-left: 24px;" href="{% url 'melk_2019' %}">Melk 2019</a>
-                          <a style="padding-left: 24px;" href="#">Link 2</a>
+                          <a style="padding-left: 24px;" href="{% url 'tuto_melk_2019' %}">Melk 2019</a>
+                          <a style="padding-left: 24px;" href="{% url 'tuto_rigid_body' %}">Rigid Body Refinement</a>
+                          <a style="padding-left: 24px;" href="http://viper.lbl.gov/cctbx.xfel/index.php/Main_Page">cctbx.xfel tutorials</a>
                           <a style="padding-left: 24px;" href="#">Link 3</a>
                         </div>
                     </li>
                     <!-- Sidebar  -->
-                    <li><a href="#">Newsletter articles</a></li>
+                    <li><a href="{% url 'newsletter_artcls' %}">Newsletter articles</a></li>
                     <li><a href="#">cctbx on GitHub</a></li>
 
                  </ul>
