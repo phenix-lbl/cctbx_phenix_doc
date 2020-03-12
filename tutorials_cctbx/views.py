@@ -20,6 +20,10 @@ def melk_2019(request):
   args = {'is_active': 'display: block;'}
   return render(request, 'tutorials_cctbx/tutorials/melk_2019.html', args)
 
+def documentation_overview(request):
+  args = {'is_active_doc': 'display: block;'}
+  return render(request, 'tutorials_cctbx/documentation/documentation_overview.html', args)
+
 def flex_array(request):
   args = {'is_active_doc': 'display: block;'}
   return render(request, 'tutorials_cctbx/documentation/flex_array.html', args)

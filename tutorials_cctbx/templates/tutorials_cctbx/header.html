@@ -12,7 +12,7 @@
     {% load static %}
 
     <!-- For Code Mirror -->
-    <link rel="stylesheet" href="{% static 'css/codemirror.css' %}" type = "text/css"/ />
+    <link rel="stylesheet" href="{% static 'css/codemirror.css' %}" type="text/css"/>
     <script type="text/javascript" src="{% static 'js/codemirror.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/matchbrackets.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/python.js' %}"></script>
@@ -26,6 +26,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
    <!-- Popper.JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+
+
+    <link rel="stylesheet" href="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.css"/>
+    <script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script>
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/mystyle.css' %}" type="text/css">
@@ -43,7 +47,7 @@
 
 
 
-<body class="body">
+<body class="body" data-spy="scroll" data-target="#toc">
 
 <!-- https://bootstrapious.com/p/bootstrap-sidebar -->
 
@@ -70,6 +74,22 @@
                     </li>
                     <!-- Sidebar  -->
                     <li>
+                        <a href="{% url 'documentation_overview' %}" class="dropdown-btn">Documentation
+                          <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+                          <i class="fa fa-caret-down"></i>
+                        </a>
+                        <div class="dropdown-container" style="{{  is_active_doc  }}">
+                          <a style="padding-left: 24px;" href="#">Getting started</a>
+                          <a style="padding-left: 24px;" href="#">Models</a>
+                          <a style="padding-left: 24px;" href="#">Data</a>
+                          <a style="padding-left: 24px;" href="#">Model vs. Data</a>
+                          <a style="padding-left: 24px;" href="#">Lower Level components</a>
+                          <a style="padding-left: 24px;" href="#">API documentation</a>
+
+                        </div>
+                    </li>
+                    <!-- Sidebar  -->
+                    <li>
                         <a href="{% url 'tutorials_intro' %}" class="dropdown-btn">Tutorials
                           <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
                           <i class="fa fa-caret-down"></i>
@@ -81,17 +101,9 @@
                         </div>
                     </li>
                     <!-- Sidebar  -->
-                    <li>
-                        <a href="#" class="dropdown-btn">Documentation
-                          <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
-                          <i class="fa fa-caret-down"></i>
-                        </a>
-                        <div class="dropdown-container" style="{{  is_active_doc  }}">
-                          <a style="padding-left: 24px;" href="{% url 'flex_array' %}">Flex arrays</a>
-                          <a style="padding-left: 24px;" href="#">API documentation</a>
-                          <a style="padding-left: 24px;" href="#">Link 3</a>
-                        </div>
-                    </li>
+                    <li><a href="#">Newsletter articles</a></li>
+                    <li><a href="#">cctbx on GitHub</a></li>
+
                  </ul>
             </div>
 

@@ -1,0 +1,50 @@
+{% extends "tutorials_cctbx/header.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+
+<h2 class="mb-5"><center>Documentation</center></h2>
+
+<div id="DocOverview">
+
+<ul >
+  <li><a href="">1. Download and Installation</a></li>
+  <li><a href="">2. Getting Started</a></li>
+  <li><a href="">3. Models</a>
+    <ul>
+        <li><a href="">3.1 Reading a model file</a></li>
+        <li><a href="">3.2 Geometry restraints</a></li>
+    </ul>
+  </li>
+  <li><a href="">4. Data</a>
+    <ul>
+      <li><a href="">4.1 Reflections</a>
+        <ul>
+          <li><a href="">4.1.1 Miller arrays</a> </li>
+        </ul>
+      </li>
+      <li><a href="">4.2 Maps</a></li>
+    </ul>
+  </li>
+  <li><a href="">5. Model vs. Data</a></li>
+  <li><a href="">6. Lower level components</a>
+    <ul>
+      <li><a href="{% url 'flex_array' %}">6.1 Flex arrays</a></li>
+    </ul>
+  </li>
+  <li><a href="">7. API documentation</a></li>
+</ul>
+
+</div>
+
+
+
+
+
+
+</div>
+
+{% endblock %}

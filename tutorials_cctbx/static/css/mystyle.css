@@ -139,12 +139,11 @@ a[data-toggle="collapse"] {
     transform: translateY(-50%);
 }
 
-ul ul a {
+/*ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    /*background: #6d7fcc;*/
     background: #1f6b93;
-}
+}*/
 
 ul.CTAs {
     padding: 20px;
@@ -301,3 +300,15 @@ ul.CTAs a {
 #toc_container li, #toc_container ul, #toc_container ul li{
     list-style: outside none none !important;
 }
+
+/* ---------------------------------------------------
+    DOCUMENTATION OVERVIEW
+----------------------------------------------------- */
+
+#DocOverview ul {
+  list-style-type: none;
+  margin-left: -20px;
+}
+
+
+
