@@ -4,6 +4,8 @@
     border: 1px solid #eee;
     height: auto;
     max-height:350px;
+    font-family: Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
+    font-size: 14px;
 }
 
 .CodeMirror-scroll {
