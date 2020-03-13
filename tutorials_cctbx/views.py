@@ -6,8 +6,8 @@ def index(request):
   return render(request, 'tutorials_cctbx/index.html')
   #return HttpResponse("Hello, world. You're at the polls index.")
 
-def download(request):
-  return render(request, 'tutorials_cctbx/download.html')
+def installation(request):
+  return render(request, 'tutorials_cctbx/installation.html')
 
 def cctbx_tour(request):
   return render(request, 'tutorials_cctbx/cctbx_tour.html')

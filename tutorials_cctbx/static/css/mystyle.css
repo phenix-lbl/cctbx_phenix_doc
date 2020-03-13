@@ -21,6 +21,11 @@
   background-color: #e6e6ff;
 }
 
+.codeDL {
+  font-size:12px;
+  background-color: #e6e6ff;
+}
+
 .mybadge {
   font-size: 18px !important;
   background-color: #7386d5;
@@ -53,6 +58,24 @@ p {
     line-height: 1.7em;
     color: #999;*/
 }
+
+
+#DownloadBtn {
+    margin-left: 10px;
+    margin-top: 30px;
+    margin-bottom: -10px;
+    background: #1a5a7c;
+    color: #fff !important;
+    border-color: #fff;
+    font-size: 18px;
+}
+
+#DownloadBtn:hover {
+    background: #fff;
+    color: #1a5a7c !important;
+    border-color: #1a5a7c;
+}
+
 
 #sidebar a,
 #sidebar  a:hover,

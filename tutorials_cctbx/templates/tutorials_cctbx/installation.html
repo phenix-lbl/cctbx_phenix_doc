@@ -1,0 +1,175 @@
+{% extends "tutorials_cctbx/header.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+
+<div class="row">
+
+<div class="col-sm-9">
+
+<h1><center>How to install the cctbx</center></h1>
+
+<h3 class="mt-3">Download</h3>
+<p>Periodically, the most recent cctbx source code including all its dependencies is automatically exported from the source code repositories (git) and bundled into compressed binary installers that are published at:</p>
+<a href="http://cci.lbl.gov/cctbx_build/">http://cci.lbl.gov/cctbx_build/</a>
+<p>This web page provides compressed binary distributions for a variety of platforms. It is most convenient to use these binary bundles if possible. </p>
+
+<h3 class="mt-3">Installation</h3>
+<p>Installation is very simple and fast. After uncompressing the bundle, run the <code>install --prefix=&lt;installation location&gt;</code> command to install on macOS and Linux. On Windows, uncompressing the zip file will provide a working copy of cctbx. There is not installation script.</p>
+
+<p>Please note: <b>The following instructions are for developers!</b></p>
+
+<h3>Manually building from sources (Linux / macOS)</h3>
+<p>Building from sources requires Python 2.5 through 2.7 and a C++ compiler. If you like to use the most recent Python, it can be installed in the following way:</p>
+
+<pre class="codeDL"><code>tar -xf Python-2.7.13.tar.xz
+cd Python-2.7.13
+./configure --prefix=/your/choice
+make
+make install
+</code></pre>
+
+<p>It may be convenient (but is not required) to add the directory <code>/your/choice/bin</code> to the command-line search PATH, e.g. using <code>csh</code>:</p>
+<pre class="codeDL"><code>set path=(/your/choice/bin $path)
+</code></pre>
+
+<p>Recent cctbx sources are available from the cctbx <a href="https://github.com/cctbx/cctbx_project/">GitHub</a> repository. To download the repository and build cctbx, use bootstrap.py:</p>
+
+<pre class="codeDL"><code>mkdir <installation directory>
+cd <installation directory>
+wget https://raw.githubusercontent.com/cctbx/cctbx_project/master/libtbx/auto_build/bootstrap.py
+python ./bootstrap.py
+</code></pre>
+
+<p>On macOS, since <code>wget</code> is not available by default, use <code>curl</code> instead:</p>
+<pre class="codeDL"><code>curl https://raw.githubusercontent.com/cctbx/cctbx_project/master/libtbx/auto_build/bootstrap.py > bootstrap.py
+</code></pre>
+
+<p>After some time, this creates the subdirectories <code>base</code>, <code>base_tmp</code>, <code>build</code>, and <code>modules</code>. The <code>base</code> directory contains dependencies for cctbx, <code>base_tmp</code> is a temporary directory for compiling dependencies (can be deleted), <code>build</code> contains the compiled cctbx code, and <code>modules</code> contains the source code for cctbx. To keep <code>bootstrap.py</code> in your <code>&lt;installation directory&gt;</code> up-to-date with the version in modules, you can create a symbolic link to that version:</p>
+<pre class="codeDL"><code>cd <installation directory>
+rm bootstrap.py
+ln -s ./modules/cctbx_project/libtbx/auto_build/bootstrap.py
+</code></pre>
+
+<p>Within the build directory, <code>cctbx</code> creates a file <code>setpaths.csh</code> (among others). This file must be used to initialize a new shell or process with the cctbx settings:</p>
+<pre class="codeDL"><code>source setpaths.csh
+</code></pre>
+
+<p>There is also a <code>setpaths.sh</code> for <code>bash</code> users.</p>
+
+<p>To update your cctbx installation to the latest version, you can just run:</p>
+
+<pre class="codeDL"><code>python ./bootstrap.py
+</code></pre>
+
+<p>again in the <code>&lt;installation directory&gt;</code>. This will update the source code in the <code>modules</code> directory and recompile the changes (if necessary) in build. Occasionally, dependencies in <code>base</code> are updated. When this happens, just delete the <code>base</code> and <code>base_tmp</code> directories and rerun the <code>bootstrap.py</code> command.</p>
+
+<p>To compile any local changes to the source code, enter the <code>build</code> directory and run:</p>
+<pre class="codeDL"><code>make
+</code></pre>
+
+<p>This will actually run the <code>libtbx.scons</code> command using all available CPUs. You can also manually specify the number of CPUs to use, for example:</p>
+<pre class="codeDL"><code>libtbx.scons -j 4
+</code></pre>
+
+<p>Note that <code>libtbx.scons</code> is just a thin wrapper around <a href="http://www.scons.org/">SCons</a>. The <a href="http://www.scons.org/doc/HTML/scons-man.html">SCons documentation</a> applies without modification.</p>
+
+<p>To run scripts with cctbx imports use the command:</p>
+<pre class="codeDL"><code>libtbx.python your_script.py
+</code></pre>
+
+<p>(You can also use <code>scitbx.python</code>, <code>cctbx.python</code>, <code>iotbx.python</code>, etc.; all these commands are equivalent.)</p>
+
+<p>For example, to run some regression tests after the compilation is finished enter:</p>
+<pre class="codeDL"><code>source build/setpaths_all.csh
+libtbx.python $SCITBX_DIST/run_tests.py
+libtbx.python $CCTBX_DIST/run_tests.py --Quick
+</code></pre>
+
+<p>The output should show many OK. A Python Traceback is an indicator for problems.</p>
+
+<!-- ----------------------------------------------------------------------- -->
+
+<h3>Manually building from sources (Windows 2000 and higher)</h3>
+
+<p>The cctbx installation requires Visual C++ 8.0 (Visual Studio .NET 2005) or higher.</p>
+
+<p>To install Python under Windows it is best to use a binary installer from the <a href="http://www.python.org/download/">Python download page</a>. The default choices presented by the installation wizard are usually fine.</p>
+
+<p>Recent self-contained cctbx sources are available in the self-extracting <code>.exe</code> file published at the <a href="http://cci.lbl.gov/cctbx_build/">cctbx build page</a>. To unpack this file in a new, empty directory enter:</p>
+<pre class="codeDL"><code>cctbx_bundle.exe
+</code></pre>
+
+<p>This creates a subdirectory <code>cctbx_sources</code>. The installation procedure should be executed in another directory, e.g.:</p>
+<pre class="codeDL"><code>mkdir cctbx_build
+cd cctbx_build
+C:\python27\python.exe ..\cctbx_sources\libtbx\configure.py mmtbx
+</code></pre>
+
+<p>The last command initializes the <code>cctbx_build</code> directory and creates a file <code>setpaths.bat</code> (among others). This file must be used to initialize a new shell or process with the cctbx settings:</p>
+<pre class="codeDL"><code>setpaths.bat
+</code></pre>
+
+<p>To compile enter:</p>
+<pre class="codeDL"><code>libtbx.scons
+</code></pre>
+
+<p>On a machine with multiple CPUs enter:</p>
+<pre class="codeDL"><code>libtbx.scons -j N
+</code></pre>
+<p>where N is the number of CPUs available.</p>
+
+<p>Note that <code>libtbx.scons</code> is just a thin wrapper around <a href="http://www.scons.org/">SCons</a>. The
+<a href="http://www.scons.org/doc/HTML/scons-man.html">SCons documentation</a> applies without modification.</p>
+
+<p>To run scripts with cctbx imports use the command:</p>
+<pre class="codeDL"><code>libtbx.python your_script.py
+</code></pre>
+
+<p>(You can also use <code>scitbx.python</code>, <code>cctbx.python</code>, <code>iotbx.python</code>, etc.; all these commands are equivalent.)</p>
+
+<p>For example, to run some regression tests after the compilation is finished enter:</p>
+
+<pre class="codeDL"><code>setpaths_all.bat
+libtbx.python %SCITBX_DIST%\run_tests.py
+libtbx.python %CCTBX_DIST%\run_tests.py --Quick
+</code></pre>
+
+<p>The output should show many OK. A Python Traceback is an indicator for problems.</p>
+
+<!-- ----------------------------------------------------------------------- -->
+
+<h3>SCons - the backbone of the cctbx build system</h3>
+
+<p>Conceptually it is a trivial task to compile and link portable source code. However, in real life this is one of the most time-consuming nuisances, in particular if multiple, diverse platforms have to be supported. In the version 1.0 release of the cctbx we made an attempt to address this with the home-made <em>fast track</em> build system. Of course home-made is often good enough, but a professional solution is almost always better, especially if it comes with no strings attached.</p>
+
+<p>Fortunately such a system is now available: <a href="http://www.scons.org/">SCons</a>, short for Software Construction tool. This is a perfect fit for the cctbx because the SCons developers have apparently adopted a similar “professional is better than home-made” philosophy: SCons is implemented in pure Python, and SCons configuration files (the equivalent of Makefiles) are pure Python scripts. SCons has many advantages compared to a traditional make-based build system. To quote some points from the SCons documentation:</p>
+
+<ul>
+    <li>Global view of all dependencies – no more multiple build passes or reordering targets to build everything.</li>
+    <li>Reliable detection of build changes using MD5 signatures – no more “clock skew detected, build may be incomplete”.</li>
+    <li>Built-in support for C, C++, Fortran, Yacc and Lex.</li>
+    <li>Improved support for parallel builds – like make -j but keeps N jobs running simultaneously regardless of directory hierarchy.</li>
+    <li>Building from central repositories of source code and/or pre-built targets.</li>
+    <li>Designed from the ground up for cross-platform builds, and known to work on Linux, POSIX, Windows NT, Mac OS X, Tru64 Unix, and OS/2.</li>
+</ul>
+
+<p>When we moved from our home-grown build system to SCons we found all these points to be perfectly true. It only took very little effort to write a small configure script for setting up a master SConstruct file based on the user’s choice of which cctbx modules to use and which to ignore. New modules can easily be tied into this system simply by providing a SConstruct file in the module’s top-level directory. The author of the new module has complete control over the build process. The existing settings can simply be reused, customized, or totally replaced, all within one uniform and 100% platform-independent framework, the Python language.</p>
+
+<!-- ----------------------------------------------------------------------- -->
+
+</div>
+
+<!-- sidebar, which will move to the top on a small screen -->
+<div class="col-sm-3">
+  <nav id="toc" data-toggle="toc" class="sticky-top"></nav>
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}
