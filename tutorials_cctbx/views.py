@@ -6,6 +6,9 @@ def index(request):
   return render(request, 'tutorials_cctbx/index.html')
   #return HttpResponse("Hello, world. You're at the polls index.")
 
+def about(request):
+  return render(request, 'tutorials_cctbx/about.html')
+
 def installation(request):
   return render(request, 'tutorials_cctbx/installation.html')
 
