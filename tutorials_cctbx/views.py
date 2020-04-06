@@ -35,6 +35,10 @@ def doc_flex_array(request):
   args = {'is_active_doc': 'display: block;'}
   return render(request, 'tutorials_cctbx/documentation/doc_flex_array.html', args)
 
+def doc_phil(request):
+  args = {'is_active_doc': 'display: block;'}
+  return render(request, 'tutorials_cctbx/documentation/doc_phil.html', args)
+
 def newsletter_artcls(request):
   return render(request, 'tutorials_cctbx/newsletter_artcls.html')
 

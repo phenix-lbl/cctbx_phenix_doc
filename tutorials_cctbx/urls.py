@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^cctbx_tour', views.cctbx_tour, name='cctbx_tour'),
     url(r'^documentation_overview', views.documentation_overview, name='documentation_overview'),
     url(r'^doc_flex_array', views.doc_flex_array, name='doc_flex_array'),
+    url(r'^doc_phil', views.doc_flex_array, name='doc_phil'),
     url(r'^tutorials', views.tutorials, name='tutorials_intro'),
     url(r'^tuto_melk_2019', views.tuto_melk_2019, name='tuto_melk_2019'),
     url(r'^tuto_rigid_body', views.tuto_rigid_body, name='tuto_rigid_body'),
