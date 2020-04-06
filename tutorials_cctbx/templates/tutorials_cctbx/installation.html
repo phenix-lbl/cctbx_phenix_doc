@@ -12,17 +12,17 @@
 
 <h1><center>How to install the cctbx</center></h1>
 
-<h3 class="mt-3">Download</h3>
+<h2 class="mt-5">Download</h2>
 <p>Periodically, the most recent cctbx source code including all its dependencies is automatically exported from the source code repositories (git) and bundled into compressed binary installers that are published at:</p>
 <a href="http://cci.lbl.gov/cctbx_build/">http://cci.lbl.gov/cctbx_build/</a>
 <p>This web page provides compressed binary distributions for a variety of platforms. It is most convenient to use these binary bundles if possible. </p>
 
-<h3 class="mt-3">Installation</h3>
+<h2 class="mt-3">Installation</h2>
 <p>Installation is very simple and fast. After uncompressing the bundle, run the <code>install --prefix=&lt;installation location&gt;</code> command to install on macOS and Linux. On Windows, uncompressing the zip file will provide a working copy of cctbx. There is not installation script.</p>
 
 <p>Please note: <b>The following instructions are for developers!</b></p>
 
-<h3>Manually building from sources (Linux / macOS)</h3>
+<h2>Manually building from sources (Linux / macOS)</h2>
 <p>Building from sources requires Python 2.5 through 2.7 and a C++ compiler. If you like to use the most recent Python, it can be installed in the following way:</p>
 
 <pre class="codeDL"><code>tar -xf Python-2.7.13.tar.xz
@@ -93,7 +93,7 @@ libtbx.python $CCTBX_DIST/run_tests.py --Quick
 
 <!-- ----------------------------------------------------------------------- -->
 
-<h3>Manually building from sources (Windows 2000 and higher)</h3>
+<h2>Manually building from sources (Windows 2000 and higher)</h2>
 
 <p>The cctbx installation requires Visual C++ 8.0 (Visual Studio .NET 2005) or higher.</p>
 
@@ -142,7 +142,7 @@ libtbx.python %CCTBX_DIST%\run_tests.py --Quick
 
 <!-- ----------------------------------------------------------------------- -->
 
-<h3>SCons - the backbone of the cctbx build system</h3>
+<h2>SCons - the backbone of the cctbx build system</h2>
 
 <p>Conceptually it is a trivial task to compile and link portable source code. However, in real life this is one of the most time-consuming nuisances, in particular if multiple, diverse platforms have to be supported. In the version 1.0 release of the cctbx we made an attempt to address this with the home-made <em>fast track</em> build system. Of course home-made is often good enough, but a professional solution is almost always better, especially if it comes with no strings attached.</p>
 
