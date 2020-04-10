@@ -15,4 +15,5 @@ urlpatterns = [
     url(r'^tuto_melk_2019', views.tuto_melk_2019, name='tuto_melk_2019'),
     url(r'^tuto_rigid_body', views.tuto_rigid_body, name='tuto_rigid_body'),
     url(r'^newsletter_artcls', views.newsletter_artcls, name='newsletter_artcls'),
+    url(r'^test', views.test, name='test'),
 ]

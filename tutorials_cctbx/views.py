@@ -42,3 +42,7 @@ def doc_phil(request):
 def newsletter_artcls(request):
   return render(request, 'tutorials_cctbx/newsletter_artcls.html')
 
+
+def test(request):
+  return render(request, 'tutorials_cctbx/test.html')
+
