@@ -8,8 +8,6 @@ $(document).ready(function () {
 //var shown = [false, false, false]
   var shown = false
 
-
-
   $('.code').each(function(index, elem){
 
       CodeMirror.fromTextArea(elem, {
@@ -30,37 +28,37 @@ $(document).ready(function () {
 
   $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
 
-  ind = $(e.target).parent().index()
-  //window.alert(shown)
-  if (ind==0 && shown==true) {
-    return;
-  }
-  shown=false
-  $('.CodeMirror').each(function(i, el){
-      el.CodeMirror.toTextArea();
-  });
+    ind = $(e.target).parent().index()
+    //window.alert(shown)
+    if (ind==0 && shown==true) {
+      return;
+    }
+    shown=false
+    $('.CodeMirror').each(function(i, el){
+        el.CodeMirror.toTextArea();
+    });
 
-  //CM = document.getElementById('CMEditor');
-  //CM.CodeMirror.toTextArea();
-  //$('.CodeMirror').each(function(i, el){
-  //    el.CodeMirror.refresh();
-  //});
+    //CM = document.getElementById('CMEditor');
+    //CM.CodeMirror.toTextArea();
+    //$('.CodeMirror').each(function(i, el){
+    //    el.CodeMirror.refresh();
+    //});
 
-  $('.code').each(function(index, elem){
+    $('.code').each(function(index, elem){
 
+        CodeMirror.fromTextArea(elem, {
+          mode: {name: "python",
+             version: 3,
+             singleLineStringErrors: false},
+          lineNumbers: true,
+          indentUnit: 4,
+          matchBrackets: true});
+    });
+    $('.output').each(function(index, elem){
       CodeMirror.fromTextArea(elem, {
-        mode: {name: "python",
-           version: 3,
-           singleLineStringErrors: false},
-        lineNumbers: true,
-        indentUnit: 4,
-        matchBrackets: true});
-  });
-  $('.output').each(function(index, elem){
-    CodeMirror.fromTextArea(elem, {
-      lineNumbers: false
+        lineNumbers: false
+      })
     })
-  })
 })
 
 var dropdown = document.getElementsByClassName("dropdown-btn");
