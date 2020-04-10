@@ -6,14 +6,15 @@ $(document).ready(function () {
 //    });
   var url = document.location.href;
   var templ_name = document.location.pathname.split('/').slice(-1)[0]
+  //window.alert(templ_name)
   if (templ_name!="") {
-    $("a[href='/']").removeClass("active");
-    $("a[href*="+templ_name+"]").addClass("active");
+    $("a[href='/tutorials_cctbx/']").removeClass("active");
+    $("a[href$="+templ_name+"]").addClass("active");
+
 
   };
 
   if (templ_name=='documentation_overview' || templ_name=='newsletter_artcls') {
-    //window.alert(templ_name)
     //$('#body-row .collapse').collapse('show');
     //$(".submenu-head").attr("aria-expanded":"true");
     $("#submenu-doc").addClass("show");
