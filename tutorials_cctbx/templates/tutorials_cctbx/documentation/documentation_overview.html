@@ -11,8 +11,16 @@
 <div id="DocOverview">
 
 <ul >
-  <li><a href="">1. Download and Installation</a></li>
-  <li><a href="">2. Getting Started</a></li>
+  <li><a href="">Download and Installation</a></li>
+  <li><a href="">Getting Started</a></li>
+    <ul>
+      <li>
+        <a href="{% url 'doc_high_level_objects' %}">High level objects for models and data</a>
+      </li>
+      <li>
+        <a href="{% url 'doc_data_manager' %}">Reading and writing files: the cctbx DataManager</a>
+      </li>
+    </ul>
   <li><a href="">3. Models</a>
     <ul>
         <li><a href="">3.1 Reading a model file</a></li>

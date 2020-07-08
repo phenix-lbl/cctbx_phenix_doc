@@ -39,6 +39,14 @@ def doc_phil(request):
   args = {'is_active_doc': 'display: block;'}
   return render(request, 'tutorials_cctbx/documentation/doc_phil.html', args)
 
+def doc_high_level_objects(request):
+  args = {'is_active_doc': 'display: block;'}
+  return render(request, 'tutorials_cctbx/documentation/doc_high_level_objects.html', args)
+
+def doc_data_manager(request):
+  args = {'is_active_doc': 'display: block;'}
+  return render(request, 'tutorials_cctbx/documentation/doc_data_manager.html', args)
+
 def getting_started(request):
   args = {'is_active_doc': 'display: block;'}
   return render(request, 'tutorials_cctbx/documentation/getting_started.html', args)
