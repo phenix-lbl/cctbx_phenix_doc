@@ -10,36 +10,100 @@
 
 <div class="col-sm-9">
 
-<h2><center>Page Title</center></h2>
+
+<h1 class="display-5">Getting started</h1>
+<p class="lead mt-3">Learn how to use the computational crystallography toolbox, the open source library for crystallography and cryo-EM.</p>
+<!--  <hr class="my-4"> -->
 
 
+<h2 class="mt-4">Download</h2>
+<p>Go to the <a href="http://cci.lbl.gov/cctbx_build/">Download</a> page to get the most recent cctbx source code as binary installer for Linux, MacOS and Windows.</p>
 
-<h3 class="mt-5">Subtitle 1</h3>
-<p>Some text</p>
-<p>Some text with <code>code</code> quoted within text.</p>
 
-<h4>sub-subtitle</h4>
-<p>Some more text</p>
+<h2 class="mt-4">Installation</h2>
+<p><a href="{% url 'installation' %}">Installation</a> is very simple and fast. After uncompressing the bundle, run the <code>install --prefix=<installation location></code> command to install on macOS and Linux. On Windows, uncompressing the zip file will provide a working copy of cctbx.</p>
 
-<h3 class="mt-3">Subtitle 2</h3>
-<p>Some other text</p>
+
+<h2 class="mt-4">Running on the command line</h2>
+<p>Type this into a terminal window to start python from cctbx so that it knows about all the cctbx modules:</p>
+
+<p><code>libtbx.python</code></p>
+
+<p>The libtbx.python command runs a version of python that already knows about the cctbx so you can easily import cctbx functions. For example:</p>
+
+<pre class="codeDL"><code>from iotbx.data_manager import DataManager    # Load in the DataManager
+</code></pre>
+
+
+<h2 class="mt-4">Running as a script</h2>
+<p>Sometimes you want to save the commands in a script. This avoids typing the same text over and over again if you want to perform some actions on many files. For example, save the following lines in a file, you can call it <code>hello_cctbx.py</code> (<a href="{% url 'doc_high_level_objects' %}">this page</a> explains in more detail what the script does).</p>
+
+
 <pre class="codeDL"><code>from iotbx.map_model_manager import map_model_manager      # load in the map_model_manager
-mmm=map_model_manager()     # get an initialized instance of the map_model_manager
+mmm=map_model_manager()          # get an initialized instance of the map_model_manager
+mmm.generate_map()               # get a model from a small library model and calculate a map for it
+mmm.write_map("map.mrc")         # write out a map in ccp4/mrc format
+mmm.write_model("model.pdb")     # write out a model in PDB format
 </code></pre>
 
-<h3 class="mt-3">Subtitle 3</h3>
-<p>Some other text</p>
-<pre class="codeDL"><code>mmm.generate_map()     # get a model from a small library model and calculate a map for it
-</code></pre>
+<p>Then run the script by typing the following command in a terminal:</p>
+
+<p><code>libtbx.python hello_cctbx.py</code></p>
+
+<p>You just ran your first cctbx script which produced example map and model files.</p>
 
 
+<h2 class="mt-4">I am completely new to cctbx. Where do I start?</h2>
+
+<p>If you want to use the cctbx, you most likely want to do some actions on models, crystallographic data files or cryo-EM maps. The following pages give an introduction to higher level objects and methods for this purpose.</p>
+
+<dl class="row">
+  <dt class="col-sm-3"><a href="{% url 'doc_high_level_objects' %}">High-level cctbx objects</a></dt>
+  <dd class="col-sm-9">Overview of high level objects that represent things like data, models, restraints, etc. Learn how to create your first object, the map_model_manager..</dd>
+
+  <dt class="col-sm-3"><a href="{% url 'doc_data_manager' %}">Reading and writing files</a></dt>
+  <dd class="col-sm-9">
+    <p>Most scripts will act on files, so this section should be of interest to everyone. Use the DataManager to conveniently read and write data and model files.</p>
+  </dd>
+
+  <dt class="col-sm-3"><a href="{% url 'doc_model_manager' %}">The cctbx model manager</a></dt>
+  <dd class="col-sm-9">
+    <p>The model manager lets you do operations on models. Learn how to to set up the model manager, apply coordinate shifts, do atom selections and calculate model-based map coefficients.</p>
+  </dd>
+
+  <dt class="col-sm-3"><a href="{% url 'doc_map_manager' %}">The cctbx map manager</a></dt>
+  <dd class="col-sm-9">
+    <p>The map manager lets you do operations on maps. Learn how to read and save maps, change a map, convert a real-space map to a Fourier representation and back and manipulate maps that represent only a part of a full map. The tutorial also explains how to find and represent map reconstruction symmetry.</p>
+  </dd>
+
+  <dt class="col-sm-3"><a href="{% url 'doc_model_map_manager' %}">The map-model manager</a></dt>
+  <dd class="col-sm-9">
+    <p>The map-model manager is useful to keep track of both maps and models. This tutorial shows how to set up the manager, how to cut out a piece of a map around a part of a model and how to create masks.</p>
+  </dd>
+
+</dl>
+
+
+<h2 class="mt-4">I got the basics. How can I learn more?</h2>
+<p>Coming soon...</p>
+
+
+<h2 class="mt-4">Community and help</h2>
+<h4>Asking for help</h4>
+<ul>
+  <li>If you want to ask a question to developers and users, subscribe to the <a href="http://www.phenix-online.org/mailman/listinfo/cctbxbb">cctbx mailing list</a>. Here are the <a href="http://phenix-online.org/pipermail/cctbxbb/">archives</a> of the cctbxbb.</li>
+  <li>You can also write to the Phenix/cctbx developers directly: help@phenix-online.org</li>
+</ul>
+<h4>Community</h4>
+<p>Want to contribute to the cctbx? Here is the <a href="https://github.com/cctbx/cctbx_project">GitHub page</a>.</p>
 
 </div> <!-- end col-sm-9 -->
+
 
 <!-- sidebar, which will move to the top on a small screen -->
 <div class="col-sm-3">
   <nav id="toc" data-toggle="toc" class="sticky-top"></nav>
-</div> <!-- end col-sm-3 -->
+</div><!-- end col-sm-3 -->
 
 </div> <!-- end row -->
 
