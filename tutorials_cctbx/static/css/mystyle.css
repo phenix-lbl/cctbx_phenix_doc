@@ -118,13 +118,23 @@
     height: auto;
     max-height:350px;
 }
+/* ---------------------------------------------------
+    code output
+----------------------------------------------------- */
+.outputDL {
+  font-size: 12px;
+  background-color: #f2f2f2;
+}
 
 /* ---------------------------------------------------
     DOCUMENTATION
 ----------------------------------------------------- */
 #DocOverview ul {
   list-style-type: none;
-  margin-left: -20px;
+  margin-left: -10px;
+}
+#DocOverview li{
+  padding-top:10px;
 }
 
 /* ---------------------------------------------------

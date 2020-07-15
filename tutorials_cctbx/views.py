@@ -27,6 +27,8 @@ def tuto_rigid_body(request):
   args = {'is_active': 'display: block;'}
   return render(request, 'tutorials_cctbx/tutorials/tuto_rigid_body.html', args)
 
+# ------------------------------------------------------------------------------
+
 def documentation_overview(request):
   args = {'is_active_doc': 'display: block;'}
   return render(request, 'tutorials_cctbx/documentation/documentation_overview.html', args)
@@ -46,6 +48,17 @@ def doc_high_level_objects(request):
 def doc_data_manager(request):
   args = {'is_active_doc': 'display: block;'}
   return render(request, 'tutorials_cctbx/documentation/doc_data_manager.html', args)
+
+def doc_model_manager(request):
+  return render(request, 'tutorials_cctbx/documentation/doc_model_manager.html')
+
+def doc_map_manager(request):
+  return render(request, 'tutorials_cctbx/documentation/doc_map_manager.html')
+
+def doc_model_map_manager(request):
+  return render(request, 'tutorials_cctbx/documentation/doc_model_map_manager.html')
+
+# ------------------------------------------------------------------------------
 
 def getting_started(request):
   args = {'is_active_doc': 'display: block;'}

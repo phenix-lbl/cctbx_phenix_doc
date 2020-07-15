@@ -8,15 +8,22 @@ urlpatterns = [
     url(r'^about', views.about, name='about'),
     url(r'^installation', views.installation, name='installation'),
     url(r'^cctbx_tour', views.cctbx_tour, name='cctbx_tour'),
+    #
     url(r'^documentation_overview', views.documentation_overview, name='documentation_overview'),
     url(r'^doc_flex_array', views.doc_flex_array, name='doc_flex_array'),
     url(r'^doc_phil', views.doc_phil, name='doc_phil'),
     url(r'^doc_high_level_objects', views.doc_high_level_objects, name='doc_high_level_objects'),
     url(r'^doc_data_manager', views.doc_data_manager, name='doc_data_manager'),
+    url(r'^doc_model_manager', views.doc_model_manager, name='doc_model_manager'),
+    url(r'^doc_map_manager', views.doc_map_manager, name='doc_map_manager'),
+    url(r'^doc_model_map_manager', views.doc_model_map_manager, name='doc_model_map_manager'),
+    #
     url(r'^getting_started', views.getting_started, name='getting_started'),
+    #
     url(r'^tutorials', views.tutorials, name='tutorials_intro'),
     url(r'^tuto_melk_2019', views.tuto_melk_2019, name='tuto_melk_2019'),
     url(r'^tuto_rigid_body', views.tuto_rigid_body, name='tuto_rigid_body'),
+    #
     url(r'^newsletter_artcls', views.newsletter_artcls, name='newsletter_artcls'),
     url(r'^test', views.test, name='test'),
 ]
