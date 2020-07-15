@@ -14,7 +14,7 @@ $(document).ready(function () {
 
   };
 
-  if (templ_name=='documentation_overview' || templ_name=='newsletter_artcls') {
+  if (templ_name=='documentation_overview' || templ_name=='newsletter_artcls' || templ_name.startsWith("doc_")) {
     //$('#body-row .collapse').collapse('show');
     //$(".submenu-head").attr("aria-expanded":"true");
     $("#submenu-doc").addClass("show");
