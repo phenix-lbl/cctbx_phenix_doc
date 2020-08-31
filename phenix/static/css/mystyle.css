@@ -68,13 +68,13 @@
     TOP NAVBAR
 ----------------------------------------------------- */
 .MyTopNavbar {
-  background-color: #00303F;
+  background-color: #4d004d;
 }
 .MyTopNavbar a{
   color: white;
 }
 .MyTopNavbar a:hover {
-  color: #ccf3ff;
+  color: #cc00cc;
 }
 
 /* ---------------------------------------------------
