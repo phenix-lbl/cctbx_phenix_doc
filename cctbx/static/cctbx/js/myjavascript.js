@@ -5,11 +5,14 @@ $(document).ready(function () {
 //        $(this).parent().addClass('active').siblings().removeClass('active');
 //    });
   var url = document.location.href;
-  var templ_name = document.location.pathname.split('/').slice(-1)[0]
-  //window.alert(templ_name)
-  //ksdjhgsdkjhg
+  window.alert(url)
+  window.alert(url.split('/').slice(-2)[0])
+  var templ_name = url.split('/').slice(-2)[0]
+  //var templ_name = document.location.pathname.split('/').slice(-1)[0]
+  window.alert(templ_name)
+  //sdkjghdkgjh
   if (templ_name!="") {
-    $("a[href='/tutorials_cctbx/']").removeClass("active");
+    $("a[href='/cctbx/']").removeClass("active");
     $("a[href$="+templ_name+"]").addClass("active");
 
 

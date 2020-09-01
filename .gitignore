@@ -5,3 +5,6 @@ __pycache__/
 
 # ignore settings.py, which may have server-specific information
 settings.py
+
+# ignore allstaticfiles, which is just a copy of app static folders
+allstaticfiles/
