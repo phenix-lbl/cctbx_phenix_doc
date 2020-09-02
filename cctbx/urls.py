@@ -29,8 +29,8 @@ from . import views
 #]
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('about', views.about, name='about'),
+    path('index/', views.index, name='index'),
+    path('about/', views.about, name='about'),
     path('installation/', views.installation, name='installation'),
     path('cctbx_tour/', views.cctbx_tour, name='cctbx_tour'),
     #
@@ -43,7 +43,7 @@ urlpatterns = [
     path('doc_map_manager/', views.doc_map_manager, name='doc_map_manager'),
     path('doc_model_map_manager/', views.doc_model_map_manager, name='doc_model_map_manager'),
     #
-    path('getting_started', views.getting_started, name='getting_started'),
+    path('getting_started/', views.getting_started, name='getting_started'),
     #
     path('tutorials/', views.tutorials, name='tutorials_intro'),
     path('tuto_melk_2019/', views.tuto_melk_2019, name='tuto_melk_2019'),
