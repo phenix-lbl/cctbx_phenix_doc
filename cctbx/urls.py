@@ -29,7 +29,7 @@ from . import views
 #]
 
 urlpatterns = [
-    path('index/', views.index, name='index'),
+    path('', views.index, name='index'),
     path('about/', views.about, name='about'),
     path('installation/', views.installation, name='installation'),
     path('cctbx_tour/', views.cctbx_tour, name='cctbx_tour'),

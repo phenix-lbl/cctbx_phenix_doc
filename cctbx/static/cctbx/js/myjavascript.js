@@ -9,8 +9,8 @@ $(document).ready(function () {
   //var templ_name = document.location.pathname.split('/').slice(-1)[0]
   //window.alert(templ_name)
   // https://api.jquery.com/category/selectors/attribute-selectors/
-  if (templ_name!="index") {
-    $('a[href="/docs/cctbx/index/"]').removeClass("active");
+  if (templ_name!="cctbx") {
+    $('a[href="/docs/cctbx/"]').removeClass("active");
     $("a[href*="+templ_name+"]").addClass("active");
     //$("a[href$="+templ_name+"]").addClass("active");
 
