@@ -102,15 +102,16 @@
                     <span class="menu-collapsed">Download</span>
                 </div>
               </a>
-            </li>
+            </li> -->
             <li>
-              <a href="{% url 'installation' %}">
+              <a href="{% url 'installation_phenix' %}">
                 <div class="d-flex w-100 justify-content-start align-items-center">
                     <span class="fa fa-keyboard-o fa-fw mr-3"></span>
                     <span class="menu-collapsed">How to install</span>
                 </div>
               </a>
             </li>
+            <!--
             <li>
               <a href="{% url 'getting_started' %}">
                 <div class="d-flex w-100 justify-content-start align-items-center">
@@ -119,6 +120,7 @@
                 </div>
               </a>
             </li>
+          -->
             <li>
                 <a data-target="#submenu-doc" data-toggle="collapse" class=" flex-column align-items-start submenu-head" aria-expanded="false" aria-controls="submenu-doc">
                     <div class="d-flex w-100 justify-content-start align-items-center">
@@ -129,16 +131,17 @@
                 </a>
                 <ul class="collapse list-unstyled ulsubmenu" id="submenu-doc">
                     <li>
-                        <a href="{% url 'documentation_overview' %}">Overview</a>
+                        <a href="{% url 'doc_overview_phenix' %}">Overview</a>
                     </li>
                     <li>
-                        <a href="{% url 'newsletter_artcls' %}">Newsletter articles</a>
+                        <a href="#">Other</a>
                     </li>
                     <li>
-                      <a href="#">Examples</a>
+                      <a href="{% url 'examples_phenix' %}">Examples</a>
                     </li>
                 </ul>
             </li>
+            <!--
             <li>
               <a href="{% url 'tutorials_intro' %}">
                   <div class="d-flex w-100 justify-content-start align-items-center">

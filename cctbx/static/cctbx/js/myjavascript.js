@@ -13,7 +13,6 @@ $(document).ready(function () {
     $('a[href="/docs/cctbx/"]').removeClass("active");
     $("a[href*="+templ_name+"]").addClass("active");
     //$("a[href$="+templ_name+"]").addClass("active");
-
   };
 
   // Keep the dropdown open when links inside it are currently open

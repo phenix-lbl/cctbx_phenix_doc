@@ -1,23 +1,14 @@
 $(document).ready(function () {
 
-
-//    $(document).on('click', '.nav-item a', function (e) {
-//        $(this).parent().addClass('active').siblings().removeClass('active');
-//    });
   var url = document.location.href;
-  var templ_name = document.location.pathname.split('/').slice(-1)[0]
+  var templ_name = url.split('/').slice(-2)[0]
   //window.alert(templ_name)
-  //ksdjhgsdkjhg
-  if (templ_name!="") {
-    $("a[href='/tutorials_cctbx/']").removeClass("active");
-    $("a[href$="+templ_name+"]").addClass("active");
-
-
+  if (templ_name!="phenix") {
+    $('a[href="/docs/phenix/"]').removeClass("active");
+    $("a[href*="+templ_name+"]").addClass("active");
   };
 
-  if (templ_name=='documentation_overview' || templ_name=='newsletter_artcls' || templ_name.startsWith("doc_")) {
-    //$('#body-row .collapse').collapse('show');
-    //$(".submenu-head").attr("aria-expanded":"true");
+  if (templ_name=='doc_overview' || templ_name=='template' || templ_name=='examples' || templ_name.startsWith("doc_")) {
     $("#submenu-doc").addClass("show");
   };
 

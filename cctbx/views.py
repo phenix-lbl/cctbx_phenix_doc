@@ -43,20 +43,20 @@ def doc_phil(request):
 
 def doc_high_level_objects(request):
   args = {'is_active_doc': 'display: block;'}
-  return render(request, 'cctbx/documentation/doc_high_level_objects.html', args)
+  return render(request, 'cctbx/documentation/website_html/doc_high_level_objects.html', args)
 
 def doc_data_manager(request):
   args = {'is_active_doc': 'display: block;'}
-  return render(request, 'cctbx/documentation/doc_data_manager.html', args)
+  return render(request, 'cctbx/documentation/website_html/doc_data_manager.html', args)
 
 def doc_model_manager(request):
-  return render(request, 'cctbx/documentation/doc_model_manager.html')
+  return render(request, 'cctbx/documentation/website_html/doc_model_manager.html')
 
 def doc_map_manager(request):
-  return render(request, 'cctbx/documentation/doc_map_manager.html')
+  return render(request, 'cctbx/documentation/website_html/doc_map_manager.html')
 
 def doc_model_map_manager(request):
-  return render(request, 'cctbx/documentation/doc_model_map_manager.html')
+  return render(request, 'cctbx/documentation/website_html/doc_model_map_manager.html')
 
 # ------------------------------------------------------------------------------
 

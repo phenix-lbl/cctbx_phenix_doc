@@ -40,7 +40,7 @@
 /* Submenu item*/
 .ulsubmenu li{
     font-size: 0.9em;
-    line-height: 1.5em;
+    line-height: 0.8em;
 }
 .ulsubmenu li a {
     display: block;
