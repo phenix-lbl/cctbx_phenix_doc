@@ -10,65 +10,26 @@
 
 
 
-
-
-
-<div id="DocOverview">
-
 <ul >
   <li><a href="http://cci.lbl.gov/cctbx_build/">Download:</a> Download the cctbx for Linux, MacOS or Windows.</li>
   <li><a href="{% url 'installation' %}">Installation:</a> Learn how to install the cctbx.</li>
   <li><a href="{% url 'getting_started' %}">Getting started:</a> Overview of what to do to get started using the cctbx.</li>
+  <li>High level cctbx objects:</li>
     <ul>
       <li>
-        <div class="row justify-content-start">
-          <div class="col-md-auto">
-            <a href="{% url 'doc_high_level_objects' %}">High-level cctbx objects</a>
-          </div>
-          <div class="col-sm-9">
-            Overview of high level objects that represent things like data, models, restraints, etc. Learn how to create your first object, the map_model_manager.
-          </div>
-        </div>
+        <a href="{% url 'doc_high_level_objects' %}">Intro to high-level objects:</a> Overview of high level objects that represent things like data, models, restraints, etc.
       </li>
       <li>
-        <div class="row justify-content-start">
-          <div class="col-md-auto">
-            <a href="{% url 'doc_data_manager' %}">Reading and writing files</a>
-          </div>
-          <div class="col-sm-9">
-            Most scripts will act on files, so this section should be of interest to everyone. Use the DataManager to conveniently read and write data and model files.
-          </div>
-        </div>
+        <a href="{% url 'doc_data_manager' %}">Reading and writing files:</a> Use the DataManager to read and write data and model files.
       </li>
       <li>
-        <div class="row justify-content-start">
-          <div class="col-md-auto">
-            <a href="{% url 'doc_model_manager' %}">The cctbx model manager</a>
-          </div>
-          <div class="col-sm-9">
-            The model manager lets you do operations on models. Learn how to to set up the model manager, apply coordinate shifts, do atom selections and calculate model-based map coefficients.
-          </div>
-        </div>
+        <a href="{% url 'doc_model_manager' %}">The cctbx model manager:</a> The model manager lets you do operations on models, such as apply coordinate shifts, do atom selections and calculate model-based map coefficients.
       </li>
       <li>
-        <div class="row justify-content-start">
-          <div class="col-md-auto">
-            <a href="{% url 'doc_map_manager' %}">The cctbx map manager</a>
-          </div>
-          <div class="col-sm-9">
-            The map manager lets you do operations on maps. Learn how to read and save maps, change a map, convert a real-space map to a Fourier representation and back and manipulate maps that represent only a part of a full map. The tutorial also explains how to find and represent map reconstruction symmetry.
-          </div>
-        </div>
+        <a href="{% url 'doc_map_manager' %}">The cctbx map manager:</a> The map manager lets you do operations on maps.
       </li>
       <li>
-        <div class="row justify-content-start">
-          <div class="col-md-auto">
-            <a href="{% url 'doc_model_map_manager' %}">The map-model manager</a>
-          </div>
-          <div class="col-sm-9">
-            The map-model manager is useful to keep track of both maps and models. This tutorial shows how to set up the manager, how to cut out a piece of a map around a part of a model and how to create masks.
-          </div>
-        </div>
+        <a href="{% url 'doc_model_map_manager' %}">The map-model manager:</a> The map-model manager is useful to keep track of both maps and models.
       </li>
     </ul>
   <li>Lower level components:
@@ -77,9 +38,10 @@
       <li><a href="{% url 'doc_phil' %}">Phil files:</a> Coming soon...</li>
     </ul>
   </li>
-  <li><a href="">API documentation: </a> Browse the API documentation. Useful if you are an experienced user. For beginners, there are probably not enough details.</li>
+  <li><a href="">API documentation: </a> Browse the API documentation. Useful if you are an experienced user.</li>
 </ul>
 
+<div id="DocOverview">
 </div>
 
 

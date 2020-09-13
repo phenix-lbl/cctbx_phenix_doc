@@ -16,3 +16,26 @@ def examples(request):
 
 def template(request):
   return render(request, 'phenix/documentation/template.html')
+
+def doc_high_level_model_building_intro(request):
+  return render(request, 'phenix/documentation/doc_high_level_model_building_intro.html')
+
+def doc_model_building_read_files(request):
+  return render(request, 'phenix/documentation/doc_model_building_read_files.html')
+
+def doc_fit_ligand(request):
+  return render(request, 'phenix/documentation/doc_fit_ligand.html')
+
+def doc_model_building_1(request):
+  return render(request, 'phenix/documentation/doc_model_building_1.html')
+
+def doc_model_building_2(request):
+  return render(request, 'phenix/documentation/doc_model_building_2.html')
+
+def doc_model_building_segment(request):
+  return render(request, 'phenix/documentation/doc_model_building_segment.html')
+
+def doc_model_building_composite(request):
+  return render(request, 'phenix/documentation/doc_model_building_composite.html')
+
+

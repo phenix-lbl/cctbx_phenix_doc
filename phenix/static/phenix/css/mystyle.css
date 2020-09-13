@@ -79,6 +79,11 @@
 /* ---------------------------------------------------
     CODE STYLE
 ----------------------------------------------------- */
+
+.CodeGreen{
+  font-size:12px;
+  background-color: #ecf9ec;
+}
 .codeDL {
   font-size:12px;
   background-color: #e6e6ff;
