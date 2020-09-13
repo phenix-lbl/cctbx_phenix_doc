@@ -1,0 +1,67 @@
+{% extends "phenix/header.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+
+<div class="row">
+
+
+<div class="col-sm-9">
+<!-- DO NOT EDIT ANYTHING ABOVE!!!! -->
+<!----------------------- EDIT START ---------------------------->
+
+<h2><center>Combining Models</center></h2>
+
+<p class="lead mt-4">Learn how to combine models to create a composite model.</p>
+
+<p>Let’s combine several models and create a new model that has the best parts of each. We can use two models that we just worked with (build.model()and  model_before_replace) along with the map we just used. The working model_building object contains model_with_replacement.pdb and the working map.</p>
+
+<p>Just to see how it works, let’s create two overlapping models: residues 6-25 from the starting model, model_before_replace, and residues 20 - 60 from the model with a segment replaced (in build.model()):</p>
+
+<pre class="codeDL"><code>model_1 = model_before_replace.apply_selection_string(    # apply a selection
+   'resseq 6:25'  )  # keep only residues 6 through 25
+</code></pre>
+
+<pre class="codeDL"><code>model_2 = build.model().apply_selection_string(    # apply a selection
+   'resseq 20:60'  )  # keep only residues 20 through 60
+</code></pre>
+
+<p>We can make sure this worked:</p>
+
+<pre class="codeDL"><code>model_1.get_hierarchy().overall_counts().n_residues  #  residues in model_1
+model_2.get_hierarchy().overall_counts().n_residues  #  residues in model_2
+</code></pre>
+
+<p>Now we can combine the overlapping models with:</p>
+
+<pre class="codeDL"><code>new_model = build.combine_models(           # combine models
+    model_list = [model_1, model_2]) # models to combine
+</code></pre>
+
+<p>We can write out the new combined model with: </p>
+
+<pre class="codeDL"><code>dm.write_model_file(new_model, 'combined_model.pdb')   # write out new model
+</code></pre>
+
+<p>Have a look at model_before_replace.pdb, model_with_replacement.pdb, and combined_model.pdb.  The combined model has residue 20 from model_1 and residue 30 from model_2.</p>
+
+
+
+<!----------------------- EDIT END ---------------------------->
+<!-- DO NOT EDIT ANYTHING BELOW!!!! -->
+</div> <!-- end col-sm-9 -->
+
+<!-- automatic table of contents
+     located in the sidebar; will move to the top on a small screen -->
+<div class="col-sm-3">
+  <nav id="toc" data-toggle="toc"></nav>
+</div> <!-- end col-sm-3 -->
+
+</div> <!-- end row -->
+
+</div> <!-- end container -->
+
+{% endblock %}

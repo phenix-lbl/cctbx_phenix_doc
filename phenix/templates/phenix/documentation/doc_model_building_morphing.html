@@ -1,0 +1,137 @@
+{% extends "phenix/header.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+
+<div class="row">
+
+
+<div class="col-sm-9">
+<!-- DO NOT EDIT ANYTHING ABOVE!!!! -->
+<!----------------------- EDIT START ---------------------------->
+
+<h2><center>Morphing a model</center></h2>
+
+<p class="lead mt-4">This is a lead paragraph. Give a short summary of what is explained in the page here.</p>
+
+<h3 class="mt-5">Subtitle_1</h3>
+<p>Some text</p>
+<p>Some text with <code>code</code> quoted within text.</p>
+
+<h4>sub-subtitle</h4>
+<p>Some more text</p>
+
+<h3 class="mt-3">Subtitle_2</h3>
+<!--
+Code within <pre> tags will be extracted for tests
+Do start code immediatly after '<pre class="codeDL"><code>', like in the example below.
+Otherwise, the code will have indentation, and breaks.
+-->
+<pre class="codeDL"><code>
+</code></pre>
+
+<pre class="CodeGreen" style="font-size: 12px"><code>XXXXX</code></pre>
+
+
+<p>Let’s adjust a model by morphing it to match the density in a map. Morphing basically distorts a model in a smooth way, so that locally the model does not change much, but parts of the model that are far apart along the chain can move relative to each other. We can read in a model and map for morphing from the model_building regression directory:</p>
+
+<pre class="codeDL"><code>from iotbx.data_manager import DataManager    # Load in the DataManager
+dm = DataManager()             # Initialize the DataManager and call it dm
+dm.set_overwrite(True)         # Overwrite files with the same name
+</code></pre>
+
+<pre class="codeDL"><code>mmm = dm.get_map_model_manager(        # getting a map_model_manager
+  model_file="short_model_box_for_morph.pdb",   # model file
+  map_files="short_model_box.ccp4")   # map file
+</code></pre>
+
+<p>Our starting model has two chains (A and B).  The A chain is pretty much perfect, and the B chain is offset from its correct position by about 1.5 A.  Let’s select just chain B to work with (in this example chains A and B overlap and so it is best to work with just one):</p>
+
+chainB = mmm.model().apply_selection_string(    # apply a selection
+   'chain B'  )  # chain B
+
+<p>And now we can replace the model in mmm with chainB (adding a model with model_id of  'model' replaces the existing model):</p>
+
+mmm.add_model_by_id(chainB, model_id = 'model')  # replace model in mmm
+<pre class="codeDL"><code>
+</code></pre>
+
+Let’s can fill in the resolution and experiment type and get a model_building object:
+
+mmm.set_resolution(3)                 # resolution is 3 A
+mmm.set_experiment_type('cryo_em')    # it is a cryo-EM map
+build = mmm.model_building()          # get a model-building object
+<pre class="codeDL"><code>
+</code></pre>
+
+We can write out the model and look at it with Coot, comparing it with the map:
+
+dm.write_model_file(build.model(), "short_model_box_for_morph.pdb") # model
+dm.write_real_map_file(build.map_manager(), "short_model_box.ccp4") # map
+
+Let’s save the coordinates of the atoms in our model  so we can compare them to their positions after morphing:
+
+chainB = build.model().deep_copy()   # save chain B
+starting_coords_chain_B = chainB.get_sites_cart()    # get coordinates chain B
+
+
+Now let’s morph the model. We’ll use the selection method 'by_segment' to choose how to split up the model when morphing. This choice means split up by chains, and also split any chains that are broken:
+
+build.set_defaults(debug=True)      # debugging run
+build.morph(default_selection_method='by_segment')   # morph model
+
+We can see how much each chain has moved. The model in build has been updated so we get the coordinates of the atoms in this working model:
+
+
+chainB_morphed = build.model()  # chain B
+
+final_coords_chain_B = chainB_morphed.get_sites_cart()    # get coordinates chain B
+
+The rmsd between starting and final chains A and B are then:
+
+rms_B = final_coords_chain_B.rms_difference(starting_coords_chain_B)  # rms B
+
+You can print this out:
+
+rms_B   # print out rms value
+
+Which yields something like:
+
+1.5801081738194553
+
+We can compare the map-model correlations of the original and morphed models:
+
+cc_before = mmm.map_model_cc(model = chainB)  # map-model cc for chain B
+cc_after = mmm.map_model_cc(model = chainB_morphed)  # map-model cc after
+cc_before, cc_after    # cc before and after morphing
+(0.25513080677867195, 0.818070481365688)
+
+Which yields something like:
+
+(0.25513080677867195, 0.818070481365688
+
+Indicating that the map-model correlation is much higher after morphing.
+
+Let’s write out the morphed model to 'morphed_model.pdb' and compare it in Coot with the original in "short_model_box_for_morph.pdb":
+
+dm.write_model_file(build.model(), 'morphed_model.pdb')  # write out morphed
+
+
+<!----------------------- EDIT END ---------------------------->
+<!-- DO NOT EDIT ANYTHING BELOW!!!! -->
+</div> <!-- end col-sm-9 -->
+
+<!-- automatic table of contents
+     located in the sidebar; will move to the top on a small screen -->
+<div class="col-sm-3">
+  <nav id="toc" data-toggle="toc"></nav>
+</div> <!-- end col-sm-3 -->
+
+</div> <!-- end row -->
+
+</div> <!-- end container -->
+
+{% endblock %}
