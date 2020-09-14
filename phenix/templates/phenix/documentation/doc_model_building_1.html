@@ -17,8 +17,6 @@
 
 <p class="lead mt-4">Learn how to build a model into some density and how to automatically extend the newly built chain.</p>
 
-
-
 <h3 class="mt-3">Setting up example data</h3>
 
 <p>First, let's set up the example data (described in more detail <a href="{% url 'doc_model_building_read_files_phenix' %}">here</a>):</p>
@@ -93,7 +91,7 @@ dm.write_real_map_file(build.map_manager(), 'build_map.ccp4')# Working map
 <p>We can get just the extension if we want with the command:</p>
 
 <pre class="codeDL"><code>result = build.get_best_result()   # get the best extension result object
-insertion_model = result.model   # the extension as a model
+insertion_model = result.model     # the extension as a model
 </code></pre>
 
 <p>Let’s insert the extension:</p>
@@ -120,7 +118,7 @@ dm.write_real_map_file(build.map_manager(), 'extended_map.ccp4')# Working map
 
 <pre class="codeDL"><code>new_model = build.model().apply_selection_string(    # apply a selection
    'not (chain U and resseq 1:1)'  )  # remove residue 1 from chain U
-build.set_model(new_model)   # replace existing model with new_model
+build.set_model(new_model)            # replace existing model with new_model
 </code></pre>
 
 <p>You can write out your new model:</p>

@@ -15,5 +15,4 @@ urlpatterns = [
     path('doc_model_building_1/', views.doc_model_building_1, name='doc_model_building_1_phenix'),
     path('doc_model_building_2/', views.doc_model_building_2, name='doc_model_building_2_phenix'),
     path('doc_model_building_segment/', views.doc_model_building_segment, name='doc_model_building_segment_phenix'),
-    path('doc_model_building_composite/', views.doc_model_building_composite, name='doc_model_building_composite_phenix'),
 ]
