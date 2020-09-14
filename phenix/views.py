@@ -11,6 +11,9 @@ def installation(request):
 def doc_overview(request):
   return render(request, 'phenix/doc_overview.html')
 
+def doc_quick_reference(request):
+  return render(request, 'phenix/documentation/doc_quick_reference.html')
+
 def examples(request):
   return render(request, 'phenix/examples.html')
 
@@ -37,6 +40,9 @@ def doc_model_building_segment(request):
 
 def doc_model_building_morphing(request):
   return render(request, 'phenix/documentation/doc_model_building_morphing.html')
+
+def doc_model_building_sequence(request):
+  return render(request, 'phenix/documentation/doc_model_building_sequence.html')
 
 
 
