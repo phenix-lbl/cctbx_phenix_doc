@@ -35,8 +35,8 @@ def doc_model_building_1(request):
 def doc_model_building_2(request):
   return render(request, 'phenix/documentation/doc_model_building_2.html')
 
-def doc_model_building_segment(request):
-  return render(request, 'phenix/documentation/doc_model_building_segment.html')
+def doc_model_building_3(request):
+  return render(request, 'phenix/documentation/doc_model_building_3.html')
 
 def doc_model_building_morphing(request):
   return render(request, 'phenix/documentation/doc_model_building_morphing.html')

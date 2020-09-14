@@ -15,7 +15,7 @@ urlpatterns = [
     path('doc_fit_ligand/', views.doc_fit_ligand, name='doc_fit_ligand_phenix'),
     path('doc_model_building_1/', views.doc_model_building_1, name='doc_model_building_1_phenix'),
     path('doc_model_building_2/', views.doc_model_building_2, name='doc_model_building_2_phenix'),
-    path('doc_model_building_segment/', views.doc_model_building_segment, name='doc_model_building_segment_phenix'),
+    path('doc_model_building_3/', views.doc_model_building_3, name='doc_model_building_3_phenix'),
     path('doc_model_building_morphing/', views.doc_model_building_morphing, name='doc_model_building_morphing_phenix'),
     path('doc_model_building_sequence/', views.doc_model_building_sequence, name='doc_model_building_sequence_phenix'),
 ]
