@@ -420,7 +420,38 @@ new_sites_cart = flex.vec3_double(x, new_y, z) #  new sites with new y
 
 <!-- ----------------------------------------------------------------------- -->
 
+<h3 class="mt-5">Working with ncs (reconstruction symmetry) objects</h3>
 
+<h6 class="mt-4">Read in reconstruction symmetry (“ncs”) and make an ncs object:</h6>
+<pre class="codeDL"><code>ncs_d7 = dm.get_ncs_spec("D7.ncs_spec")   # reconstruction symmetry file
+</code></pre>
+
+<h6 class="mt-4">Print out ncs information</h6>
+<pre class="codeDL"><code>ncs_d7.display_all()  #  print out ncs
+</code></pre>
+
+<h6 class="mt-4">Get ncs from a model</h6>
+<pre class="codeDL"><code>ncs_d7_model = dm.get_model("D7.pdb")   # model with D7 symmetry
+ncs_d7_model.search_for_ncs()  # find NCS in this model
+ncs_spec_object = ncs_d7_model.get_ncs_obj().get_ncs_info_as_spec() # ncs
+print (ncs_spec_object.display_all()) #   print out summary
+</code></pre>
+
+<h6 class="mt-4">Find ncs from a map and apply to a model using the model_building tool</h6>
+<pre class="codeDL"><code>mmm = dm.get_map_model_manager(model_file="D7.pdb",   # model
+   map_files="D7.ccp4")    #map
+build=mmm.model_building()    # get a model-building object
+build.map_manager().find_map_symmetry(symmetry = "D7")  # find symmetry in map
+build.map_manager().ncs_object().display_all() # summary
+model_no_ncs = build.model().apply_selection_string("chain A") #
+print (model_no_ncs)#  make sure we got one chain
+model_ncs = build.apply_ncs(model = model_no_ncs) # apply ncs to model_no_ncs
+print (model_ncs)  # now we have 14 chains
+</code></pre>
+
+
+
+<!-- ----------------------------------------------------------------------- -->
 
 
 <!----------------------- EDIT END ---------------------------->
