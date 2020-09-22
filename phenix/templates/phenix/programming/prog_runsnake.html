@@ -1,0 +1,43 @@
+
+{% extends "phenix/header.html" %}
+
+{% block content %}
+
+<h2><center>Install and use Runsnake</center></h2>
+
+<p class="lead mt-4">It is a good idea to profile  code to speed up runtime.</p>
+
+<p>Install RunSnakeRun</p>
+
+<pre class="CodeGreen"><code>libtbx.python -m pip install SquareMap RunSnakeRun
+</code></pre>
+
+<p>To profile something:</p>
+
+<pre class="CodeGreen"><code>libtbx.python -m cProfile -o prof.out myscript.py my_model.pdb
+</code></pre>
+
+<p><code>myscript.py</code> is the code that is being profiled. This script may or may not have inputs. In this example the script has the input <code>my_model.pdb</code>.</p>
+
+<p>It is a good idea to use an alias:</p>
+
+<pre class="CodeGreen"><code>alias runsnake='libtbx.python /base/Python.framework/Versions/2.7/lib/python2.7/site-packages/runsnakerun/runsnake.py'
+</code></pre>
+
+<p>The alias runs the <code>runsnake.py</code> script that is installed in phenix/base.</p>
+
+<p>After profiling you can view the file with:</p>
+
+<pre class="CodeGreen"><code>runsnake prof.out
+</code></pre>
+
+<p>In the output of the above command, you will see many squares of different size. The size is proportional to runtime. In the square you can find what it is exactly (function name). When you hovering with mouse over a square, the same functions are highlighted as well, so it is easy to see if something is run from different places.</p>
+
+<p>You can also use a flag, so every command outputs a runsnake profile:</p>
+
+<pre class="CodeGreen"><code>setenv LIBTBX__CPROFILE_FLAG__ 1
+</code></pre>
+
+
+{% endblock %}
+

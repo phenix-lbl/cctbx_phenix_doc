@@ -44,6 +44,15 @@ def doc_model_building_morphing(request):
 def doc_model_building_sequence(request):
   return render(request, 'phenix/documentation/phenix_dev_doc_html/doc_model_building_sequence.html')
 
+def doc_program_template(request):
+  return render(request, 'phenix/documentation/phenix_dev_doc_html/doc_program_template.html')
+
+def prog_overview(request):
+  return render(request, 'phenix/programming/prog_overview.html')
+
+def prog_runsnake(request):
+  return render(request, 'phenix/programming/prog_runsnake.html')
+
 
 
 
