@@ -1,6 +1,7 @@
 $(document).ready(function () {
 
   var url = document.location.href;
+  //window.alert(url)
   var templ_name = url.split('/').slice(-2)[0]
   //window.alert(templ_name)
   if (templ_name!="phenix") {
@@ -8,8 +9,16 @@ $(document).ready(function () {
     $("a[href*="+templ_name+"]").addClass("active");
   };
 
-  if (templ_name=='doc_overview' || templ_name=='template' || templ_name=='examples' || templ_name.startsWith("doc_")) {
+  if (templ_name=='overview' || templ_name=='restraint_jiffys' || templ_name.startsWith("doc_") || templ_name.startsWith("prog")) {
     $("#submenu-doc").addClass("show");
+  };
+
+  if (templ_name.startsWith("doc_mb")) {
+    $("#subsubmenu1-doc").addClass("show");
+  };
+
+  if (templ_name.startsWith("prog")) {
+    $("#subsubmenu2-doc").addClass("show");
   };
 
   var shown = false
