@@ -19,6 +19,6 @@ urlpatterns = [
     path('doc_model_building_morphing/', views.doc_model_building_morphing, name='doc_model_building_morphing_phenix'),
     path('doc_model_building_sequence/', views.doc_model_building_sequence, name='doc_model_building_sequence_phenix'),
     path('doc_program_template/', views.doc_program_template, name='doc_program_template_phenix'),
-    path('prog_overview/', views.prog_overview, name='prog_overview_phenix'),
     path('prog_runsnake/', views.prog_runsnake, name='prog_runsnake_phenix'),
+    path('restraint_jiffys', views.restraint_jiffys, name='restraint_jiffys_phenix'),
 ]

@@ -2,20 +2,26 @@
 
 {% block content %}
 
+<div class="col-sm-9 main">
 
-
-<h1><center>Overview</center></h1>
+<h1><center>Table of contents</center></h1>
 <div class="mt-4">
   <ul>
-    <li>
+    <li class="DocOverview">
       <a href="{% url 'installation_phenix' %}">Installation:</a> How to install and set up Phenix.
     </li>
-    <li>
-      <a href="{% url 'doc_high_level_model_building_intro_phenix' %}">Model building:</a> Introduction to high level model building tools.
+    <li class="DocOverview">
+      <a href="{% url 'doc_quick_reference_phenix' %}">Quick reference:</a> Reference of commands.
+    </li>
+    <li class="DocOverview">
+      Model building: High level tools for model building
     </li>
     <ul>
       <li>
-        <a href="{% url 'doc_model_building_read_files_phenix' %}">Reading files:</a> Learn how to read in data and models or how to set up example files.
+        <a href="{% url 'doc_high_level_model_building_intro_phenix' %}">Introduction:</a> Introduction  high level model building tools.
+      </li>
+      <li>
+        <a href="{% url 'doc_model_building_read_files_phenix' %}">Reading files:</a> Learn how to set up example files.
       </li>
       <li>
         <a href="{% url 'doc_fit_ligand_phenix' %}">Fitting ligands:</a> How to fit a ligand into density inside a box.
@@ -37,11 +43,22 @@
       </li>
 
     </ul>
-    <li>
-      <a href="{% url 'doc_program_template_phenix' %}">Creating a program with the Program Template:</a> Step by step instructions on how to use the program template.
+
+    <li class="DocOverview">
+      Programming: Specific tips for programming in Phenix
+      <ul>
+        <li>
+          <a href="{% url 'doc_program_template_phenix' %}">Creating a program with the Program Template:</a> Step by step instructions on how to use the program template.
+        </li>
+        <li>
+          <a href="{% url 'doc_program_template_phenix' %}">Runsnake:</a> How to do profiling with Runsnake.
+        </li>
+      </ul>
     </li>
   </ul>
 
+
+</div>
 
 </div>
 

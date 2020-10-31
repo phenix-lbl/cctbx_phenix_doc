@@ -1,0 +1,602 @@
+{% extends "phenix/header.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="col-sm-9 main">
+<!-- DO NOT EDIT ANYTHING ABOVE!!!! -->
+<!----------------------- EDIT START ---------------------------->
+
+<h2><center>Restraint jiffys</center></h2>
+
+<p class="lead mt-4">This page summarizes some helpful command line tools to find and display restraints.</p>
+
+<h3 class="mt-3">Finding ligand related CIF files</h3>
+
+<p>Phenix has three databases of CIF files related to ligands:</p>
+<ul>
+  <li>Chemical Components</li>
+  <li>Monomer Library</li>
+  <li>Geostandard (GeoStd)</li>
+</ul>
+ <p>The first, Chemical Components (CC), is obtained from the Protein Data Bank (PDB). It contains information about all entities in the PDB including protein, nucleic acids and ligands. The information includes bonding but no other internal coordinates, so these are not restraints files. The second, Monomer Library, is a curated copy of the Monomer Library containing restraints for many common ligands. The third, GeoStd, contains all protein entities (amino acids, modified amino acids), all glycans, many nucleic acids and ligands. This is a curated set of restraints that is maintained as the “best” possible.</p>
+
+<p>In some cases, restraints are be required to run a tool, for example when we want to create the <code>geometry_restraints_manager()</code>. It is then useful to determine whether there is a restraints file in the Phenix distribution and if so where. Otherwise, it would be necessary to get restraints, for example with <code>ReadySet</code>. The following command returns the contents of the restraints file and the path for the molecule <code>hoh</code> (water molecule):</p>
+
+<pre class="codeDL"><code>elbow.where_is_that_cif_file hoh
+</code></pre>
+
+<p>The command <code>elbow.where_is_that_cif_file</code> is followed by the 3-letter code of a ligand or component. The output is:</p>
+
+<div class="ScrollBarBoxDL"><pre><code>Looking for ligand code hoh
+
+--------------------------------------------------------------------------------
+  CIF file
+    /Users/nigel/phenix/conda/modules/chem_data/geostd/h/data_HOH.cif
+--------------------------------------------------------------------------------
+
+#
+data_comp_list
+loop_
+_chem_comp.id
+_chem_comp.three_letter_code
+_chem_comp.name
+_chem_comp.group
+_chem_comp.number_atoms_all
+_chem_comp.number_atoms_nh
+_chem_comp.desc_level
+_chem_comp.initial_date
+_chem_comp.modified_date
+_chem_comp.source
+HOH   .   'water     ' solvent   3   1  .   2012-10-17  2013-01-10
+;
+Copy of CCP4 Monomer Library entry.
+Added neutron distances
+;
+#
+data_comp_HOH
+#
+loop_
+_chem_comp_atom.comp_id
+_chem_comp_atom.atom_id
+_chem_comp_atom.type_symbol
+_chem_comp_atom.type_energy
+_chem_comp_atom.partial_charge
+ HOH           O      O    OH2      -0.408
+ HOH           H1     H    HOH2      0.204
+ HOH           H2     H    HOH2      0.204
+loop_
+_chem_comp_tree.comp_id
+_chem_comp_tree.atom_id
+_chem_comp_tree.atom_back
+_chem_comp_tree.atom_forward
+_chem_comp_tree.connect_type
+ HOH      O      n/a    .      END
+ HOH      H1     O      .      .
+ HOH      H2     O      .      .
+loop_
+_chem_comp_bond.comp_id
+_chem_comp_bond.atom_id_1
+_chem_comp_bond.atom_id_2
+_chem_comp_bond.type
+_chem_comp_bond.value_dist
+_chem_comp_bond.value_dist_esd
+_chem_comp_bond.value_dist_neutron
+ HOH      O      H1        coval       0.840    0.020    0.950
+ HOH      O      H2        coval       0.840    0.020    0.950
+loop_
+_chem_comp_angle.comp_id
+_chem_comp_angle.atom_id_1
+_chem_comp_angle.atom_id_2
+_chem_comp_angle.atom_id_3
+_chem_comp_angle.value_angle
+_chem_comp_angle.value_angle_esd
+ HOH      H1     O      H2      106.800    3.000
+
+--------------------------------------------------------------------------------
+  CIF file
+    /Users/nigel/phenix/conda/modules/chem_data/geostd/h/data_HOH.cif
+--------------------------------------------------------------------------------
+</code></pre>
+</div>
+
+<p>According to the output, the restraints file for hoh is in GeoStd.</p>
+
+<p>If the file is not in the GeoStd, the code looks in the Monomer Library and returns it it is found. This scenario occurs for example in the case of GTP. If the component is not found in the Monomer Library, the output displays the contents of the Chemical Components file. An example for this is the component 000.</p>
+
+<pre class="codeDL"><code>elbow.where_is_that_cif_file 000
+</code></pre>
+
+<p>The output for this command is:</p>
+
+<div class="ScrollBarBoxDL"><pre><code>Looking for ligand code 000
+
+--------------------------------------------------------------------------------
+  CIF file
+    /Users/nigel/phenix/conda/modules/chem_data/chemical_components/0/data_000.cif
+--------------------------------------------------------------------------------
+
+data_000
+#
+_chem_comp.id                                    000
+_chem_comp.name                                  "methyl hydrogen carbonate"
+_chem_comp.type                                  NON-POLYMER
+_chem_comp.pdbx_type                             ATOMP
+_chem_comp.formula                               "C2 H4 O3"
+_chem_comp.mon_nstd_parent_comp_id               ?
+_chem_comp.pdbx_synonyms                         ?
+_chem_comp.pdbx_formal_charge                    0
+_chem_comp.pdbx_initial_date                     2010-04-27
+_chem_comp.pdbx_modified_date                    2011-06-04
+_chem_comp.pdbx_ambiguous_flag                   N
+_chem_comp.pdbx_release_status                   REL
+_chem_comp.pdbx_replaced_by                      ?
+_chem_comp.pdbx_replaces                         ?
+_chem_comp.formula_weight                        76.051
+_chem_comp.one_letter_code                       ?
+_chem_comp.three_letter_code                     000
+_chem_comp.pdbx_model_coordinates_details        ?
+_chem_comp.pdbx_model_coordinates_missing_flag   N
+_chem_comp.pdbx_ideal_coordinates_details        Corina
+_chem_comp.pdbx_ideal_coordinates_missing_flag   N
+_chem_comp.pdbx_model_coordinates_db_code        3LIN
+_chem_comp.pdbx_subcomponent_list                ?
+_chem_comp.pdbx_processing_site                  RCSB
+#
+loop_
+_chem_comp_atom.comp_id
+_chem_comp_atom.atom_id
+_chem_comp_atom.alt_atom_id
+_chem_comp_atom.type_symbol
+_chem_comp_atom.charge
+_chem_comp_atom.pdbx_align
+_chem_comp_atom.pdbx_aromatic_flag
+_chem_comp_atom.pdbx_leaving_atom_flag
+_chem_comp_atom.pdbx_stereo_config
+_chem_comp_atom.model_Cartn_x
+_chem_comp_atom.model_Cartn_y
+_chem_comp_atom.model_Cartn_z
+_chem_comp_atom.pdbx_model_Cartn_x_ideal
+_chem_comp_atom.pdbx_model_Cartn_y_ideal
+_chem_comp_atom.pdbx_model_Cartn_z_ideal
+_chem_comp_atom.pdbx_component_atom_id
+_chem_comp_atom.pdbx_component_comp_id
+_chem_comp_atom.pdbx_ordinal
+000 C   C   C 0 1 N N N 32.880 -0.090 51.314 -0.456 0.028  -0.001 C   000 1
+000 O   O   O 0 1 N N N 32.160 0.180  50.105 -0.376 1.240  0.001  O   000 2
+000 OA  OA  O 0 1 N N N 34.147 -0.940 51.249 0.662  -0.720 0.001  OA  000 3
+000 CB  CB  C 0 1 N N N 33.872 -2.227 50.459 1.929  -0.010 -0.001 CB  000 4
+000 OXT OXT O 0 1 N Y N 32.419 0.429  52.564 -1.663 -0.566 -0.000 OXT 000 5
+000 HB  HB  H 0 1 N N N 34.788 -2.834 50.416 1.996  0.613  -0.892 HB  000 6
+000 HBA HBA H 0 1 N N N 33.076 -2.800 50.957 1.995  0.618  0.888  HBA 000 7
+000 HBB HBB H 0 1 N N N 33.555 -1.969 49.438 2.748  -0.730 0.002  HBB 000 8
+000 HXT HXT H 0 1 N Y N 31.625 0.931  52.425 -2.438 0.013  0.002  HXT 000 9
+#
+loop_
+_chem_comp_bond.comp_id
+_chem_comp_bond.atom_id_1
+_chem_comp_bond.atom_id_2
+_chem_comp_bond.value_order
+_chem_comp_bond.pdbx_aromatic_flag
+_chem_comp_bond.pdbx_stereo_config
+_chem_comp_bond.pdbx_ordinal
+000 C   OXT SING N N 1
+000 O   C   DOUB N N 2
+000 OA  C   SING N N 3
+000 CB  OA  SING N N 4
+000 CB  HB  SING N N 5
+000 CB  HBA SING N N 6
+000 CB  HBB SING N N 7
+000 OXT HXT SING N N 8
+#
+loop_
+_pdbx_chem_comp_descriptor.comp_id
+_pdbx_chem_comp_descriptor.type
+_pdbx_chem_comp_descriptor.program
+_pdbx_chem_comp_descriptor.program_version
+_pdbx_chem_comp_descriptor.descriptor
+000 SMILES           ACDLabs              12.01 "O=C(O)OC"
+000 SMILES_CANONICAL CACTVS               3.370 "COC(O)=O"
+000 SMILES           CACTVS               3.370 "COC(O)=O"
+000 SMILES_CANONICAL "OpenEye OEToolkits" 1.7.0 "COC(=O)O"
+000 SMILES           "OpenEye OEToolkits" 1.7.0 "COC(=O)O"
+000 InChI            InChI                1.03  "InChI=1S/C2H4O3/c1-5-2(3)4/h1H3,(H,3,4)"
+000 InChIKey         InChI                1.03  CXHHBNMLPJOKQD-UHFFFAOYSA-N
+#
+loop_
+_pdbx_chem_comp_identifier.comp_id
+_pdbx_chem_comp_identifier.type
+_pdbx_chem_comp_identifier.program
+_pdbx_chem_comp_identifier.program_version
+_pdbx_chem_comp_identifier.identifier
+000 "SYSTEMATIC NAME" ACDLabs              12.01 "methyl hydrogen carbonate"
+000 "SYSTEMATIC NAME" "OpenEye OEToolkits" 1.7.0 "methyl hydrogen carbonate"
+#
+loop_
+_pdbx_chem_comp_audit.comp_id
+_pdbx_chem_comp_audit.action_type
+_pdbx_chem_comp_audit.date
+_pdbx_chem_comp_audit.processing_site
+000 "Create component"  2010-04-27 RCSB
+000 "Modify descriptor" 2011-06-04 RCSB
+#
+
+--------------------------------------------------------------------------------
+  CIF file
+    /Users/nigel/phenix/conda/modules/chem_data/chemical_components/0/data_000.cif
+--------------------------------------------------------------------------------
+</code></pre>
+</div>
+
+<h4 class="mt-3">Options</h4>
+
+<p>Should you wish to see the Chemical Components file for an entity in the restraints databases use the option <code>cc</code>.</p>
+
+<pre class="codeDL"><code>elbow.where_is_that_cif_file hoh cc
+</code></pre>
+
+<p>The output of this command is:</p>
+
+<div class="ScrollBarBoxDL"><pre><code>Looking for ligand code hoh
+
+--------------------------------------------------------------------------------
+  CIF file
+    /Users/nigel/phenix/conda/modules/chem_data/chemical_components/h/data_HOH.cif
+--------------------------------------------------------------------------------
+
+data_HOH
+#
+_chem_comp.id                                    HOH
+_chem_comp.name                                  WATER
+_chem_comp.type                                  NON-POLYMER
+_chem_comp.pdbx_type                             HETAS
+_chem_comp.formula                               "H2 O"
+_chem_comp.mon_nstd_parent_comp_id               ?
+_chem_comp.pdbx_synonyms                         ?
+_chem_comp.pdbx_formal_charge                    0
+_chem_comp.pdbx_initial_date                     1999-07-08
+_chem_comp.pdbx_modified_date                    2011-06-04
+_chem_comp.pdbx_ambiguous_flag                   N
+_chem_comp.pdbx_release_status                   REL
+_chem_comp.pdbx_replaced_by                      ?
+_chem_comp.pdbx_replaces                         MTO
+_chem_comp.formula_weight                        18.015
+_chem_comp.one_letter_code                       ?
+_chem_comp.three_letter_code                     HOH
+_chem_comp.pdbx_model_coordinates_details        ?
+_chem_comp.pdbx_model_coordinates_missing_flag   N
+_chem_comp.pdbx_ideal_coordinates_details        ?
+_chem_comp.pdbx_ideal_coordinates_missing_flag   N
+_chem_comp.pdbx_model_coordinates_db_code        1NHE
+_chem_comp.pdbx_subcomponent_list                ?
+_chem_comp.pdbx_processing_site                  RCSB
+#
+loop_
+_chem_comp_atom.comp_id
+_chem_comp_atom.atom_id
+_chem_comp_atom.alt_atom_id
+_chem_comp_atom.type_symbol
+_chem_comp_atom.charge
+_chem_comp_atom.pdbx_align
+_chem_comp_atom.pdbx_aromatic_flag
+_chem_comp_atom.pdbx_leaving_atom_flag
+_chem_comp_atom.pdbx_stereo_config
+_chem_comp_atom.model_Cartn_x
+_chem_comp_atom.model_Cartn_y
+_chem_comp_atom.model_Cartn_z
+_chem_comp_atom.pdbx_model_Cartn_x_ideal
+_chem_comp_atom.pdbx_model_Cartn_y_ideal
+_chem_comp_atom.pdbx_model_Cartn_z_ideal
+_chem_comp_atom.pdbx_component_atom_id
+_chem_comp_atom.pdbx_component_comp_id
+_chem_comp_atom.pdbx_ordinal
+HOH O  O  O 0 1 N N N -23.107 18.401 -21.626 -0.064 0.000 0.000  O  HOH 1
+HOH H1 1H H 0 1 N N N -22.157 18.401 -21.626 0.512  0.000 -0.776 H1 HOH 2
+HOH H2 2H H 0 1 N N N -23.424 18.401 -20.730 0.512  0.000 0.776  H2 HOH 3
+#
+loop_
+_chem_comp_bond.comp_id
+_chem_comp_bond.atom_id_1
+_chem_comp_bond.atom_id_2
+_chem_comp_bond.value_order
+_chem_comp_bond.pdbx_aromatic_flag
+_chem_comp_bond.pdbx_stereo_config
+_chem_comp_bond.pdbx_ordinal
+HOH O H1 SING N N 1
+HOH O H2 SING N N 2
+#
+loop_
+_pdbx_chem_comp_descriptor.comp_id
+_pdbx_chem_comp_descriptor.type
+_pdbx_chem_comp_descriptor.program
+_pdbx_chem_comp_descriptor.program_version
+_pdbx_chem_comp_descriptor.descriptor
+HOH SMILES           ACDLabs              10.04 O
+HOH SMILES_CANONICAL CACTVS               3.341 O
+HOH SMILES           CACTVS               3.341 O
+HOH SMILES_CANONICAL "OpenEye OEToolkits" 1.5.0 O
+HOH SMILES           "OpenEye OEToolkits" 1.5.0 O
+HOH InChI            InChI                1.03  InChI=1S/H2O/h1H2
+HOH InChIKey         InChI                1.03  XLYOFNOQVPJJNP-UHFFFAOYSA-N
+#
+loop_
+_pdbx_chem_comp_identifier.comp_id
+_pdbx_chem_comp_identifier.type
+_pdbx_chem_comp_identifier.program
+_pdbx_chem_comp_identifier.program_version
+_pdbx_chem_comp_identifier.identifier
+HOH "SYSTEMATIC NAME" ACDLabs              10.04 water
+HOH "SYSTEMATIC NAME" "OpenEye OEToolkits" 1.5.0 oxidane
+#
+loop_
+_pdbx_chem_comp_audit.comp_id
+_pdbx_chem_comp_audit.action_type
+_pdbx_chem_comp_audit.date
+_pdbx_chem_comp_audit.processing_site
+HOH "Create component"  1999-07-08 RCSB
+HOH "Modify descriptor" 2011-06-04 RCSB
+#
+
+--------------------------------------------------------------------------------
+  CIF file
+    /Users/nigel/phenix/conda/modules/chem_data/chemical_components/h/data_HOH.cif
+--------------------------------------------------------------------------------
+</code></pre>
+</div>
+
+<p>Note the different locations compared to the first example. Also, this cif file only has coordinates.</p>
+
+
+<h3 class="mt-3">Reading .geo files</h3>
+
+<h4>Example</h4>
+
+<p>Perform these commands to follow along.</p>
+
+<pre class="codeDL"><code>phenix.fetch_pdb 1yjp --mtz
+phenix.refine 1yjp.{pdb,mtz} write_final_geo=True
+</code></pre>
+
+<p>These commands will download a model from the PDB and then refine it.</p>
+
+<h4>Get RMSD/Z</h4>
+
+<p>To get the RMSD and RMSZ values for the initial model broken into all residues, residues without alt. loc. and residues with alt. loc.</p>
+
+<pre class="codeDL"><code>elbow.refine_geo_display 1yjp_refine_001.geo
+</code></pre>
+
+<p>The output of the command is:</p>
+
+<pre class="CodeGreen" style="font-size: 12px"><code>RMS results for model
+
+RMS(D/Z)
+             d-all          d-none         d-alt          z-all          z-none         z-alt
+  bond       0.015(   59)   0.015(   59)   0.000(    0)   0.932(   59)   0.932(   59)   0.000(    0)
+  angle      1.354(   79)   1.354(   79)   0.000(    0)   0.825(   79)   0.825(   79)   0.000(    0)
+  dihedral  18.725(   34)  18.725(   34)   0.000(    0)   1.170(   34)   1.170(   34)   0.000(    0)</code></pre>
+
+
+<p>The overall bond RMSD is 0.015Å while the overall bond RMSZ is 0.93. We can do the same for the .geo obtained after refinement:</p>
+
+<pre class="codeDL"><code>elbow.refine_geo_display 1yjp_refine_001_final.geo
+</code></pre>
+
+
+<pre class="CodeGreen" style="font-size: 12px"><code>RMS results for model
+
+RMS(D/Z)
+             d-all          d-none         d-alt          z-all          z-none         z-alt
+  bond       0.006(   59)   0.006(   59)   0.000(    0)   0.315(   59)   0.315(   59)   0.000(    0)
+  angle      0.844(   79)   0.844(   79)   0.000(    0)   0.447(   79)   0.447(   79)   0.000(    0)
+  dihedral   3.051(   34)   3.051(   34)   0.000(    0)   0.645(   34)   0.645(   34)   0.000(    0)
+</code></pre>
+
+
+<p>The output shows that after refinement, the RMSD and RMSZ are reduced to 0.06Å and 0.32, respectively.</p>
+
+<h4>Displaying restraints of a subset of atoms</h4>
+
+<p>The output for a geo file of a large molecule can be overwhelming. If it is desired to look at restraints of a particular residue (such as a ligand), it is handy to apply the command on a subset. The syntax does not follow the standard Phenix atom selection syntax, but it is straightforward. For example, the selection string <code>GLY</code> will show restraints for all glycine residues in the model. The output also shows the RMSD/Z for the selection. The selection is therefore partular useful to display information about ligands.</p>
+
+<pre class="codeDL"><code>elbow.refine_geo_display 1yjp_refine_001_final.geo GLY
+</code></pre>
+
+<p>The output is:</p>
+
+<div class="ScrollBarBoxDL"><pre><code>RMS results for selection
+
+RMS(D/Z)
+             d-all          d-none         d-alt          z-all          z-none         z-alt
+  bond       0.004(    4)   0.004(    4)   0.000(    0)   0.235(    4)   0.235(    4)   0.000(    0)
+  angle      1.901(    5)   1.901(    5)   0.000(    0)   0.679(    5)   0.679(    5)   0.000(    0)
+  dihedral   4.330(    1)   4.330(    1)   0.000(    0)   0.866(    1)   0.866(    1)   0.000(    0)
+
+----- bonds ----- bonds ----- bonds ----- bonds ----- bonds ----- bonds
+   1 " CA  GLY A   1 " - " C   GLY A   1 " [ 1.516, 1.508,  0.008, 1.80e-02, 3.09e+03, 2.14e-01] Z=  0.44
+   2 " N   GLY A   1 " - " CA  GLY A   1 " [ 1.451, 1.453, -0.002, 1.60e-02, 3.91e+03, 1.87e-02] Z= -0.12
+   3 " C   GLY A   1 " - " N   ASN A   2 " [ 1.330, 1.329,  0.001, 1.31e-02, 5.83e+03, 1.13e-02] Z=  0.08
+   4 " C   GLY A   1 " - " O   GLY A   1 " [ 1.231, 1.230,  0.001, 2.00e-02, 2.50e+03, 1.19e-03] Z=  0.05
+---- angles ---- angles ---- angles ---- angles ---- angles ---- angles
+   1 " N   GLY A   1 " - " CA  GLY A   1 " - " C   GLY A   1 " [ 113.30, 109.17,  4.13, 2.90, 0.119, 2.02e+00] Z=  1.42
+   2 " CA  GLY A   1 " - " C   GLY A   1 " - " N   ASN A   2 " [ 116.20, 116.86, -0.66, 2.00, 0.250, 1.09e-01] Z= -0.33
+   3 " CA  GLY A   1 " - " C   GLY A   1 " - " O   GLY A   1 " [ 120.80, 120.18,  0.62, 2.10, 0.227, 8.69e-02] Z=  0.30
+   4 " C   GLY A   1 " - " N   ASN A   2 " - " CA  ASN A   2 " [ 120.94, 120.50,  0.44, 1.57, 0.406, 7.81e-02] Z=  0.28
+   5 " O   GLY A   1 " - " C   GLY A   1 " - " N   ASN A   2 " [ 123.00, 122.95,  0.05, 1.60, 0.391, 8.63e-04] Z=  0.03
+---- dihedrals ---- dihedrals ---- dihedrals ---- dihedrals ---- dihedrals ---- dihedrals
+   1 " CA  GLY A   1 " - " C   GLY A   1 " - " N   ASN A   2 " - " CA  ASN A   2 " [  180.00,  175.67,    4.33,  0,    5.00,    0.04,    0.75]
+---- chirals ---- chirals ---- chirals ---- chirals ---- chirals ---- chirals
+  None
+</code></pre></div>
+
+<p>To get just the information for the ASN with residue number "3" use</p>
+
+<pre class="codeDL"><code>elbow.refine_geo_display 1yjp_refine_001_final.geo “ASN 3”
+</code></pre>
+
+
+<div class="ScrollBarBoxDL"><pre><code>RMS results for selection
+
+RMS(D/Z)
+             d-all          d-none         d-alt          z-all          z-none         z-alt
+  bond       0.004(    9)   0.004(    9)   0.000(    0)   0.248(    9)   0.248(    9)   0.000(    0)
+  angle      0.664(   14)   0.664(   14)   0.000(    0)   0.419(   14)   0.419(   14)   0.000(    0)
+  dihedral   5.645(    6)   5.645(    6)   0.000(    0)   1.139(    6)   1.139(    6)   0.000(    0)
+
+----- bonds ----- bonds ----- bonds ----- bonds ----- bonds ----- bonds
+   1 " C   ASN A   3 " - " N   GLN A   4 " [ 1.331, 1.337, -0.006, 1.29e-02, 6.01e+03, 1.88e-01] Z= -0.47
+   2 " CA  ASN A   3 " - " CB  ASN A   3 " [ 1.532, 1.526,  0.006, 1.82e-02, 3.02e+03, 1.13e-01] Z=  0.33
+   3 " CG  ASN A   3 " - " ND2 ASN A   3 " [ 1.328, 1.323,  0.005, 2.10e-02, 2.27e+03, 5.49e-02] Z=  0.24
+   4 " CG  ASN A   3 " - " OD1 ASN A   3 " [ 1.231, 1.235, -0.004, 1.90e-02, 2.77e+03, 5.24e-02] Z= -0.21
+   5 " CB  ASN A   3 " - " CG  ASN A   3 " [ 1.516, 1.521, -0.005, 2.50e-02, 1.60e+03, 3.53e-02] Z= -0.20
+   6 " N   ASN A   3 " - " CA  ASN A   3 " [ 1.456, 1.454,  0.002, 1.21e-02, 6.83e+03, 3.20e-02] Z=  0.17
+   7 " C   ASN A   3 " - " O   ASN A   3 " [ 1.236, 1.237, -0.002, 1.20e-02, 6.94e+03, 1.84e-02] Z= -0.17
+   8 " CA  ASN A   3 " - " C   ASN A   3 " [ 1.521, 1.523, -0.002, 1.19e-02, 7.06e+03, 1.62e-02] Z= -0.17
+   9 " C   ASN A   2 " - " N   ASN A   3 " [ 1.331, 1.329,  0.001, 1.34e-02, 5.57e+03, 6.14e-03] Z=  0.07
+…
+</code></pre></div>
+
+<p>Two “selections” will show those restraints that involve both. Note that the selection <code>4</code> will select the residue number (resseq).</p>
+
+<pre class="codeDL"><code>elbow.refine_geo_display 1yjp_refine_001_final.geo “ASN 3” 4
+</code></pre>
+
+<pre class="CodeGreen" style="font-size: 12px"><code>----- bonds ----- bonds ----- bonds ----- bonds ----- bonds ----- bonds
+   1 " C   ASN A   3 " - " N   GLN A   4 " [ 1.331, 1.337, -0.006, 1.29e-02, 6.01e+03, 1.88e-01] Z= -0.47
+---- angles ---- angles ---- angles ---- angles ---- angles ---- angles
+   1 " C   ASN A   3 " - " N   GLN A   4 " - " CA  GLN A   4 " [ 122.77, 123.55, -0.78, 1.41, 0.503, 3.06e-01] Z= -0.55
+   2 " O   ASN A   3 " - " C   ASN A   3 " - " N   GLN A   4 " [ 123.30, 123.53, -0.23, 1.19, 0.706, 3.65e-02] Z= -0.19
+   3 " CA  ASN A   3 " - " C   ASN A   3 " - " N   GLN A   4 " [ 116.29, 116.19,  0.10, 1.30, 0.592, 5.54e-03] Z=  0.08
+---- dihedrals ---- dihedrals ---- dihedrals ---- dihedrals ---- dihedrals ---- dihedrals
+   1 " CA  ASN A   3 " - " C   ASN A   3 " - " N   GLN A   4 " - " CA  GLN A   4 " [  180.00,  168.44,   11.56,  0,    5.00,    0.04,    5.35]
+</code></pre>
+
+
+<h4 class="mt-4">Advanced “selections” of subsets</h4>
+
+<p>To get the information for all connections use the exclamation mark <code>!</code>.</p>
+
+<pre class="codeDL"><code>elbow.refine_geo_display 1yjp_refine_001_final.geo “ASN 3” !
+</code></pre>
+
+<pre class="CodeGreen" style="font-size: 12px"><code>
+  ----- bonds ----- bonds ----- bonds ----- bonds ----- bonds ----- bonds
+   1 " C   ASN A   3 " - " N   GLN A   4 " [ 1.331, 1.337, -0.006, 1.29e-02, 6.01e+03, 1.88e-01] Z= -0.47
+   2 " C   ASN A   2 " - " N   ASN A   3 " [ 1.331, 1.329,  0.001, 1.34e-02, 5.57e+03, 6.14e-03] Z=  0.07
+---- angles ---- angles ---- angles ---- angles ---- angles ---- angles
+   1 " C   ASN A   3 " - " N   GLN A   4 " - " CA  GLN A   4 " [ 122.77, 123.55, -0.78, 1.41, 0.503, 3.06e-01] Z= -0.55
+   2 " O   ASN A   2 " - " C   ASN A   2 " - " N   ASN A   3 " [ 122.86, 123.11, -0.25, 1.18, 0.718, 4.35e-02] Z= -0.21
+   3 " O   ASN A   3 " - " C   ASN A   3 " - " N   GLN A   4 " [ 123.30, 123.53, -0.23, 1.19, 0.706, 3.65e-02] Z= -0.19
+   4 " C   ASN A   2 " - " N   ASN A   3 " - " CA  ASN A   3 " [ 122.99, 122.77,  0.22, 1.41, 0.503, 2.49e-02] Z=  0.16
+   5 " CA  ASN A   2 " - " C   ASN A   2 " - " N   ASN A   3 " [ 115.51, 115.61, -0.10, 1.27, 0.620, 6.56e-03] Z= -0.08
+   6 " CA  ASN A   3 " - " C   ASN A   3 " - " N   GLN A   4 " [ 116.29, 116.19,  0.10, 1.30, 0.592, 5.54e-03] Z=  0.08
+---- dihedrals ---- dihedrals ---- dihedrals ---- dihedrals ---- dihedrals ---- dihedrals
+   1 " CA  ASN A   3 " - " C   ASN A   3 " - " N   GLN A   4 " - " CA  GLN A   4 " [  180.00,  168.44,   11.56,  0,    5.00,    0.04,    5.35]
+   2 " CA  ASN A   2 " - " C   ASN A   2 " - " N   ASN A   3 " - " CA  ASN A   3 " [ -180.00, -172.49,   -7.51,  0,    5.00,    0.04,    2.26]
+</code></pre>
+
+<p>To see the worst restraints use <code>top=3</code>.</p>
+
+<pre class="codeDL"><code>elbow.refine_geo_display 1yjp_refine_001_final.geo “ASN 3” top=3
+</code></pre>
+
+
+<pre class="CodeGreen" style="font-size: 12px"><code>
+----- bonds ----- bonds ----- bonds ----- bonds ----- bonds ----- bonds
+   1 " CG  GLN A   4 " - " CD  GLN A   4 " [ 1.516, 1.537, -0.021, 2.50e-02, 1.60e+03, 6.77e-01] Z= -0.84
+   2 " CA  ASN A   6 " - " CB  ASN A   6 " [ 1.527, 1.513,  0.014, 1.75e-02, 3.27e+03, 6.15e-01] Z=  0.80
+   3 " CB  ASN A   6 " - " CG  ASN A   6 " [ 1.516, 1.497,  0.019, 2.50e-02, 1.60e+03, 5.99e-01] Z=  0.76
+---- angles ---- angles ---- angles ---- angles ---- angles ---- angles
+   1 " N   GLY A   1 " - " CA  GLY A   1 " - " C   GLY A   1 " [ 113.30, 109.17,  4.13, 2.90, 0.119, 2.02e+00] Z=  1.42
+   2 " N   ASN A   3 " - " CA  ASN A   3 " - " C   ASN A   3 " [ 108.90, 111.07, -2.17, 1.63, 0.376, 1.77e+00] Z= -1.33
+   3 " CB  GLN A   4 " - " CG  GLN A   4 " - " CD  GLN A   4 " [ 112.60, 114.29, -1.69, 1.70, 0.346, 9.91e-01] Z= -0.99
+---- dihedrals ---- dihedrals ---- dihedrals ---- dihedrals ---- dihedrals ---- dihedrals
+   1 " CA  ASN A   3 " - " C   ASN A   3 " - " N   GLN A   4 " - " CA  GLN A   4 " [  180.00,  168.44,   11.56,  0,    5.00,    0.04,    5.35]
+   2 " CA  ASN A   2 " - " C   ASN A   2 " - " N   ASN A   3 " - " CA  ASN A   3 " [ -180.00, -172.49,   -7.51,  0,    5.00,    0.04,    2.26]
+   3 " CA  GLN A   4 " - " C   GLN A   4 " - " N   GLN A   5 " - " CA  GLN A   5 " [  180.00,  173.45,    6.55,  0,    5.00,    0.04,    1.71]
+---- chirals ---- chirals ---- chirals ---- chirals ---- chirals ---- chirals
+   1 " CA  ASN A   6 " - " N   ASN A   6 " - " C   ASN A   6 " - " CB  ASN A   6 " [ False,    2.51,    2.58,   -0.07,    0.20,   25.00,    0.13]
+   2 " CA  GLN A   5 " - " N   GLN A   5 " - " C   GLN A   5 " - " CB  GLN A   5 " [ False,    2.51,    2.46,    0.06,    0.20,   25.00,    0.08]
+   3 " CA  TYR A   7 " - " N   TYR A   7 " - " C   TYR A   7 " - " CB  TYR A   7 " [ False,    2.51,    2.46,    0.05,    0.20,   25.00,    0.06]
+</code></pre>
+
+
+
+<h4 class="mt-4">Hydrogen atoms</h4>
+
+<p>You can use the option <code>only_hydrogens=True</code> to see just the information of the hydrogen atoms. Note that RMSD/Z is zero for the bonds (in our example, H atoms are placed at ideal distances).</p>
+
+<pre class="codeDL"><code>phenix.reduce 1yjp.pdb > 1yjp_h.pdb
+phenix.pdb_interpretation 1yjp_h.pdb write_geo=True
+elbow.refine_geo_display 1yjp_h.pdb.geo "ASN 3" only_hydrogens=True
+</code></pre>
+
+<p>The above commands will place H atoms with reduce, then the new file will be run by <code>pdb_interpretation</code> and finally, the restraints information is displayed for the H atoms only.</p>
+
+<div class="ScrollBarBoxDL"><pre><code>RMS results for selection
+
+RMS(D/Z)
+             d-all          d-none         d-alt          z-all          z-none         z-alt
+  bond       0.000(    6)   0.000(    6)   0.000(    0)   0.000(    6)   0.000(    6)   0.000(    0)
+  angle      1.575(   14)   1.575(   14)   0.000(    0)   0.525(   14)   0.525(   14)   0.000(    0)
+  dihedral   0.900(    1)   0.900(    1)   0.000(    0)   0.030(    1)   0.030(    1)   0.000(    0)
+
+----- bonds ----- bonds ----- bonds ----- bonds ----- bonds ----- bonds
+   1 " CA  ASN A   3 " - " HA  ASN A   3 " [ 0.970, 0.970,  0.000, 2.00e-02, 2.50e+03, 3.94e-04] Z=  0.00
+   2 " ND2 ASN A   3 " - "HD21 ASN A   3 " [ 0.860, 0.860, -0.000, 2.00e-02, 2.50e+03, 1.83e-04] Z= -0.00
+   3 " N   ASN A   3 " - " H   ASN A   3 " [ 0.860, 0.860, -0.000, 2.00e-02, 2.50e+03, 1.07e-04] Z= -0.00
+   4 " CB  ASN A   3 " - " HB2 ASN A   3 " [ 0.970, 0.970, -0.000, 2.00e-02, 2.50e+03, 4.15e-05] Z= -0.00
+   5 " ND2 ASN A   3 " - "HD22 ASN A   3 " [ 0.860, 0.860,  0.000, 2.00e-02, 2.50e+03, 1.45e-05] Z=  0.00
+   6 " CB  ASN A   3 " - " HB3 ASN A   3 " [ 0.970, 0.970, -0.000, 2.00e-02, 2.50e+03, 1.30e-07] Z= -0.00
+---- angles ---- angles ---- angles ---- angles ---- angles ---- angles
+   1 " N   ASN A   3 " - " CA  ASN A   3 " - " HA  ASN A   3 " [ 110.00, 106.81,  3.19, 3.00, 0.111, 1.13e+00] Z=  1.06
+   2 " HB2 ASN A   3 " - " CB  ASN A   3 " - " HB3 ASN A   3 " [ 110.00, 106.96,  3.04, 3.00, 0.111, 1.03e+00] Z=  1.01
+   3 " C   ASN A   3 " - " CA  ASN A   3 " - " HA  ASN A   3 " [ 109.00, 106.68,  2.32, 3.00, 0.111, 6.00e-01] Z=  0.77
+   4 " CB  ASN A   3 " - " CA  ASN A   3 " - " HA  ASN A   3 " [ 109.00, 110.98, -1.98, 3.00, 0.111, 4.36e-01] Z= -0.66
+   5 " C   ASN A   3 " - " N   GLN A   4 " - " H   GLN A   4 " [ 123.72, 122.31,  1.41, 3.00, 0.111, 2.22e-01] Z=  0.47
+   6 " CG  ASN A   3 " - " CB  ASN A   3 " - " HB2 ASN A   3 " [ 108.00, 109.29, -1.29, 3.00, 0.111, 1.86e-01] Z= -0.43
+   7 " CG  ASN A   3 " - " CB  ASN A   3 " - " HB3 ASN A   3 " [ 108.00, 109.26, -1.26, 3.00, 0.111, 1.77e-01] Z= -0.42
+   8 " CA  ASN A   3 " - " N   ASN A   3 " - " H   ASN A   3 " [ 113.36, 114.17, -0.81, 3.00, 0.111, 7.33e-02] Z= -0.27
+   9 " CA  ASN A   3 " - " CB  ASN A   3 " - " HB3 ASN A   3 " [ 109.00, 109.27, -0.27, 3.00, 0.111, 8.37e-03] Z= -0.09
+  10 " CA  ASN A   3 " - " CB  ASN A   3 " - " HB2 ASN A   3 " [ 109.00, 109.23, -0.23, 3.00, 0.111, 5.99e-03] Z= -0.08
+  11 " C   ASN A   2 " - " N   ASN A   3 " - " H   ASN A   3 " [ 123.66, 123.71, -0.05, 3.00, 0.111, 2.83e-04] Z= -0.02
+  12 "HD21 ASN A   3 " - " ND2 ASN A   3 " - "HD22 ASN A   3 " [ 120.00, 119.97,  0.03, 3.00, 0.111, 8.30e-05] Z=  0.01
+  13 " CG  ASN A   3 " - " ND2 ASN A   3 " - "HD21 ASN A   3 " [ 120.00, 120.02, -0.02, 3.00, 0.111, 3.25e-05] Z= -0.01
+  14 " CG  ASN A   3 " - " ND2 ASN A   3 " - "HD22 ASN A   3 " [ 120.00, 120.01, -0.01, 3.00, 0.111, 1.16e-05] Z= -0.00
+---- dihedrals ---- dihedrals ---- dihedrals ---- dihedrals ---- dihedrals ---- dihedrals
+   1 " CB  ASN A   3 " - " CG  ASN A   3 " - " ND2 ASN A   3 " - "HD22 ASN A   3 " [   -0.00,   -0.90,    0.90,  2,   30.00, 1.11e-03, 1.33e-03]
+</code></pre></div>
+
+<h4 class="mt-4">Other features</h4>
+
+<p>To see information about non-bonded atoms use <code>show_nonbond=True</code>.</p>
+
+<pre class="codeDL"><code>elbow.refine_geo_display 1yjp_refine_001_final.geo “ASN 3” show_nonbond=True
+</code></pre>
+
+<pre class="CodeGreen" style="font-size: 12px"><code>- nonbonded - nonbonded - nonbonded - nonbonded - nonbonded - nonbonded
+   1 " OD1 ASN A   3 " - " ND2 ASN A   3 " ['2.730', '2.520', 'x,y+1,z']
+   2 " ND2 ASN A   3 " - " OD1 ASN A   3 " ['2.730', '2.520', 'x,y-1,z']
+   3 " O   ASN A   2 " - " CA  ASN A   3 " ['2.801', '2.776']
+   4 " O   ASN A   2 " - " N   ASN A   3 " ['2.838', '2.520', 'x,y+1,z']
+   5 " N   ASN A   3 " - " O   ASN A   2 " ['2.838', '2.520', 'x,y-1,z']
+   6 " O   ASN A   3 " - " CA  GLN A   4 " ['2.844', '2.776']
+   7 " ND2 ASN A   3 " - " OE1 GLN A   5 " ['2.845', '2.520']
+   8 " N   ASN A   3 " - " O   ASN A   3 " ['2.904', '2.496']
+</code></pre>
+
+
+<!----------------------- EDIT END ---------------------------->
+<!-- DO NOT EDIT ANYTHING BELOW!!!! -->
+</div> <!-- end col-sm-9 -->
+
+<!-- automatic table of contents
+     located in the sidebar; will move to the top on a small screen -->
+<div class="col-sm-3 mt-5">
+  <nav id="toc" data-toggle="toc"></nav>
+</div> <!-- end col-sm-3 -->
+
+
+
+{% endblock %}

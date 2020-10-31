@@ -47,12 +47,10 @@ def doc_model_building_sequence(request):
 def doc_program_template(request):
   return render(request, 'phenix/documentation/phenix_dev_doc_html/doc_program_template.html')
 
-def prog_overview(request):
-  return render(request, 'phenix/programming/prog_overview.html')
-
 def prog_runsnake(request):
   return render(request, 'phenix/programming/prog_runsnake.html')
 
-
+def restraint_jiffys(request):
+  return render(request, 'phenix/restraint_jiffys.html')
 
 
