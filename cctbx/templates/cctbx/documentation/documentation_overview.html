@@ -1,48 +1,73 @@
-{% extends "cctbx/header_new.html" %}
+{% extends "cctbx/header.html" %}
 
 {% load static %}
 
 {% block content %}
 
-<div class="container">
+<div class="col-sm-9 main">
 
-<h2 class="mb-3">Documentation</h2>
-
-
+<h2 class="mb-3">Documentation Table of Contents</h2>
 
 <ul >
-  <li><a href="http://cci.lbl.gov/cctbx_build/">Download:</a> Download the cctbx for Linux, MacOS or Windows.</li>
-  <li><a href="{% url 'installation' %}">Installation:</a> Learn how to install the cctbx.</li>
-  <li><a href="{% url 'getting_started' %}">Getting started:</a> Overview of what to do to get started using the cctbx.</li>
-  <li>High level cctbx objects:</li>
+  <li class="DocOverview">
+    <a href="http://cci.lbl.gov/cctbx_build/">Download:</a> Download the cctbx for Linux, MacOS or Windows.
+  </li>
+
+  <li class="DocOverview">
+    <a href="{% url 'installation' %}">Installation:</a> Learn how to install the cctbx.
+  </li>
+
+  <li class="DocOverview">
+    <a href="{% url 'getting_started' %}">Getting started:</a> Overview of what to do to get started using the cctbx.
+  </li>
+
+  <li class="DocOverview">High level cctbx objects:
     <ul>
+
       <li>
-        <a href="{% url 'doc_high_level_objects' %}">Intro to high-level objects:</a> Overview of high level objects that represent things like data, models, restraints, etc.
+        <a href="{% url 'doc_hlo_intro' %}">Intro to high-level objects:</a> Overview of high level objects that represent things like data, models, restraints, etc.
       </li>
+
       <li>
-        <a href="{% url 'doc_data_manager' %}">Reading and writing files:</a> Use the DataManager to read and write data and model files.
+        <a href="{% url 'doc_hlo_data_manager' %}">Reading and writing files:</a> Use the DataManager to read and write data and model files.
       </li>
+
       <li>
-        <a href="{% url 'doc_model_manager' %}">The cctbx model manager:</a> The model manager lets you do operations on models, such as apply coordinate shifts, do atom selections and calculate model-based map coefficients.
+        <a href="{% url 'doc_hlo_model_manager' %}">The cctbx model manager:</a> The model manager lets you do operations on models, such as apply coordinate shifts, do atom selections and calculate model-based map coefficients.
       </li>
+
       <li>
-        <a href="{% url 'doc_map_manager' %}">The cctbx map manager:</a> The map manager lets you do operations on maps.
+        <a href="{% url 'doc_hlo_map_manager' %}">The cctbx map manager:</a> The map manager lets you do operations on maps.
       </li>
+
       <li>
-        <a href="{% url 'doc_model_map_manager' %}">The map-model manager:</a> The map-model manager is useful to keep track of both maps and models.
+        <a href="{% url 'doc_hlo_model_map_manager' %}">The map-model manager:</a> The map-model manager is useful to keep track of both maps and models.
       </li>
-    </ul>
-  <li>Lower level components:
-    <ul>
-      <li><a href="{% url 'doc_flex_array' %}">Flex arrays:</a> An array specifically designed for the cctbx. Very useful for handling crystallographic data.</li>
-      <li><a href="{% url 'doc_phil' %}">Phil files:</a> Coming soon...</li>
+
     </ul>
   </li>
-  <li><a href="">API documentation: </a> Browse the API documentation. Useful if you are an experienced user.</li>
+
+  <li class="DocOverview">Lower level components:
+    <ul>
+
+      <li>
+        <a href="{% url 'doc_low_flex_array' %}">Flex arrays:</a> An array specifically designed for the cctbx. Very useful for handling crystallographic data.
+      </li>
+      <li>
+        <a href="{% url 'doc_low_flex_advanced' %}">Advanced features of flex arrays:</a> An array specifically designed for the cctbx. Very useful for handling crystallographic data.
+      </li>
+
+
+    </ul>
+  </li>
+
+  <li class="DocOverview">
+    <a href="">API documentation: </a> Browse the API documentation. Useful if you are an experienced user.
+  </li>
+
 </ul>
 
-<div id="DocOverview">
-</div>
+
 
 
 

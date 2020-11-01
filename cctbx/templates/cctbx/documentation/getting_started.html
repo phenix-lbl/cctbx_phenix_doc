@@ -1,19 +1,13 @@
-{% extends "cctbx/header_new.html" %}
+{% extends "cctbx/header.html" %}
 
 {% load static %}
 
 {% block content %}
 
-<div class="container">
-
-<div class="row">
-
-<div class="col-sm-9">
-
+<div class="col-sm-9 main">
 
 <h1 class="display-5">Getting started</h1>
 <p class="lead mt-3">Learn how to use the computational crystallography toolbox, the open source library for crystallography and cryo-EM.</p>
-<!--  <hr class="my-4"> -->
 
 
 <h2 class="mt-4">Download</h2>
@@ -36,8 +30,7 @@
 
 
 <h2 class="mt-4">Running as a script</h2>
-<p>Sometimes you want to save the commands in a script. This avoids typing the same text over and over again if you want to perform some actions on many files. For example, save the following lines in a file, you can call it <code>hello_cctbx.py</code> (<a href="{% url 'doc_high_level_objects' %}">this page</a> explains in more detail what the script does).</p>
-
+<p>Sometimes you want to save the commands in a script. This avoids typing the same text over and over again if you want to perform some actions on many files. For example, save the following lines in a file, you can call it <code>hello_cctbx.py</code> (<a href="{% url 'doc_hlo_intro' %}">this page</a> explains in more detail what the script does).</p>
 
 <pre class="codeDL"><code>from iotbx.map_model_manager import map_model_manager      # load in the map_model_manager
 mmm=map_model_manager()          # get an initialized instance of the map_model_manager
@@ -62,25 +55,25 @@ mmm.write_model("model.pdb")     # write out a model in PDB format
 <p>If you want to use the cctbx, you most likely want to do some actions on models, crystallographic data files or cryo-EM maps. The following pages give an introduction to higher level objects and methods for this purpose.</p>
 
 <dl class="row">
-  <dt class="col-sm-3"><a href="{% url 'doc_high_level_objects' %}">High-level cctbx objects</a></dt>
+  <dt class="col-sm-3"><a href="{% url 'doc_hlo_intro' %}">High-level cctbx objects</a></dt>
   <dd class="col-sm-9">Overview of high level objects that represent things like data, models, restraints, etc. Learn how to create your first object, the map_model_manager..</dd>
 
-  <dt class="col-sm-3"><a href="{% url 'doc_data_manager' %}">Reading and writing files</a></dt>
+  <dt class="col-sm-3"><a href="{% url 'doc_hlo_data_manager' %}">Reading and writing files</a></dt>
   <dd class="col-sm-9">
     <p>Most scripts will act on files, so this section should be of interest to everyone. Use the DataManager to conveniently read and write data and model files.</p>
   </dd>
 
-  <dt class="col-sm-3"><a href="{% url 'doc_model_manager' %}">The cctbx model manager</a></dt>
+  <dt class="col-sm-3"><a href="{% url 'doc_hlo_model_manager' %}">The cctbx model manager</a></dt>
   <dd class="col-sm-9">
     <p>The model manager lets you do operations on models. Learn how to to set up the model manager, apply coordinate shifts, do atom selections and calculate model-based map coefficients.</p>
   </dd>
 
-  <dt class="col-sm-3"><a href="{% url 'doc_map_manager' %}">The cctbx map manager</a></dt>
+  <dt class="col-sm-3"><a href="{% url 'doc_hlo_map_manager' %}">The cctbx map manager</a></dt>
   <dd class="col-sm-9">
     <p>The map manager lets you do operations on maps. Learn how to read and save maps, change a map, convert a real-space map to a Fourier representation and back and manipulate maps that represent only a part of a full map. The tutorial also explains how to find and represent map reconstruction symmetry.</p>
   </dd>
 
-  <dt class="col-sm-3"><a href="{% url 'doc_model_map_manager' %}">The map-model manager</a></dt>
+  <dt class="col-sm-3"><a href="{% url 'doc_hlo_model_map_manager' %}">The map-model manager</a></dt>
   <dd class="col-sm-9">
     <p>The map-model manager is useful to keep track of both maps and models. This tutorial shows how to set up the manager, how to cut out a piece of a map around a part of a model and how to create masks.</p>
   </dd>
@@ -105,12 +98,9 @@ mmm.write_model("model.pdb")     # write out a model in PDB format
 
 
 <!-- sidebar, which will move to the top on a small screen -->
-<div class="col-sm-3">
+<div class="col-sm-3 mt-5">
   <nav id="toc" data-toggle="toc"></nav>
 </div><!-- end col-sm-3 -->
 
-</div> <!-- end row -->
-
-</div> <!-- end container -->
 
 {% endblock %}

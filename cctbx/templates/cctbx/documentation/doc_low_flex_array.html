@@ -1,15 +1,10 @@
-{% extends "cctbx/header_new.html" %}
+{% extends "cctbx/header.html" %}
 
 {% load static %}
 
 {% block content %}
 
-
-<div class="container">
-
-<div class="row">
-
-<div class="col-sm-9">
+<div class="col-sm-9 main">
 
 <h1 style="text-align:center">Flex arrays</h1>
 
@@ -250,13 +245,11 @@ SCITBX_ASSERT(grid.size_1d() == a.size()) failure.</code></pre>
 
 </div>
 
-      <!-- sidebar, which will move to the top on a small screen -->
-      <div class="col-sm-3">
-        <nav id="toc" data-toggle="toc"></nav>
-      </div>
-
+<!-- sidebar, which will move to the top on a small screen -->
+<div class="col-sm-3 mt-5">
+  <nav id="toc" data-toggle="toc"></nav>
 </div>
 
-</div>
+
 
 {% endblock %}

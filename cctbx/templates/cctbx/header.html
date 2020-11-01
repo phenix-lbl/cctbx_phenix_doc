@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>CCTBX documentation</title>
+
+    {% load static %}
+
+
+    <!-- For Code Mirror -->
+    <link rel="stylesheet" href="{% static 'phenix/css/codemirror.css' %}" type="text/css"/>
+    <script type="text/javascript" src="{% static 'phenix/js/codemirror.js' %}"></script>
+    <script type="text/javascript" src="{% static 'phenix/js/matchbrackets.js' %}"></script>
+    <script type="text/javascript" src="{% static 'phenix/js/python.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap Table of Contents -->
+    <link rel="stylesheet" href="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.css"/>
+    <script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'cctbx/css/mystyle_new.css' %}" type="text/css">
+
+
+    <!-- Font Awesome JS -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <!-- Font Awesome
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script> -->
+
+    <!-- Our Custom CSS-->
+
+    <script type="text/javascript" src="{% static 'cctbx/js/myheaderjs.js' %}"></script>
+    <script type="text/javascript" src="{% static 'cctbx/js/myjavascript.js' %}"></script>
+
+  </head>
+
+  <body>
+
+<!-- Bootstrap NavBar -->
+<nav class="navbar sticky-top navbar-expand-md MyTopNavbar">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">
+        <span class="menu-collapsed">Phenix developers documentation</span>
+    </a>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'index_phenix' %}">Phenix dev doc</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://www.phenix-online.org">Phenix website</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://cci.lbl.gov">CCI website</a>
+            </li>
+        </ul>
+    </div>
+</nav><!-- NavBar END -->
+
+    <div class="container-fluid">
+      <div class="row">
+
+
+
+        <div class="sidebar"  id="sidebar-container">
+          <ul class="nav nav-sidebar list-unstyled components sidenav-list mt-4" >
+            <li>
+              <a href="{% url 'index' %}" class="active">
+                <span class="fa fa-home fa-fw mr-2"></span>
+                <span>Home</span>
+              </a>
+            </li>
+            <li>
+              <a href="http://cci.lbl.gov/cctbx_build/">
+                <span class="fa fa-download fa-fw mr-2"></span>
+                <span class="menu-collapsed">Download</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'installation' %}">
+                <span class="fa fa-keyboard-o fa-fw mr-2"></span>
+                <span class="menu-collapsed">How to install</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'getting_started' %}">
+                <span class="fa fa-pencil fa-fw mr-2"></span>
+                <span class="menu-collapsed">Getting started</span>
+              </a>
+            </li>
+            <li>
+              <a data-target="#submenu-doc" data-toggle="collapse" class=" flex-column align-items-start submenu-head" aria-expanded="false" aria-controls="submenu-doc">
+                <span class="fa fa-book fa-fw mr-2"></span>
+                <span class="menu-collapsed">Documentation</span>
+                <span class="fa  submenu-icon ml-auto"></span>
+              </a>
+                <ul class="collapse list-unstyled ulsubmenu" id="submenu-doc">
+                    <li>
+                      <a href="{% url 'documentation_overview' %}">Table of Contents</a>
+                    </li>
+
+
+
+                    <li>
+                      <a data-target="#subsubmenu1-doc" data-toggle="collapse" class=" flex-column align-items-start submenu-head" aria-expanded="false" aria-controls="submenu-doc">
+                        <span class="menu-collapsed">High level objects</span>
+                        <span class="fa  submenu-icon ml-auto"></span>
+                      </a>
+                      <ul class="collapse list-unstyled ulsubsubmenu" id="subsubmenu1-doc">
+                        <li>
+                          <a href="{% url 'doc_hlo_intro' %}">Introduction</a>
+                        </li>
+                        <li>
+                          <a href="{% url 'doc_hlo_data_manager' %}">Data Manager</a>
+                        </li>
+                        <li>
+                          <a href="{% url 'doc_hlo_model_manager' %}">Model Manager</a>
+                        </li>
+                        <li>
+                          <a href="{% url 'doc_hlo_map_manager' %}">Map Manager</a>
+                        </li>
+                        <li>
+                          <a href="{% url 'doc_hlo_model_map_manager' %}">Map-Model Manager</a>
+                        </li>
+                      </ul>
+                    </li>
+                    <!--
+                    <li>
+                      <a href="{% url 'doc_quick_reference_phenix' %}">Quick reference</a>
+                    </li>
+                    <li>
+                      <a href="{% url 'test' %}">Examples</a>
+                    </li>
+                    <li>
+                      <a href="{% url 'restraint_jiffys_phenix' %}">Restraint jiffys</a>
+                    </li>
+                    -->
+                    <li>
+                      <a data-target="#subsubmenu2-doc" data-toggle="collapse" class=" flex-column align-items-start submenu-head" aria-expanded="false" aria-controls="submenu-doc">
+                        <span class="menu-collapsed">Low level</span>
+                        <span class="fa  submenu-icon ml-auto"></span>
+                      </a>
+                      <ul class="collapse list-unstyled ulsubsubmenu" id="subsubmenu2-doc">
+                        <li>
+                          <a href="{% url 'doc_low_flex_array' %}">Flex arrays</a>
+                        </li>
+                        <li>
+                          <a href="{% url 'doc_low_flex_advanced' %}">Advanced flex</a>
+                        </li>
+                      </ul>
+                    </li>
+
+                </ul>
+
+            </li>
+
+
+
+            <li>
+              <a data-target="#submenu2-doc" data-toggle="collapse" class=" flex-column align-items-start submenu-head" aria-expanded="false" aria-controls="submenu2-doc">
+                <span class="fa fa-graduation-cap fa-fw mr-2"></span>
+                <span class="menu-collapsed">Tutorials</span>
+                <span class="fa submenu-icon ml-auto"></span>
+              </a>
+                <ul class="collapse list-unstyled ulsubmenu" id="submenu2-doc">
+                    <li>
+                      <a href="{% url 'tuto_intro' %}">Introduction</a>
+                    </li>
+                    <li>
+                      <a href="{% url 'tuto_melk_2019' %}">Melk 2019</a>
+                    </li>
+                    <li>
+                      <a href="{% url 'tuto_rigid_body' %}">Rigid Body</a>
+                    </li>
+                    <li>
+                      <a href="{% url 'tuto_cctbx_tour' %}">cctbx tour</a>
+                    </li>
+                </ul>
+            </li>
+
+
+
+            <li>
+              <a href="{% url 'newsletter_artcls' %}">
+                <span class="fa fa-newspaper-o fa-fw mr-2"></span>
+                <span class="menu-collapsed">Newsletter articles</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="{% url 'about' %}">
+                <span class="fa fa-hand-o-up fa-fw mr-2"></span>
+                <span class="menu-collapsed">About the cctbx</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://github.com/cctbx/cctbx_project">
+                <span class="fa fa-github fa-fw mr-2"></span>
+                <span class="menu-collapsed">cctbx on GitHub</span>
+              </a>
+            </li>
+
+          </ul>
+        </div>
+
+
+
+        {% block content %}
+        {% endblock %}
+
+      </div>
+    </div>
+
+  {% block extra_js %}{% endblock extra_js %}
+
+  </body>
+
+</html>

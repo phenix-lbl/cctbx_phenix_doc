@@ -1,14 +1,10 @@
-{% extends "cctbx/header_new.html" %}
+{% extends "cctbx/header.html" %}
 
 {% load static %}
 
 {% block content %}
 
-<div class="container">
-
-<div class="row">
-
-<div class="col-sm-9">
+<div class="col-sm-9 main">
 
 <h2><center>How to install</center></h2>
 
@@ -166,12 +162,10 @@ libtbx.python %CCTBX_DIST%\run_tests.py --Quick
 </div>
 
 <!-- sidebar, which will move to the top on a small screen -->
-<div class="col-sm-3">
+<div class="col-sm-3 mt-5">
   <nav id="toc" data-toggle="toc"></nav>
 </div>
 
-</div>
 
-</div>
 
 {% endblock %}

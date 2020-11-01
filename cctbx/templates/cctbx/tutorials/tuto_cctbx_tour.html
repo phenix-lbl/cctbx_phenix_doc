@@ -1,31 +1,12 @@
-{% extends "cctbx/header_new.html" %}
+{% extends "cctbx/header.html" %}
 
 {% load static %}
 
 {% block content %}
 
-<div class="container">
-
-<div class="row">
-
-<div class="col-sm-9">
+<div class="col-sm-9 main">
 
 <h1 class="mb-5"><center>Tour of the cctbx</center></h1>
-
-<!-- https://www.tipsandtricks-hq.com/simple-table-of-contents-toc-using-pure-html-and-css-code-9217
-<div id="toc_container" class="mt-4">
-<p class="toc_title" id="Contents">Contents</p>
-<ul class="toc_list">
-  <li><a href="#First_Point_Header">1. The beach in the box</a></li>
-  <li><a href="#Second_Point_Header">2. At the very bottom</a></li>
-  <li><a href="#Third_Point_Header">3. scitbx.array_family.flex</a></li>
-  <li><a href="#Fourth_Point_Header">4. cctbx.array_family.flex</a></li>
-  <li><a href="#Fifth_Point_Header">5. A balancing act</a></li>
-  <li><a href="#Sixth_Point_Header">6. Hybrid systems</a></li>
-  <li><a href="#Seventh_Point_Header">7. Building bridges</a></li>
-  <li><a href="#Eigth_Point_Header">8. Thinking hybrid</a></li>
-</ul>
-</div>-->
 
 <h2>1. The beach in the box</h2>
 <p class="mt-3">If you go to the beach you will find massive amounts of a material known to crystallographers as quartz, which in this case is just a fancy word for sand. As an example here is the cctbx way of playing in the sandbox:</p>
@@ -326,12 +307,10 @@ class_&lt;brick&gt;("brick", no_init)
 </div>
 
 <!-- sidebar, which will move to the top on a small screen -->
-<div class="col-sm-3">
+<div class="col-sm-3 mt-5">
   <nav id="toc" data-toggle="toc"></nav>
 </div>
 
-</div>
-</div>
 
 <!--
 <p class="mt-3"></p>

@@ -16,10 +16,24 @@ $(document).ready(function () {
   };
 
   // Keep the dropdown open when links inside it are currently open
-  if (templ_name=='documentation_overview' || templ_name=='newsletter_artcls' || templ_name.startsWith("doc_")) {
+  if (templ_name=='documentation_overview' || templ_name.startsWith("doc_")) {
     //$('#body-row .collapse').collapse('show');
     //$(".submenu-head").attr("aria-expanded":"true");
     $("#submenu-doc").addClass("show");
+  };
+
+  if (templ_name.startsWith("doc_hlo")) {
+    $("#subsubmenu1-doc").addClass("show");
+  };
+
+  if (templ_name.startsWith("doc_low")) {
+    $("#subsubmenu2-doc").addClass("show");
+  };
+
+  if (templ_name.startsWith("tuto_")) {
+    //$('#body-row .collapse').collapse('show');
+    //$(".submenu-head").attr("aria-expanded":"true");
+    $("#submenu2-doc").addClass("show");
   };
 
   // -------------------
