@@ -23,6 +23,11 @@ def documentation_overview(request):
 
 # ------------------------------------------------------------------------------
 
+def doc_programming_tips(request):
+  return render(request, 'cctbx/documentation/doc_programming_tips.html')
+
+# ------------------------------------------------------------------------------
+
 def doc_phil(request):
   return render(request, 'cctbx/documentation/doc_phil.html')
 

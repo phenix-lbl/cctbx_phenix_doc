@@ -12,6 +12,8 @@ urlpatterns = [
 
     path('documentation_overview/', views.documentation_overview, name='documentation_overview'),
 
+    path('doc_programming_tips/', views.doc_programming_tips, name='doc_programming_tips'),
+
     path('doc_hlo_intro/', views.doc_hlo_intro, name='doc_hlo_intro'),
     path('doc_hlo_data_manager/', views.doc_hlo_data_manager, name='doc_hlo_data_manager'),
     path('doc_hlo_model_manager/', views.doc_hlo_model_manager, name='doc_hlo_model_manager'),
