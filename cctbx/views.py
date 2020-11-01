@@ -24,7 +24,7 @@ def documentation_overview(request):
 # ------------------------------------------------------------------------------
 
 def doc_programming_tips(request):
-  return render(request, 'cctbx/documentation/doc_programming_tips.html')
+  return render(request, 'cctbx/documentation/website_html/doc_programming_tips.html')
 
 # ------------------------------------------------------------------------------
 
@@ -52,7 +52,7 @@ def doc_low_flex_array(request):
   return render(request, 'cctbx/documentation/doc_low_flex_array.html')
 
 def doc_low_flex_advanced(request):
-  return render(request, 'cctbx/documentation/doc_low_flex_advanced.html')
+  return render(request, 'cctbx/documentation/website_html/doc_low_flex_advanced.html')
 
 # ------------------------------------------------------------------------------
 
