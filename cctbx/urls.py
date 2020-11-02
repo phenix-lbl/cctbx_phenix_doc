@@ -20,6 +20,9 @@ urlpatterns = [
     path('doc_hlo_map_manager/', views.doc_hlo_map_manager, name='doc_hlo_map_manager'),
     path('doc_hlo_model_map_manager/', views.doc_hlo_model_map_manager, name='doc_hlo_model_map_manager'),
 
+    path('doc_maps_intro/', views.doc_maps_intro, name='doc_maps_intro'),
+    path('doc_maps_boxing/', views.doc_maps_boxing, name='doc_maps_boxing'),
+
     path('doc_low_flex_array/', views.doc_low_flex_array, name='doc_low_flex_array'),
     path('doc_low_flex_advanced/', views.doc_low_flex_advanced, name='doc_low_flex_advanced'),
     path('doc_phil/', views.doc_phil, name='doc_phil'),

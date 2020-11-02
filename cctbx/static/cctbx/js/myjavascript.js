@@ -30,6 +30,10 @@ $(document).ready(function () {
     $("#subsubmenu2-doc").addClass("show");
   };
 
+  if (templ_name.startsWith("doc_map")) {
+    $("#subsubmenu3-doc").addClass("show");
+  };
+
   if (templ_name.startsWith("tuto_")) {
     //$('#body-row .collapse').collapse('show');
     //$(".submenu-head").attr("aria-expanded":"true");
