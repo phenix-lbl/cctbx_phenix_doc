@@ -1,0 +1,71 @@
+{% extends "phenix/header.html" %}
+
+{% load static %}
+
+{% block content %}
+
+
+<div class="col-sm-9 main">
+<!-- DO NOT EDIT ANYTHING ABOVE!!!! -->
+<!----------------------- EDIT START ---------------------------->
+
+<h2><center>The Phenix directory structure</center></h2>
+
+<p class="lead mt-4">It is helpful to have an idea about the directory structure in Phenix so that you can find Phenix tools that you want to use in your programming. This page describes the overall setup.</p>
+
+<p>The top-level Phenix directory is typically located in the directory referred to by the environmental variable  <code>$PHENIX</code>. It contains the following files and folders:</p>
+
+<ul>
+  <li>bootstrap.py -- Python program used to build and update</li>
+  <li>conda_base -- base for Conda</li>
+  <li>dev_env -- for installing git.lfs</li>
+  <li>modules  -- source programs</li>
+  <li>build -- installed programs</li>
+  <li>doc -- installed documentation</li>
+</ul>
+
+<p>Since all Phenix code is in the <code>modules</code> directory, the location of a particular file is often referred to relative to this modules directory. For example, as <code>modules/phenix/phenix/programs/mtriage.py</code>.</p>
+
+<p>Within the modules directory are a big set of directories for different modules of Phenix (including cctbx_project, the computational crystallography project):</p>
+
+<img width="550" src="{% static 'phenix/img/fig_directory_structure.png' %}">
+
+<p class="mt-4">Several directories are of particular interest:</p>
+
+<ul>
+  <li><b>cctbx_project</b>:  Most of the source code for low-level programming is in the cctbx_project directory. This code is documented in the <a href="https://cci.lbl.gov/docs/cctbx/">cctbx documentation</a>.</li>
+  <li><b>phenix</b>: Most of the code for Phenix programming is in the phenix directory (see below)</li>
+  <li><b>phenix_regression</b>:  Regression tests for phenix tools</li>
+  <li><b>phenix_examples</b>:  Tutorials on Phenix tools</li>
+  <li><b>phenix_html</b>:  Documentation on Phenix</li>
+</ul>
+
+<p>The phenix module has the following subdirectories:</p>
+<ul>
+  <li><b>phenix</b>: source code for most Phenix tools</li>
+  <li><b>wxGUI</b>: no longer used</li>
+  <li><b>wxGUI2</b>: source code for Phenix GUI</li>
+  <li><b>conda_envs</b>: files that define the conda environments</li>
+</ul>
+
+<p>Often, you will add to existing files or create new files within the existing directory structure. If you start a completely new area of Phenix programming, you would create a new directory structure to hold it. Before creating a new directory structure, it should be discussed among Phenix group members.</p>
+
+<p>The phenix/phenix/ subdirectory is further subdivided into:</p>
+
+<img width="550" src="{% static 'phenix/img/fig_directory_structure2.png' %}">
+
+<p class="mt-4">There are two special subdirectories in the phenix/phenix directory:</p>
+  <ul>
+    <li><b>programs</b>: program files that interface between the user or the GUI and a program</li>
+    <li><b>command_line</b>: short files that specify what program to run when a user types something like <code>phenix.refine</code></li>
+  </ul>
+
+
+<!----------------------- EDIT END ---------------------------->
+<!-- DO NOT EDIT ANYTHING BELOW!!!! -->
+</div> <!-- end col-sm-9 -->
+
+
+
+
+{% endblock %}
