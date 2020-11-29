@@ -46,7 +46,7 @@
 
 <p>2. Run <code>python bootstrap.py</code> (you may want to run it with the <code>--help</code> option first to discover the available options).</p>
 
-<p>3. For better compatibility with newer operating systems, you will want to use conda packages for dependencies. Add the <code>--use-conda</code> flag and the command becomes <code>python bootstrap.py --use-conda</code>. This will run the miniconda installer if conda cannot be found. The environment with the dependencies will be located in the <code>conda_base</code> directory. See the description of the <code>--use-conda</code> flag from the <code>--help</code> output for more details.<br>
+<p>For better compatibility with newer operating systems, you will want to use conda packages for dependencies. Add the <code>--use-conda</code> flag and the command becomes <code>python bootstrap.py --use-conda</code>. This will run the miniconda installer if conda cannot be found. The environment with the dependencies will be located in the <code>conda_base</code> directory. See the description of the <code>--use-conda</code> flag from the <code>--help</code> output for more details.<br>
 The installation will take a long while (15 min - 1 hour, depending on your computer) but the script will verbosely describe what it does.</p>
 
 <p>This creates the subdirectories <code>base</code>, <code>build</code>, and <code>modules</code>. The <code>base</code> directory contains dependencies for cctbx, <code>build</code> contains the compiled cctbx code, and <code>modules</code> contains the source code for cctbx. To keep <code>bootstrap.py</code> in your installation directory up-to-date with the version in modules, you can create a symbolic link to that version:</p>
