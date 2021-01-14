@@ -1,0 +1,195 @@
+{% extends "cctbx/header.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="col-sm-9 main">
+<!-- DO NOT EDIT ANYTHING ABOVE!!!! -->
+<!----------------------- EDIT START ---------------------------->
+
+<h2><center>HKLviewer</center></h2>
+
+<p class="lead mt-4">Learn how to visualize the reflections of your diffraction dataset.</p>
+
+<h3 class="mt-4">Showing I/SigI</h3>
+
+<p>Reflections with I/SigI &gt; 2 are deemed to be good data
+for structure solution. This is often used as a resolution cutoff limit. Here
+we examine a dataset to see that there isn’t always a well defined resolution
+threshold.<br>
+The dataset “merged.mtz” provided by a workshop participant Armando Albert is opened
+in the HKLviewer.<br>
+The IMEAN,SIGIMEAN reflections are shown by double clicking the row with that
+label in the upper left table. <br>
+To better see any variation in the IMEAN data values either untick the “User
+defined power scaling” checkbox on the Sizing tab or click on the colour chart
+to open the Colour Gradient Maps dialog. Then select a smaller power factor value
+than 1, say 0.29. </p>
+
+<img width="800" src="{% static 'cctbx/img/doc_hklviewer_001.png' %}">
+
+<h4 class="mt-4">Computing I/SigI data</h4>
+
+<p>Right click the first row with the “IMEAN,SIGIMEAN” label
+and select “Make new data as a function of this data and another dataset”. <br>
+In the “Create New Reflection data” dialog enter “newdata=flex.abs(data1)/sigmas1”
+and “IoverSIGI” as the formula and the label for the new data respectively.</p>
+
+<img width="600" src="{% static 'cctbx/img/doc_hklviewer_002.png' %}">
+
+<p class="mt-3">In the text field python syntax can be entered for the predefined
+variables: </p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">python syntax</th>
+      <th scope="col">predefined variables</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>newdata</td>
+      <td>miller_array._data variable produced by the operation</td>
+    </tr>
+    <tr>
+      <td>newsigmas</td>
+      <td>miller_array._sigmas variable produced by the operation</td>
+    </tr>
+    <tr>
+      <td>data1</td>
+      <td>miller_array._data variable of the reflection right-clicked for bringing up the dialog used by the operation, labelled “FP” in  Figure 2</td>
+    </tr>
+    <tr>
+      <td>sigmas1</td>
+      <td>miller_array._sigmas variable of the reflection right-clicked for bringing up the dialog used by the operation, labelled “SIGFP” in  Figure 2</td>
+    </tr>
+    <tr>
+      <td>data2</td>
+      <td>miller_array._data variable of the dataset selected from the drop-down list, labelled “FWT,PHWT” in  Figure 2</td>
+    </tr>
+    <tr>
+      <td>sigmas2</td>
+      <td>miller_array._sigmas variable of the dataset selected from the drop-down list if it exists.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The input syntax is plain python executed as one command using the flex array
+API defined by the cctbx. Multiple commands can be separated with semi-colon. Basic
+knowledge of flex array data types and the relevant API is assumed. When the
+operation succeeds the newly created array will be displayed in the viewer.</p>
+
+
+<p>Execute the formula and display the IoverSIGI data set in
+the viewer by clicking OK:</p>
+
+<img width="800" src="{% static 'cctbx/img/doc_hklviewer_003.png' %}">
+
+<p class="mt-3">On the Binning tab, bin data against IoverSIGI. <br>
+Change the number of bins from 1 to 5 or 6.</p>
+
+<img width="400" src="{% static 'cctbx/img/doc_hklviewer_004.png' %}">
+
+<p class="mt-3">HKLviewer will try to put an equal number of reflections into
+each bin. But here we want explicit bin thresholds.<br>
+Enter bin thresholds by typing in numbers 4,3,2,1 from the bottom row and up in
+the “lower bin value” column. <br>
+Untick the checkboxes of the first two bins to hide reflections with I/SigI
+less than 2.</p>
+
+<p>This proves to be a significant number of reflections not
+just located beyond a certain resolution limit. The relatively small number of
+reflections with I/SigI &gt; 2 suggests that it could be difficult to solve the
+structure for this data set.</p>
+
+<img width="800" src="{% static 'cctbx/img/doc_hklviewer_005.png' %}">
+
+<h3 class="mt-4">Inspecting tNCS modulation</h3>
+
+<p>tNCS is a condition where two or more molecules in the unit
+cell are aligned in a way to cause interference in the diffraction pattern. It
+shows as periodic modulation of the diffraction pattern and can cause problems
+for structure solution unless identified and taken into account by structure
+solution software. tNCS vectors are real space vectors and can be predicted by
+in advance of structure solution. The dataset 6C5F (available from the PDB) has
+tNCS which is detected by programs such as phenix.xtriage. It determined the tNCS
+vector to be 0.333, -0.334, 0.040 in fractional coordinate space. </p>
+
+<p>Open the data file in the HKLviewer.<br>
+Double click the FP,SIGFP label to display it. <br>
+On the Expansion tab, expand the reflections to a sphere. <br>
+On the sizing tab, tick the “User defined power scaling” checkbox and enter a power
+factor of 2 to show reflections roughly proportional to original intensities
+(which are not present in the file from the PDB). <br>
+On the Vectors tab, enter the coordinates for the tNCS vector found by xtriage on
+the last line by overwriting the “new vector” label to “xtriageTNCS” and
+entering the actual coordinate in the same row under the “as abc” column.
+Pressing return will submit the vector to HKLviewer. <br>
+Tick the xtriageTNCS vector checkbox as well as the “Orient vector” checkbox
+and the radio button “Parallel to screen”. <br>
+Either rotate the reflections manually on the slider control or tick the “Rotate
+continuously” checkbox. </p>
+
+<p>This will make visible the modulations in the data as
+ripples in the reflections in planes perpendicular to the tNCS vector. It can
+be useful to tick the “Show Real Space Unit cell” checkbox to see where exactly
+the tNCS vector points.</p>
+
+<img width="800" src="{% static 'cctbx/img/doc_hklviewer_006.png' %}">
+
+<p class="mt-3">Phasertng, which is currently under development, stores a
+data column, TEPS, revealing the modulation of the intensities. The coordinate
+for the tNCS vector is also embedded in the mtz file. This is illustrated below
+where the reflections have been sliced with a clip plane width of 8. On the
+sizing tab we have set the power factor to 0 and the linear scaling factor to
+0.8. The modulation is clear from the alternating layers of red, green and blue
+layers of reflections.</p>
+
+<img width="800" src="{% static 'cctbx/img/doc_hklviewer_007.png' %}">
+
+<h3 class="mt-4">Inspecting a twin law</h3>
+
+<p>The phenix tutorial with the file, porin.mtz, illustrates
+twinning. The twin operator found by phenix.xtriage is -h-k,k,-l.</p>
+
+<p>Load the file in the HKLviewer and display the dataset “F-obs,SIGF-obs”.
+<br>
+On the Vectors tab, Enter the twin operator into the table of vectors; first by
+overwriting the last row with the “new vector” string with “twin”. Then by
+entering the string “-h-k,k,-l” in the adjacent rotation column and pressing
+return for the HKLviewer to accept the new twin operator. It turns out to be a
+2-fold rotation so the HKLviewer will prefix the name with 2-fold. <br>
+Press the “Orient vector” checkbox and the radio button “Normal to screen”. <br>
+On the Expansion tab, expand the reflections to P1 and Friedel mates. <br>
+On the Slicing tab, tick the “Slice with a clip plane” checkbox and set “Distance
+from Origin” and “Clip plane width” to 4 and 1 respectively. <br>
+Show a “Tabulated Reflection data” window by right clicking the column label “F-obs,SIGF-obs”
+in the upper left table and selecting “Show a table…” from the menu.</p>
+
+<img width="800" src="{% static 'cctbx/img/doc_hklviewer_008.png' %}">
+
+<p class="mt-3">To inspect data values of reflections related by the twin
+operator right-click a reflection in the view. It will bring up two tooltips with
+the hkl indices at the end of two vectors from the reciprocal space origin pointing
+to the twin reflections. Due to the clip plane, the vectors may not be fully visible.
+Double click one of the reflections to bring up the standard tooltip with all data
+values represented by this reflection. Right-clicking a reflection will also
+highlight the data value in the “Tabulated Reflection data” window. The HKL
+indices in the table are the original from file and so may differ from computed
+indices of expanded reflections in the tooltips displayed in the view. </p>
+
+
+<!----------------------- EDIT END ---------------------------->
+<!-- DO NOT EDIT ANYTHING BELOW!!!! -->
+</div> <!-- end col-sm-9 -->
+
+<!-- automatic table of contents
+     located in the sidebar; will move to the top on a small screen -->
+<div class="col-sm-3 mt-5">
+  <nav id="toc" data-toggle="toc"></nav>
+</div> <!-- end col-sm-3 -->
+
+
+{% endblock %}

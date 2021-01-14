@@ -27,6 +27,11 @@ def doc_programming_tips(request):
   return render(request, 'cctbx/documentation/website_html/doc_programming_tips.html')
 
 # ------------------------------------------------------------------------------
+
+def doc_hklviewer(request):
+  return render(request, 'cctbx/documentation/doc_hklviewer.html')
+
+# ------------------------------------------------------------------------------
 # subsubmenu1
 def doc_phil(request):
   return render(request, 'cctbx/documentation/doc_phil.html')

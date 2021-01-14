@@ -6,7 +6,7 @@
 
 <h2>About the cctbx</h2>
 
-<p class="mt-5">The Computational Crystallography Toolbox (<i>cctbx</i>) is being developed as the open source component of the <i><a href="http://phenix-online.org">Phenix</a> </i> system. The goal of the <i>Phenix</i> project is to advance automation of macromolecular structure determination. <i>Phenix</i> depends on the cctbx, but not vice versa. This hierarchical approach enforces a clean design as a reusable library. The <i>cctbx</i> is therefore also useful for small-molecule crystallography and even general scientific applications.</p>
+<p class="mt-4">The Computational Crystallography Toolbox (<i>cctbx</i>) is being developed as the open source component of the <i><a href="http://phenix-online.org">Phenix</a> </i> system. The goal of the <i>Phenix</i> project is to advance automation of macromolecular structure determination. <i>Phenix</i> depends on the cctbx, but not vice versa. This hierarchical approach enforces a clean design as a reusable library. The <i>cctbx</i> is therefore also useful for small-molecule crystallography and even general scientific applications.</p>
 
 <p>To maximize reusability and, maybe even more importantly, to give individual developers a notion of privacy, the <i>cctbx</i> is organized as a set of smaller modules. This is very much like a village (the <i>cctbx</i> project) with individual houses (modules) for each family (groups of developers, of any size including one).</p>
 
@@ -15,6 +15,102 @@
 <p>The <i>cctbx</i> is designed with an open and flexible architecture to promote extendability and easy incorporation into other software environments. The package is organized as a set of ISO C++ classes with <a href="https://www.python.org">Python</a> bindings. This organization combines the computational efficiency of a strongly typed compiled language with the convenience and flexibility of a dynamically typed scripting language in a strikingly uniform and very maintainable way.</p>
 
 <p>Use of the Python interfaces is highly recommended, but optional. The <i>cctbx</i> can also be used purely as a C++ class library.</p>
+
+<h2 class="mt-4">Organization</h2>
+
+<p class="mt-3">
+  The cctbx project contains several modules:
+</p>
+
+<ul class="mt-3">
+  <li>
+    <b>libtbx:</b><br>
+    The build system common to all other modules. This includes a very thin wrapper around the SCons software construction tool. It also contains many useful frameworks and utilities to simplify application development, including tools for regression testing, parallelization across multiprocessor systems and managed clusters, and a flexible, modular configuration syntax called PHIL (Python Hierarchial Interface Language) used throughout the cctbx.<br>
+    <a href="https://cctbx.github.io/libtbx/index.html#libtbx">API Documentation for libtbx</a>
+  </li>
+
+  <br>
+  <li>
+    <b>boost_adaptbx:</b><br>
+    A very small adaptor toolbox with platform-independent instructions for building the <a href="https://www.boost.org/doc/libs/1_74_0/libs/python/doc/html/index.html">Boost.Python</a> library.<br>
+    <a href="https://cctbx.github.io/boost_adaptbx/index.html#boost-adaptbx">API Documentation for boost_adaptbx</a>
+  </li>
+
+  <br>
+  <li>
+    <b>scitbx:</b><br>
+    Libraries for general scientific computing (i.e. libraries that are not specific to crystallographic applications).  This includes a family of high-level C++ array types, a fast Fourier transform library, and a C++ port of the popular L-BFGS quasi-Newton minimizer, and many mathematical utilities, all including Python_ bindings. These libraries are separated from the crystallographic code base to make them easily accessible for non-crystallographic application developers.<br>
+    <a href="https://cctbx.github.io/scitbx/index.html#scitbx">API Documentation for scitbx </a>
+  </li>
+
+  <br>
+  <li>
+    <b>cctbx:</b><br>
+    Libraries for general crystallographic applications, useful for both small-molecule and macro-molecular crystallography. The libraries in the cctbx module include algorithms and data structures for the handling of crystal symmetry, basic geometry restraints, reflection data, atomic displacement parameters, X-ray scattering, and high-level building blocks for refinement algorithms. <br>
+    Note the distinction between the CCTBX *project* and the cctbx *module*.<br>
+    <a href="https://cctbx.github.io/cctbx/cctbx.html">API Documentation for cctbx</a>
+  </li>
+
+  <br>
+  <li>
+    <b>iotbx:</b><br>
+    Libraries for reading and writing common file formats, including PDB, CIF, many reflection formats, electron density maps, and sequences.
+    <a href="https://cctbx.github.io/iotbx/index.html#iotbx">API Documentation for iotbx</a>
+  </li>
+
+  <br>
+  <li>
+    <b>mmtbx:</b><br>
+    Functionality specific to macromolecular crystallography. This includes all of the machinery required for setup of geometry restraints, bulk solvent correction and scaling, analysis of macromolecular diffraction data, calculation of weighted map coefficients, and most of the methods implemented in phenix.refine. The majority of infrastructure for the MolProbity validation server (and Phenix equivalent) is also located here.
+    <a href="https://cctbx.github.io/mmtbx/mmtbx.html">API Documentation for mmtbx</a>
+  </li>
+
+  <br>
+  <li>
+    <b>xfel:</b><br>
+    Software for processing serial data collected using an X-ray free electron laser. Includes spotfinding, integration, data clustering/filering and merging tools.
+    <a href="https://cctbx.github.io/xfel/xfel.html">API Documentation for xfel</a>
+  </li>
+
+  <br>
+  <li>
+    <b>smtbx:</b><br>
+    Functionality specific to small-molecule crystallography, including a complete refinement program (smtbx.refine).
+  </li>
+
+  <br>
+  <li>
+    <b>dxtbx:</b><br>
+    The Diffraction Image Toolbox, a library for handling X-ray detector data of arbitrary complexity from a variety of standard formats.  (Also used by routines in iotbx.)
+  </li>
+
+  <br>
+  <li>
+    <b>Other:</b><br>
+    Many additional libraries have more specialized functionality, including:
+    <ul>
+      <li>spotfinder - fast detection of Bragg peaks in diffraction images</li>
+      <li>ucif - the core CIF I/O library (used by iotbx)</li>
+      <li>rstbx - Reciprocal Space Toolbox, used for data processing</li>
+      <li>gltbx - OpenGL bindings, including a wxPython-based viewer framework</li>
+      <li>crys3d - Modules for the display of molecules, electron density, and reciprocal space data</li>
+      <li>fable - a program (and compatibility library) for porting Fortran77 to C++</li>
+      <li>wxtbx - wxPython controls used in the Phenix GUI and various utilities</li>
+      <li>cma_es - a library of derivative-free optimization methods</li>
+    </ul>
+
+  </li>
+
+</ul>
+
+<h2 class="mt-4">Acknowledgments</h2>
+
+<p class="mt-3">
+  We would like to thank David Abrahams for creating the amazing Boost.Python library and for patiently supporting the entire open source community. We would like to thank Airlie McCoy for allowing us to adapt some parts of the Phaser package (FFT structure factor calculation). Kevin Cowtan has contributed algorithms for the handling of reciprocal space asymmetric units. We are also grateful for his development of the <a href="http://www.ysbl.york.ac.uk/~cowtan/clipper clipper.html">Clipper library</a> from which we have adapted some source code fragments. Our work was funded in part by the US Department of Energy under Contract No. DE-AC03-76SF00098. We gratefully acknowledge the financial support of NIH/NIGMS.<br>
+  The cctbx git development tree is hosted by GitHub.
+</p>
+
+
 
 </div>
 
