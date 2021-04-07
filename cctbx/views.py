@@ -84,7 +84,7 @@ def tuto_cctbx_tour(request):
 # ------------------------------------------------------------------------------
 
 def script_1(request):
-  return render(request, 'cctbx/scripts/script_1.html')
+  return render(request, 'cctbx/documentation/website_html/script_1.html')
 
 # ------------------------------------------------------------------------------
 

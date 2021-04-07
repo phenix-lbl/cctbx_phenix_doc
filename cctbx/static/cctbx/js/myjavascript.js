@@ -40,6 +40,10 @@ $(document).ready(function () {
     $("#submenu2-doc").addClass("show");
   };
 
+  if (templ_name.startsWith("script_")) {
+    $("#submenu3-doc").addClass("show");
+  };
+
   // -------------------
   // Codemiror and tabs
   // -------------------
