@@ -33,6 +33,8 @@ urlpatterns = [
     path('tuto_melk_2019/', views.tuto_melk_2019, name='tuto_melk_2019'),
     path('tuto_rigid_body/', views.tuto_rigid_body, name='tuto_rigid_body'),
     path('tuto_cctbx_tour/', views.tuto_cctbx_tour, name='tuto_cctbx_tour'),
+
+    path('script_1/', views.script_1, name='script_1'),
     #
     path('newsletter_artcls/', views.newsletter_artcls, name='newsletter_artcls'),
 

@@ -83,6 +83,11 @@ def tuto_cctbx_tour(request):
 
 # ------------------------------------------------------------------------------
 
+def script_1(request):
+  return render(request, 'cctbx/scripts/script_1.html')
+
+# ------------------------------------------------------------------------------
+
 def newsletter_artcls(request):
   return render(request, 'cctbx/newsletter_artcls.html')
 
