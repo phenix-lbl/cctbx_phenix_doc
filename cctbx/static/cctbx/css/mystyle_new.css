@@ -90,7 +90,7 @@
     SIDEBAR Submenu
 ----------------------------------------------------- */
 
-/* Submenu item*/
+/* Submenu item */
 .ulsubmenu li{
     font-size: 0.9em;
     line-height: 0.8em;
@@ -99,7 +99,7 @@
     display: block;
     margin-left: 40px;
 }
-/* Subsubmenu item*/
+/* Subsubmenu item */
 .ulsubsubmenu li{
     font-size: 0.9em;
     line-height: 0.5em;
