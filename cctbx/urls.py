@@ -30,6 +30,7 @@ urlpatterns = [
     path('doc_phil/', views.doc_phil, name='doc_phil'),
 
     path('tuto_intro/', views.tuto_intro, name='tuto_intro'),
+    path('tuto_hklviewer/', views.tuto_hklviewer, name='tuto_hklviewer'),
     path('tuto_melk_2019/', views.tuto_melk_2019, name='tuto_melk_2019'),
     path('tuto_rigid_body/', views.tuto_rigid_body, name='tuto_rigid_body'),
     path('tuto_cctbx_tour/', views.tuto_cctbx_tour, name='tuto_cctbx_tour'),

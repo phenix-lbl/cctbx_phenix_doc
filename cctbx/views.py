@@ -72,6 +72,9 @@ def doc_maps_boxing(request):
 def tuto_intro(request):
   return render(request, 'cctbx/tutorials/tuto_intro.html')
 
+def tuto_hklviewer(request):
+  return render(request, 'cctbx/tutorials/tuto_hklviewer.html')
+
 def tuto_melk_2019(request):
   return render(request, 'cctbx/tutorials/tuto_melk_2019.html')
 
