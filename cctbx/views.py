@@ -89,6 +89,9 @@ def tuto_cctbx_tour(request):
 def script_1(request):
   return render(request, 'cctbx/documentation/website_html/script_1.html')
 
+def script_compare_ss(request):
+  return render(request, 'cctbx/documentation/website_html/script_compare_ss.html')
+
 # ------------------------------------------------------------------------------
 
 def newsletter_artcls(request):
