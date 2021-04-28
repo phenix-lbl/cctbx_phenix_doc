@@ -57,7 +57,7 @@ The HKlviewer is available from a CCTBX installation. In the command line, type 
 
 <p>The reflections are coloured according to <a href="https://matplotlib.org/examples/color/colormaps_reference.html">colour gradient maps</a> of the Python module <a href="https://matplotlib.org/examples/color/colormaps_reference.html">matplotlib</a>. The colour mapping can be changed with a mouse-click on the upper left colour chart in the viewer area of a displayed dataset. This will bring up the Colour gradient maps dialog as show below:</p>
 
-<img width="500" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_001.png' %}">
+<img style="max-width: 50%;" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_001.png' %}">
 
 <p class="mt-3">A colour gradient map is an array of rgb values that usually varies smoothly between adjacent array elements. The mapping between a data value, x, and a colour gradient map is done with a power law: </p>
 
@@ -65,7 +65,7 @@ The HKlviewer is available from a CCTBX installation. In the command line, type 
 
 <p>where minvalue and maxvalue are the minimum and maximum data values found in the data set. The function f(x) is then mapped linearly onto the array values of the colour gradient map chosen by the user. Some data types such as intensities are better viewed with a value of p that is smaller than 1. Other data types, like figure of merits are best viewed with a linear mapping between colours and the data values, i.e. p should be set to 1. Below is an illustration of how different power factors affects the resultant colour mapping for brg being the chosen colour gradient map.</p>
 
-<img width="500" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_002.png' %}">
+<img style="max-width: 60%;" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_002.png' %}">
 
 <!----------------------------------------------------------------------------->
 
@@ -86,7 +86,7 @@ There are situations where it is preferable to inspect reflection data as if it 
 <p>It is also possible to display "Missing reflections". These are the reflections that would have been present in a given wedge of reflections up to the resolution limit of the data set but have been lost during measurement, say due to radiation damage of the crystal or a shading beamstop.<br>
 Below is an example of showing only the missing reflections for the data set 2B18 expanded to P1 including Friedel pairs:</p>
 
-<img width="900" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_003.png' %}">
+<img style="max-width: 90%;" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_003.png' %}">
 
 <!----------------------------------------------------------------------------->
 
@@ -95,11 +95,11 @@ Below is an example of showing only the missing reflections for the data set 2B1
 <p>It is often useful to look at a slice through the displayed reflections. It is most informative to first expand the reflections tot he full sphere on the "Expansion" tab. Reflections can be sliced with a clip plane parallel to the screen that allows for arbitrary orientation of the reflections by the user. This can be useful when examining reflections governed by a twin operator where the axis of rotation is not necessarily aligned with either one of the reciprocal unit cell axes.<br>
 Below are reflections of the data set 2B18 displayed with a clip plane normal to the HKL vector (2,0,-5) pointing out of the screen at a distance of 5.5 from the origin.</p>
 
-<img width="900" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_004.png' %}">
+<img style="max-width: 90%;" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_004.png' %}">
 
 <p class="mt-3">Reflections can also be shown as just a single plane of reflections restricted to the ones where one of the axes h,k,l has a fixed value as shown below.</p>
 
-<img width="900" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_005.png' %}">
+<img style="max-width: 90%;" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_005.png' %}">
 
 <!----------------------------------------------------------------------------->
 
@@ -111,7 +111,7 @@ Below are reflections of the data set 2B18 displayed with a clip plane normal to
 
 <p>where minvalue and maxvalue are the minimum and maximum data values found in the data set. The power scale factor can either be selected by the user or be determined atuomatically.</p>
 
-<img width="500" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_006.png' %}">
+<img style="max-width: 50%;" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_006.png' %}">
 
 <p class="mt-3">For data sets of amplitudes or intensities where there often are more orders of magnitude difference between the smallest and the largest data values it can sometimes be helpful to adjust the power scale factor to either make all reflections the same size (p=0) to illustrate what was actually recorded. Alternatively, to get a better view of the strength of the data an automatic power scale factor can be selected which will render the weakest reflections ten times smaller than the strongest reflections.
 Selecting a power scale factor of 1 for amplitude or intensity data is rarely useful as typically the data set is dominated by a handful of very strong low resolution reflections. But it may serve for illustrating the presence of strong anisotropy or tNCS modulation in a data set.</p>
@@ -124,7 +124,7 @@ Selecting a power scale factor of 1 for amplitude or intensity data is rarely us
 <p>
 In the figure below 6 bins of resolution have been created for the FP,SIGFP dataset.</p>
 
-<img width="900" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_007.png' %}">
+<img style="max-width: 90%;" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_007.png' %}">
 
 <!----------------------------------------------------------------------------->
 
@@ -132,23 +132,23 @@ In the figure below 6 bins of resolution have been created for the FP,SIGFP data
 
 <p>If one were to change the bin threshold for 4th bin from 2.27 to 2.1Å this is done by entering the new value in its place.</p>
 
-<img width="450" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_008.png' %}">
+<img style="max-width: 45%;" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_008.png' %}">
 
 <p class="mt-3">Entering return on the keyboard processes the new value and computes new number of reflections in the bin and adjacent ones.</p>
 
-<img width="450" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_009.png' %}">
+<img style="max-width: 45%;" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_009.png' %}">
 
 <p class="mt-3">The reflections in this bin can be visualised by deselecting reflections in all other bins in the opacity column.</p>
 
-<img width="900" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_010.png' %}">
+<img style="max-width: 90%;" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_010.png' %}">
 
 <p class="mt-3">Data can alsso be binned against other data values by selecting the desired data value for binning from the drop-down list.</p>
 
-<img width="500" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_011.png' %}">
+<img style="max-width: 50%;" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_011.png' %}">
 
 <p class="mt-3">Below is the data set FP,SIGFP binned according to the sigmas found in the data set but only displayed for the data values with sigmas larger than 5.42. This is done by un-ticking all the checkboxes but the last one in the opacity column.</p>
 
-<img width="900" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_012.png' %}">
+<img style="max-width: 90%;" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_012.png' %}">
 
 <p class="mt-3">Data can also be made semi transparent by entering a value between 0 and 1 on the opacity column. This may be useful when showing vectors that are shorter than the radius of the sphere of reflections, i.e. the highest resolution shell. Beware that implementations of WebGL can often cause shading artifacts of objects when displayed semitransparently. If opacity is set below 0.3 reflections will not respond to hovering or clicking with the mouse.</p>
 
@@ -158,7 +158,7 @@ In the figure below 6 bins of resolution have been created for the FP,SIGFP data
 
 <p>On the Vectors tab various vectors can be displayed in reciprocal space. These are the rotation axes given by the space group, any tNCS vector specified in the file header as well as vectors defined by the user either in reciprocal or in real space fractional coordinates. In the HKLviewer  reciprocal space or real space vector are defined with (0,0,0) as their origin so only their end coordinates are listed in the table.</p>
 
-<img width="900" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_013.png' %}">
+<img style="max-width: 90%;" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_013.png' %}">
 
 <p class="mt-3">Above is an example of the viewer showing the reflections of a dataset togetehr with the rotation axes as defined by the spacegroup. A tNCS vector that was defined in the file header is also drawn.
 If only one vector is drawn the reflections can be oriented with respect to the vector being either parallel or perpendicular to the screen. It is then possible to also rotate the reflections around that vector which can be helpful for examining features in the dataset such as tNCS modulation or twin laws.</p>
@@ -169,36 +169,36 @@ If only one vector is drawn the reflections can be oriented with respect to the 
 
 <p>In addition to rotation axes given by the space group it is possible to explicitly enter a rotation operator and show its rotation axes. This is done by overwriting the "new name" field in the "draw" column of the table of rotation operators or vectors with a name of choosing, say "some_rot".</p>
 
-<img width="500" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_014.png' %}">
+<img style="max-width: 50%;" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_014.png' %}">
 
 <p class="mt-3">For the dataset 2QCW with the spacegroup P31 2 1 the reflections are displayed below. Although not part of the spacegroup we can see that it is possible to apply a 6-fold rotation along the l-axis and have the reflections unambiguously transformed into new ones with the operation "-k,h+k,l". We enter that into the rotation column.</p>
 
-<img width="900" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_015.png' %}">
+<img style="max-width: 90%;" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_015.png' %}">
 
 <p class="mt-3">HKLviewer will parse the operator when the enter key is pressed. If parsing succeeds the row in the table will become read-only and the name specified in the draw column will have "n-fold_" prefixed to it, where n is the number of times to apply this operation to achieve the identity operator.</p>
 
-<img width="300" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_016.png' %}">
+<img style="max-width: 40%;" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_016.png' %}">
 
 <p class="mt-3">Rotation operators should be commensurate with the spacegroup. However, some leeway is allowed although grossly mismatching rotation operators will be refused with an error message.
 When displaying only one rotation vector the symmetry related reflections for a given reflection will be highlighted with vectors and tooltips when right-clicking on a particular reflection. This is shown below where a slice has been made at l=0 and reflections have been expanded to P1 and Friedel mates. This is useful when inspecting twin related reflections as discussed in the tutorial section.</p>
 
-<img width="800" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_017.png' %}">
+<img style="max-width: 80%;" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_017.png' %}">
 
 <p class="mt-3">It is also possible to enter a reciprocal space vector. To do this first overwrite the "new name" field in the "draw" column with a chosen name, say "myHKL". Then enter the reciprrocal space vector in the same row under the "as hkl" column.</p>
 
-<img width="450" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_018.png' %}">
+<img style="max-width: 45%;" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_018.png' %}">
 
 <p class="mt-3">When the HKLviewer parses the coordinates the row will become read-only and the coordinates encapsulated by brackets.</p>
 
-<img width="450" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_019.png' %}">
+<img style="max-width: 45%;" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_019.png' %}">
 
 <p class="mt-3">Real space fractional vectors may also be entered in the same manner as for reciprocal space vectors. Enter those in the "as abc" column.</p>
 
-<img width="450" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_020.png' %}">
+<img style="max-width: 45%;" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_020.png' %}">
 
 <p class="mt-3">The unit cells for real space and reciprocal space can also be drawn for the sake of locating the tNCS vector or rotation operators. in the unit cell. Below is the 2QCW data set displayed with its realspace unit cell, the 6-fold rotation axis, the myHKL and the myABC vectors defined above.</p>
 
-<img width="800" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_021.png' %}">
+<img style="max-width: 80%;" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_021.png' %}">
 
 <!----------------------------------------------------------------------------->
 
@@ -208,7 +208,7 @@ When displaying only one rotation vector the symmetry related reflections for a 
 
 <p>To get started, right-click a dataset in the upperleft table in the HKLviewer which you want to use for creating a new dataset. This invokes a context menu. Then select the "Make a new dataset from this dataset and another dataset" menu item. This invokes the "Create a new reflection dataset" dialog.</p>
 
-<img width="500" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_022.png' %}">
+<img style="max-width: 60%;" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_022.png' %}">
 
 <p class="mt-3">In the textbox a python expression that defines the new dataset, newarray, can be entered. Below that, a label for the dataset should also be entered. Pressing the "Compute new reflection dataset" button then parses and executes the python expression. If succesful the new dataset with the specified column label will appear at the bottom of the table of existing datasets and automatically be displayed in the viewer. For convenience newarray is initialised to a copy of array1 (here representing "I,SIGI"). </p>
 
@@ -325,11 +325,11 @@ and <a href="http://cci.lbl.gov/docs/cctbx/doc_low_flex_array/">here</a>.</p>
 
 <p>With a right click on the upper-left table of datasets in the reflection data file individual datasets can be tabulated from the context menu. First highlight the datasets of interest. Then click on "Show a table of <some dataset>...". This brings up a window with tabulated data as it is stored in the reflection data file as well as the ones that may have been created from scripting.</p>
 
-<img width="900" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_023.png' %}">
+<img style="max-width: 90%;" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_023.png' %}">
 
 <p class="mt-3">The table can be sorted according to the values of any available dataset, to the resolution. Double clicking a row in the table will cause the viewer to zoom in on that particular reflection with a red mesh</p>
 
-<img width="850" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_024.png' %}">
+<img style="max-width: 85%;" src="{% static 'cctbx/img/hklviewer/doc_hklviewer_024.png' %}">
 
 <p class="mt-3">Similarly will a right-click on a displayed reflection in the viewer retrieve and highlight that reflections data value in the table.<br>
 The tabulated datasets will remain unchanged when the displayed reflections are transformed by expanding to Friedel mates, P1 or lower symmetry spacegroups. This also means that double clicking a symmetry copy generated from expanding the dataset to P1 or Friedel mates will only retrieve the original HKL index and its data value in the table.</p>
