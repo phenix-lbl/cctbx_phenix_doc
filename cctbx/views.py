@@ -92,6 +92,9 @@ def script_1(request):
 def script_compare_ss(request):
   return render(request, 'cctbx/documentation/website_html/script_compare_ss.html')
 
+def script_ideal_ss(request):
+  return render(request, 'cctbx/documentation/website_html/script_ideal_ss.html')
+
 # ------------------------------------------------------------------------------
 
 def newsletter_artcls(request):

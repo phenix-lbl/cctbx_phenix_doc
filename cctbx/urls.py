@@ -37,6 +37,7 @@ urlpatterns = [
 
     path('script_1/', views.script_1, name='script_1'),
     path('script_compare_ss/', views.script_compare_ss, name='script_compare_ss'),
+    path('script_ideal_ss/', views.script_ideal_ss, name='script_ideal_ss'),
     #
     path('newsletter_artcls/', views.newsletter_artcls, name='newsletter_artcls'),
 
