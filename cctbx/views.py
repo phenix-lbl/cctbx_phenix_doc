@@ -86,6 +86,9 @@ def tuto_cctbx_tour(request):
 
 # ------------------------------------------------------------------------------
 
+def script_toc(request):
+  return render(request, 'cctbx/script_toc.html')
+
 def script_1(request):
   return render(request, 'cctbx/documentation/website_html/script_1.html')
 
@@ -94,6 +97,9 @@ def script_compare_ss(request):
 
 def script_ideal_ss(request):
   return render(request, 'cctbx/documentation/website_html/script_ideal_ss.html')
+
+def script_lbfgs_no_curvature(request):
+  return render(request, 'cctbx/documentation/website_html/script_lbfgs_no_curvature.html')
 
 # ------------------------------------------------------------------------------
 

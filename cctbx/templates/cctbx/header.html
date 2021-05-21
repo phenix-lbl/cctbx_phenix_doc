@@ -44,6 +44,11 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script> -->
 
+    <!-- MathJax for writing formulas in html: https://www.mathjax.org-->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
     <!-- Our Custom CSS-->
 
     <script type="text/javascript" src="{% static 'cctbx/js/myheaderjs.js' %}"></script>
@@ -115,7 +120,7 @@
               </a>
                 <ul class="collapse list-unstyled ulsubmenu" id="submenu-doc">
                     <li>
-                      <a href="{% url 'documentation_overview' %}">Table of Contents</a>
+                      <b><a href="{% url 'documentation_overview' %}">Table of Contents</a></b>
                     </li>
                     <li>
                       <a href="{% url 'doc_programming_tips' %}">Programming tips</a>
@@ -203,7 +208,7 @@
               </a>
                 <ul class="collapse list-unstyled ulsubmenu" id="submenu2-doc">
                     <li>
-                      <a href="{% url 'tuto_intro' %}">Introduction</a>
+                      <b><a href="{% url 'tuto_intro' %}">Table of contents</a></b>
                     </li>
                     <li>
                       <a href="{% url 'tuto_hklviewer' %}">HKLViewer</a>
@@ -231,6 +236,9 @@
               </a>
                 <ul class="collapse list-unstyled ulsubmenu" id="submenu3-doc">
                     <li>
+                      <b><a href="{% url 'script_toc' %}" style="font-size: 11pt">Table of contents</a></b>
+                    </li>
+                    <li>
                       <a href="{% url 'script_1' %}" style="font-size: 11pt">Random model+density</a>
                     </li>
                     <li>
@@ -238,6 +246,9 @@
                     </li>
                     <li>
                       <a href="{% url 'script_ideal_ss' %}" style="font-size: 11pt">Ideal SS</a>
+                    </li>
+                    <li>
+                      <a href="{% url 'script_lbfgs_no_curvature' %}" style="font-size: 11pt">LBFGS (no curvature)</a>
                     </li>
                 </ul>
             </li>

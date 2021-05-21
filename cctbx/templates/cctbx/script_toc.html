@@ -1,0 +1,39 @@
+{% extends "cctbx/header.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="col-sm-9 main">
+
+<h2 class="mb-5"><center>Example scripts</center></h2>
+
+<p class="lead mt-4">The scripts below illustrate how to use the cctbx.</p>
+
+<!----------------------------------------------------------------------------->
+
+<h3>Beginner</h3>
+<ul>
+
+  <li class="mb-3"><b><a href="{% url 'script_1' %}">Generate a random model and compute its density map</a></b><br>
+    This example script shows how to generate a small centrosymmetric unit cell in P-1 with 15 atoms, and how to calculate phases and amplitudes to reconstruct the electron density.
+  </li>
+
+  <li class="mb-3"><b><a href="{% url 'script_ideal_ss' %}">Generate ideal helices and strands</a></b><br>
+    This script shows how to generate idealized helices and strands from a sequence.
+  </li>
+
+</ul>
+
+<!----------------------------------------------------------------------------->
+
+<h3>Advanced</h3>
+<ul>
+  <li class="mb-3"><b><a href="{% url 'script_compare_ss' %}">Compare secondary structure annotations numerically</a></b><br>
+    Several methods exist that determine the secondary structure of macromolecules. This script shows how to automatically determine secondary structure using several methods with cctbx tools and how to numerically compare the result.
+  </li>
+</ul>
+
+</div>
+
+{% endblock %}

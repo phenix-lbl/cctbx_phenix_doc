@@ -35,9 +35,11 @@ urlpatterns = [
     path('tuto_rigid_body/', views.tuto_rigid_body, name='tuto_rigid_body'),
     path('tuto_cctbx_tour/', views.tuto_cctbx_tour, name='tuto_cctbx_tour'),
 
+    path('script_toc/', views.script_toc, name='script_toc'),
     path('script_1/', views.script_1, name='script_1'),
     path('script_compare_ss/', views.script_compare_ss, name='script_compare_ss'),
     path('script_ideal_ss/', views.script_ideal_ss, name='script_ideal_ss'),
+    path('script_lbfgs_no_curvature/', views.script_lbfgs_no_curvature, name='script_lbfgs_no_curvature'),
     #
     path('newsletter_artcls/', views.newsletter_artcls, name='newsletter_artcls'),
 
