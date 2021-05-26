@@ -27,7 +27,7 @@ urlpatterns = [
 
     path('doc_low_flex_array/', views.doc_low_flex_array, name='doc_low_flex_array'),
     path('doc_low_flex_advanced/', views.doc_low_flex_advanced, name='doc_low_flex_advanced'),
-    path('doc_phil/', views.doc_phil, name='doc_phil'),
+    path('doc_low_phil/', views.doc_low_phil, name='doc_low_phil'),
 
     path('tuto_intro/', views.tuto_intro, name='tuto_intro'),
     path('tuto_hklviewer/', views.tuto_hklviewer, name='tuto_hklviewer'),

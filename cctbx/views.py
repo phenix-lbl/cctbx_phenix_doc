@@ -33,8 +33,8 @@ def doc_hklviewer(request):
 
 # ------------------------------------------------------------------------------
 # subsubmenu1
-def doc_phil(request):
-  return render(request, 'cctbx/documentation/doc_phil.html')
+def doc_low_phil(request):
+  return render(request, 'cctbx/documentation/doc_low_phil.html')
 
 def doc_hlo_intro(request):
   return render(request, 'cctbx/documentation/website_html/doc_hlo_intro.html')
