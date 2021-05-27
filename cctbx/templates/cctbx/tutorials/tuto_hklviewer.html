@@ -17,7 +17,7 @@
 <h3 class="mt-4">Display I/SigI of a dataset</h3>
 
 <p>Reflections with I/SigI &gt; 2 are considered to be good data for structure solution. Therefore, this cutoff is often used to determine the resolution limit. Here we examine a problematic dataset to show that for a given threshold of I/SigI a matching resolution cutoff does not necessarily exist.<br>
-Open the dataset "merged.mtz" in the HKLviewer. The IMEAN,SIGIMEAN reflections are shown by double clicking the row with that label in the upper left table.</p>
+Open the dataset <a href="https://phenix-online.org/phenix_data/cctbx_phenix_doc_data/merged.mtz">merged.mtz</a> in the HKLviewer. The IMEAN,SIGIMEAN reflections are shown by double clicking the row with that label in the upper left table.</p>
 
 <img style="max-width: 90%;" src="{% static 'cctbx/img/tutorials/tuto_hklviewer_01.png' %}">
 
@@ -40,25 +40,35 @@ Clicking the "Compute new reflection dataset" button will execute the script and
 
 <img style="max-width: 90%;" src="{% static 'cctbx/img/tutorials/tuto_hklviewer_03.png' %}">
 
-<p class="mt-3">The "Binning" Tab lets you choose the number of bins and the thresholds. Here, the number of bins has been set to 6.<br>
-HKLviewer will try to put an equal number of reflections into each bin and then compute corresponding bin thresholds. For this exercise, we want the bin thresholds at defined I/SigI values: 4.0, 3.0, 2.0 and 1.0.<br>
+<p class="mt-3">The "Binning" Tab lets you choose the number of bins and the thresholds. By default data is binned according to resolution.
+But here we have binned against the newly created “IoverSigI” column and set the number of bins to 6.<br>
+HKLviewer will try to put an equal number of reflections into each bin and then compute corresponding bin thresholds. For this exercise,
+we want the bin thresholds at defined I/SigI values: 4.0, 3.0, 2.0 and 1.0.<br>
 Do this by entering these new bin thresholds by typing  the numbers 4,3,2,1 in row 6, 5, 4 and 3 in the “lower bin value” column.<br>
 Then untick the "Opacity" checkboxes of the first three bins to hide reflections with I/SigI less than 2.</p>
 
 <img style="max-width: 90%;" src="{% static 'cctbx/img/tutorials/tuto_hklviewer_04.png' %}">
 
-<p class="mt-3">The first column of the "Binning" shows the number of reflections in each bin. The relatively small number of reflections with I/SigI > 2 suggests that it could be difficult to solve the structure for this data set. This is also visible in the Viewer on the right, which shows much fewer spheres than the figure above.</p>
+<p class="mt-3">The first column of the "Binning" shows the number of reflections in each bin. The relatively small total number of reflections
+    with I/SigI > 2 suggests that it could be difficult to solve the structure for this data set. This is also visible in the Viewer
+    on the right, which shows much fewer spheres than the figure above where none of the bins have been excluded.</p>
 
 <!----------------------------------------------------------------------------->
 
 <h3 class="mt-3">Inspecting TNCS modulation in a dataset</h3>
 
-<p>tNCS is a crystal pathology where two or more molecules in the unit cell are aligned in a way to cause interference in the diffraction pattern. It shows as periodic modulation of the diffraction pattern and can cause problems for structure solution unless identified and taken into account by the software. tNCS vectors are real space vectors and can be predicted before structure solution attempts. The dataset 6C5F (available from the PDB) has tNCS which is detected by programs such as <code>phenix.xtriage</code>. It determined the tNCS vector to be [0.333, -0.334, 0.040] in fractional coordinates. Follow the steps below:</p>
+<p>
+    tNCS or pseudo-symmetry is a crystal pathology where two or more molecules in the unit cell are aligned in a way to cause interference in the diffraction pattern.
+    It shows as periodic modulation of the diffraction pattern and can cause problems for structure solution unless identified and taken into
+    account by the software. tNCS vectors are real space vectors and can be determined before structure solution attempts.
+    The dataset <a href="https://files.rcsb.org/download/6C5F-sf.cif">6C5F</a> (available from the PDB) has tNCS which is detected by programs such as <code>phenix.xtriage</code>.
+    It determined the pseudo-symmetry vector to be [0.333, -0.334, 0.040] in fractional coordinates. Follow the steps below:
+</p>
 <ul>
   <li>Open the data file in the HKLviewer.</li>
-  <li>Double click the FP,SIGFP label to display the data.</li>
+  <li>Double click the "F_meas_au,F_meas_sigma_au" label (or "FP,SIGFP" if loading an mtz file) to display the data.</li>
   <li>On the Expansion tab, expand the reflections to a sphere.</li>
-  <li>On the sizing tab, tick the “User defined power scaling” checkbox and enter a power factor of 2 to obtain values that are roughly proportional to intensities (the file from the PDB has only structure factors).</li>
+  <li>On the sizing tab, tick the “User defined power scaling” checkbox and enter a power factor of 2 to obtain values that are roughly proportional to intensities (the file from the PDB does not provide the original intensity data).</li>
   <li>On the Vectors tab, enter the coordinates for the tNCS vector found by xtriage [0.333, -0.334, 0.040] on the last line by overwriting the “new vector” label to “xtriageTNCS” and entering the coordinates in the same row under the “as abc” column. Pressing return will submit the vector to HKLviewer.</li>
   <li>Tick the xtriageTNCS vector checkbox as well as the “Orient vector” checkbox and the radio button “Parallel to screen”.</li>
   <li>Either rotate the reflections manually on the slider control or tick the “Rotate continuously” checkbox.</li>
@@ -74,8 +84,9 @@ Then untick the "Opacity" checkboxes of the first three bins to hide reflections
 
 <h3 class="mt-4">Inspecting a twin law</h3>
 
-<p>The phenix tutorial with the file, porin.mtz, illustrates twinning. The twin operator found by phenix.xtriage is -h-k,k,-l.<br>
-Follow the steps below:</p>
+<p>The phenix tutorial with the file, <a href="porin.mtz">porin.mtz</a>, illustrates twinning. The twin operator found by phenix.xtriage is -h-k,k,-l.<br>
+    Follow the steps below:
+</p>
 
 <ul>
   <li>Load the file in the HKLviewer and display the dataset “F-obs,SIGF-obs”.</li>
