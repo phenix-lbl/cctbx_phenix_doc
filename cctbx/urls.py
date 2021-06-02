@@ -29,6 +29,8 @@ urlpatterns = [
     path('doc_low_flex_advanced/', views.doc_low_flex_advanced, name='doc_low_flex_advanced'),
     path('doc_low_phil/', views.doc_low_phil, name='doc_low_phil'),
 
+    path('doc_models_hierarchy/', views.doc_models_hierarchy, name='doc_models_hierarchy'),
+
     path('tuto_intro/', views.tuto_intro, name='tuto_intro'),
     path('tuto_hklviewer/', views.tuto_hklviewer, name='tuto_hklviewer'),
     path('tuto_melk_2019/', views.tuto_melk_2019, name='tuto_melk_2019'),

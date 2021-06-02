@@ -52,7 +52,7 @@ def doc_hlo_model_map_manager(request):
   return render(request, 'cctbx/documentation/website_html/doc_hlo_model_map_manager.html')
 
 # ------------------------------------------------------------------------------
-# # subsubmenu2
+#   subsubmenu2
 def doc_low_flex_array(request):
   return render(request, 'cctbx/documentation/doc_low_flex_array.html')
 
@@ -60,12 +60,18 @@ def doc_low_flex_advanced(request):
   return render(request, 'cctbx/documentation/website_html/doc_low_flex_advanced.html')
 
 # ------------------------------------------------------------------------------
-# # subsubmenu3
+#   subsubmenu3
 def doc_maps_intro(request):
   return render(request, 'cctbx/documentation/website_html/doc_maps_intro.html')
 
 def doc_maps_boxing(request):
   return render(request, 'cctbx/documentation/website_html/doc_maps_boxing.html')
+
+# ------------------------------------------------------------------------------
+
+#   subsubmenu4
+def doc_models_hierarchy(request):
+  return render(request, 'cctbx/documentation/website_html/doc_models_hierarchy.html')
 
 # ------------------------------------------------------------------------------
 

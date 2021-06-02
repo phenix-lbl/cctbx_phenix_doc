@@ -34,6 +34,10 @@ $(document).ready(function () {
     $("#subsubmenu3-doc").addClass("show");
   };
 
+  if (templ_name.startsWith("doc_models")) {
+    $("#subsubmenu4-doc").addClass("show");
+  };
+
   if (templ_name.startsWith("tuto_")) {
     //$('#body-row .collapse').collapse('show');
     //$(".submenu-head").attr("aria-expanded":"true");
