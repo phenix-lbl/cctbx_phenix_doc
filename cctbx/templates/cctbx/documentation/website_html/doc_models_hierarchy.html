@@ -56,9 +56,12 @@ Grosse-Kunstleve et al. (2006). The current cctbx version provides comprehensive
 <p>Here is a simple example of reading in a single-model PDB (or mmCIF) model and
 traversing the hierarchy, deleting any zinc atoms:</p>
 
-<pre class="codeDL"><code>dm = DataManager()                    #   Initialize the DataManager and call it dm
+<pre class="codeDL"><code>from __future__ import absolute_import, division, print_function
+from iotbx.data_manager import DataManager
+import sys
+dm = DataManager()                    #   Initialize the DataManager and call it dm
 dm.set_overwrite(True)                #   tell the DataManager to overwrite files with the same name
-model_filename = 'model.pdb'          #   Name of model file
+model_filename = sys.argv[1:][0]      #   Name of model file
 model = dm.get_model(model_filename)  #   Deliver model object with model info
 
 m = model.deep_copy()                 # work on a copy of model object
@@ -88,7 +91,7 @@ with open("model_Zn_free.pdb", "w") as f:
 
 
 <pre class="codeDL"><code>import iotbx.pdb
-pdb_hierarchy = iotbx.pdb.input(file_name='model.pdb').construct_hierarchy()
+pdb_hierarchy = iotbx.pdb.input(file_name=model_filename).construct_hierarchy()
 </code></pre>
 
 <p>However, it is recommended to proceed via the <code>model</code> object. The lower-level approach may be nevertheless useful for quick scripts and for regression tests.</p>
@@ -106,7 +109,7 @@ hierarchy_new = pdb_hierarchy.select(non_zn_sel)
 structure in place. We can avoid using the <code>atom_selection_cache</code> by doing the selection via the <code>model</code> object:</p>
 
 <pre class="codeDL"><code>non_zn_sel= model.selection("not (resname ZN)")
-hierarchy_new = model.select(non_zn_sel_2).get_hierarchy()
+hierarchy_new = model.select(non_zn_sel).get_hierarchy()
 </code></pre>
 
 <!----------------------------------------------------------------------------->
