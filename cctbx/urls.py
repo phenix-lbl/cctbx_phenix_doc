@@ -42,6 +42,7 @@ urlpatterns = [
     path('script_compare_ss/', views.script_compare_ss, name='script_compare_ss'),
     path('script_ideal_ss/', views.script_ideal_ss, name='script_ideal_ss'),
     path('script_lbfgs_no_curvature/', views.script_lbfgs_no_curvature, name='script_lbfgs_no_curvature'),
+    path('script_lbfgs_with_curvature/', views.script_lbfgs_with_curvature, name='script_lbfgs_with_curvature'),
     #
     path('newsletter_artcls/', views.newsletter_artcls, name='newsletter_artcls'),
 
