@@ -1,5 +1,6 @@
-
 {% extends "phenix/header.html" %}
+
+{% load static %}
 
 {% block content %}
 
@@ -9,31 +10,58 @@
 
 <p class="lead mt-4">It is a good idea to profile  code to speed up runtime.</p>
 
-<p>Install RunSnakeRun</p>
+<h4>Install and set up RunSnakeRun</h4>
 
-<pre class="CodeGreen"><code>libtbx.python -m pip install SquareMap RunSnakeRun
+<p>Due to a compatibility issue with wxPython, you need to install specific versions of runsnake and SquareMap:</p>
+
+<pre class="CodeGreen"><code>libtbx.python -m pip install runsnakerun==2.0.4 SquareMap==1.0.4
 </code></pre>
 
-<p>To profile something:</p>
+<p>It is a good idea to use an alias:</p>
+
+<pre class="CodeGreen"><code>alias runsnake='libtbx.python &lt;conda_base&gt;/lib/python2.7/site-packages/runsnakerun/runsnake.py'
+</code></pre>
+
+<p>where <code>&lt;conda_base&gt;</code> is your "conda_base" directory location.</p>
+
+<p>For Python 3.7, the command becomes</p>
+
+<pre class="CodeGreen"><code>alias runsnake='libtbx.python &lt;conda_base&gt;/lib/python3.7/site-packages/runsnakerun/runsnake.py'
+</code></pre>
+
+
+<h4>Profiling a script</h4>
 
 <pre class="CodeGreen"><code>libtbx.python -m cProfile -o prof.out myscript.py my_model.pdb
 </code></pre>
 
 <p><code>myscript.py</code> is the code that is being profiled. This script may or may not have inputs. In this example the script has the input <code>my_model.pdb</code>.</p>
 
-<p>It is a good idea to use an alias:</p>
-
-<pre class="CodeGreen"><code>alias runsnake='libtbx.python /base/Python.framework/Versions/2.7/lib/python2.7/site-packages/runsnakerun/runsnake.py'
-</code></pre>
-
 <p>The alias runs the <code>runsnake.py</code> script that is installed in phenix/base.</p>
 
-<p>After profiling you can view the file with:</p>
+
+<h4>Profiling with the ProgramTemplate</h4>
+
+<p>Use the <code>--profile</code> command line flag. If the ProgramTemplate is called by the "run_program" function in <code>iotbx/cli_parser.py</code> (i.e. you have the basic boilerplate code in your file in the command_line directory), you will get a <code>profile.out</code> file. </p>
+
+<pre class="CodeGreen"><code>mmtbx.hydrogenate 1kyc.pdb --profile
+</code></pre>
+
+<p>The file is hardcoded to "profile.out" so that the parser does not get confused (e.g. there is a default filename when no argument is provided, but "--profile model.pdb" should not dump the stats into model.pdb).<br>
+Note that if you customize how you run your program, then you would need to handle the profiling manually.</p>
+
+
+<h4>Looking at the profiling output</h4>
+
+<p>After profiling you can view the file with (if you set up an alias, see above):</p>
 
 <pre class="CodeGreen"><code>runsnake prof.out
 </code></pre>
 
 <p>In the output of the above command, you will see many squares of different size. The size is proportional to runtime. In the square you can find what it is exactly (function name). When you hovering with mouse over a square, the same functions are highlighted as well, so it is easy to see if something is run from different places.</p>
+
+<img width="700" src="{% static 'phenix/img/fig_doc_runsnake.png' %}">
+
 
 <p>You can also use a flag, so every command outputs a runsnake profile:</p>
 
