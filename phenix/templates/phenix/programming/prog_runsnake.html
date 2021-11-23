@@ -6,9 +6,11 @@
 
 <div class="col-sm-9 main">
 
+<!-- ----------------------------------------------------------------------- -->
+
 <h2><center>Install and use Runsnake</center></h2>
 
-<p class="lead mt-4">It is a good idea to profile  code to speed up runtime.</p>
+<p class="lead mt-4">It is a good idea to profile code to speed up runtime.</p>
 
 <h4>Install and set up RunSnakeRun</h4>
 
@@ -29,6 +31,7 @@
 <pre class="CodeGreen"><code>alias runsnake='libtbx.python &lt;conda_base&gt;/lib/python3.7/site-packages/runsnakerun/runsnake.py'
 </code></pre>
 
+<!-- ----------------------------------------------------------------------- -->
 
 <h4>Profiling a script</h4>
 
@@ -50,6 +53,7 @@
 <p>The file is hardcoded to "profile.out" so that the parser does not get confused (e.g. there is a default filename when no argument is provided, but "--profile model.pdb" should not dump the stats into model.pdb).<br>
 Note that if you customize how you run your program, then you would need to handle the profiling manually.</p>
 
+<!-- ----------------------------------------------------------------------- -->
 
 <h4>Looking at the profiling output</h4>
 
@@ -61,7 +65,6 @@ Note that if you customize how you run your program, then you would need to hand
 <p>In the output of the above command, you will see many squares of different size. The size is proportional to runtime. In the square you can find what it is exactly (function name). When you hovering with mouse over a square, the same functions are highlighted as well, so it is easy to see if something is run from different places.</p>
 
 <img width="700" src="{% static 'phenix/img/fig_doc_runsnake.png' %}">
-
 
 <p>You can also use a flag, so every command outputs a runsnake profile:</p>
 

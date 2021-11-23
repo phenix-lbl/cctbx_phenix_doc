@@ -1,0 +1,106 @@
+{% extends "phenix/header.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="col-sm-9 main">
+
+<h2><center>Install and use line_profiler</center></h2>
+
+<p class="lead mt-4">It is a good idea to profile code to speed up runtime. <code>line_profiler</code> is a module for doing line-by-line profiling of functions: <a href="https://github.com/rkern/line_profiler">https://github.com/rkern/line_profiler</a></p>
+
+<h4>Installation and set up</h4>
+
+<p>It is preferable to install line_profiler with mamba because it is faster and it is less likely to make unnecessary changes to your dependencies.</p>
+
+<p>If you don't have mamba, you'll first have to install mamba. To do this, activate your conda base environment:</p>
+
+<pre class="CodeGreen"><code>conda activate base
+</code></pre>
+
+<p>Then install mamba:</p>
+
+<pre class="CodeGreen"><code>conda install -c conda-forge mamba
+</code></pre>
+
+<p>Deactivate your conda environment:</p>
+
+<pre class="CodeGreen"><code>conda deactivate
+</code></pre>
+
+<p>Then go to your phenix installation which contains the <code>conda_base</code> folder. If you install line_profiler in conda_base, then it will be available in phenix scripts.</p>
+
+<pre class="CodeGreen"><code>mamba install -p ./conda_base -c conda-forge line_profiler
+</code></pre>
+
+<p>Now you can use line_profiler in your scripts.</p>
+
+<!-- ----------------------------------------------------------------------- -->
+
+<h4>Using line_profiler in the program template</h4>
+
+<p>Let's say we want to profile the run() method of a class that is created in a
+ProgramTemplate, such as in the second line of the code snippet below:</p>
+<pre class="CodeGreen"><code>reduce_add_h_obj = reduce_hydrogen.place_hydrogens(model = self.model)
+reduce_add_h_obj.run()
+</code></pre>
+
+<p>To profile the <code>run()</code> function, you can wrap it with the following lines of code:</p>
+
+<pre class="CodeGreen"><code>reduce_add_h_obj = reduce_hydrogen.place_hydrogens(model = self.model)
+<b>import line_profiler
+lp = line_profiler.LineProfiler(reduce_add_h_obj.run)
+lp.enable()</b>
+reduce_add_h_obj.run()
+<b>lp.disable()
+lp.print_stats()</b>
+</code></pre>
+
+<p>Note that the argument of LineProfiler, <code>reduce_add_h_obj.run</code>, does not include the parentheses; so it is .run and not run().</p>
+
+<!-- ----------------------------------------------------------------------- -->
+
+<h4>line_profiler output</h4>
+
+<p>Below an example for the output from line_profiler. To save space, some lines were omitted.</p>
+
+<pre class="CodeGreen"><code>Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+    82                                             def run(self):
+    83                                               '''
+    84                                               Function that places H atoms
+    85                                               '''
+    86         1          4.0      4.0      0.0      model_has_bogus_cs = False
+    87
+    90         1         28.0     28.0      0.0      cs = self.model.crystal_symmetry()
+    91         1          1.0      1.0      0.0      if (cs is None) or (cs.unit_cell() is None):
+    92                                                 self.model = shift_and_box_model(model = self.model)
+    93                                                 model_has_bogus_cs = True
+    94
+    96         1       3367.0   3367.0      0.1      self.n_H_initial = self.model.get_hd_selection().count(True)
+    97         1          2.0      2.0      0.0      if not self.keep_existing_H:
+    98         1       4562.0   4562.0      0.1        self.model = self.model.select(~self.model.get_hd_selection())
+    99
+   100         1          5.0      5.0      0.0      t0 = time.time()
+   101                                               # Add H atoms and place them at center of coordinates
+   102         1    1479990.0 1479990.0     31.3      pdb_hierarchy = self.add_missing_H_atoms_at_bogus_position()
+   103         1          2.0      2.0      0.0      if print_time:
+   104                                                 print("add_missing_H_atoms_at_bogus_position:", round(time.time()-t0, 2))
+   128
+   129         1       1379.0   1379.0      0.0      pdb_hierarchy.sort_atoms_in_place()
+   130         1         19.0     19.0      0.0      pdb_hierarchy.atoms().reset_serial()
+   131                                           #    f = open("intermediate2.pdb","w")
+   132                                           #    f.write(self.model.model_as_pdb())
+   133
+   134         1     513441.0 513441.0     10.9      p = mmtbx.model.manager.get_default_pdb_interpretation_params()
+</code></pre>
+
+<p>Here we can see that the functions <code>add_missing_H_atoms_at_bogus_position()</code> and <code>get_default_pdb_interpretation_params()</code> use 30% and 10 % of time respectively. To find out what slows down these functions, we would have to profile them separately, because line_profiler does not recursively analyse the calls.</p>
+
+<p>Furthermore, if the code does not execute a statement, such as those in conditional parts, then it will not show up in the list. For example, line 92 was not executed in this call, so we don't know how much time it would need.</p>
+
+
+</div>
+
+{% endblock %}

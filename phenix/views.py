@@ -61,7 +61,8 @@ def prog_program_template(request):
 def prog_runsnake(request):
   return render(request, 'phenix/programming/prog_runsnake.html')
 
-
+def prog_lineprofiler(request):
+  return render(request, 'phenix/programming/prog_lineprofiler.html')
 
 # ------------------------------------------------------------------------------
 
