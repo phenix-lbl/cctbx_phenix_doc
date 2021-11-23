@@ -100,6 +100,40 @@ lp.print_stats()</b>
 
 <p>Furthermore, if the code does not execute a statement, such as those in conditional parts, then it will not show up in the list. For example, line 92 was not executed in this call, so we don't know how much time it would need.</p>
 
+<!-- ----------------------------------------------------------------------- -->
+
+<h4>Running line_profiler in a script</h4>
+
+<p>This example is from <a href="https://stackoverflow.com/questions/23885147/how-do-i-use-line-profiler-from-robert-kern">stackoverflow</a>:</p>
+
+<pre class="CodeGreen"><code>from line_profiler import LineProfiler
+import random
+
+def do_stuff(numbers):
+    s = sum(numbers)
+    l = [numbers[i]/43 for i in range(len(numbers))]
+    m = ['hello'+str(numbers[i]) for i in range(len(numbers))]
+
+numbers = [random.randint(1,100) for i in range(1000)]
+lp = LineProfiler()
+lp_wrapper = lp(do_stuff)
+lp_wrapper(numbers)
+lp.print_stats()
+</code></pre>
+
+<!-- ----------------------------------------------------------------------- -->
+
+<h4>line_profiler in the cctbx</h4>
+
+<p>An example of the line_profiler in cctbx is here:<br>
+<a href="https://github.com/cctbx/cctbx_project/blob/616b75885724955d627d0d0057b64747b8276384/simtbx/command_line/stage_two.py#L84">/simtbx/command_line/stage_two.py#L84</a>
+</p>
+<p>The output is printed here<br>
+<a href="https://github.com/cctbx/cctbx_project/blob/616b75885724955d627d0d0057b64747b8276384/simtbx/command_line/stage_two.py#L112">/simtbx/command_line/stage_two.py#L112</a>
+</p>
+<p>using this simple function<br>
+<a href="https://github.com/cctbx/cctbx_project/blob/616b75885724955d627d0d0057b64747b8276384/simtbx/diffBragg/hopper_utils.py#L1321">/simtbx/diffBragg/hopper_utils.py#L1321</a>
+</p>
 
 </div>
 
