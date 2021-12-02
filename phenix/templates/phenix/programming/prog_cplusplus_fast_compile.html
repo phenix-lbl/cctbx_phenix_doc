@@ -1,0 +1,55 @@
+{% extends "phenix/header.html" %}
+
+{% load static %}
+
+{% block content %}
+
+
+<div class="col-sm-9 main">
+<!-- DO NOT EDIT ANYTHING ABOVE!!!! -->
+<!----------------------- EDIT START ---------------------------->
+
+<h2><center>C++ fast partial compilation</center></h2>
+
+<p class="lead mt-4">Learn how to quickly debug and compile C++ code.</p>
+
+<p>Often when editing C++ code in cctbx_project one needs to test and fix errors multiple times. It is not efficient to use bootstrap for compiling because it is very slow. There are two ways to that make compilation faster:</p>
+
+<h5>Method 1</h5>
+<ol>
+  <li>
+    Go to build directory.
+  </li>
+  <li>
+    run <code>libtbx.scons</code>. This command is equal to the <code>build</code> flag for bootstrap.<br>
+    This command will check all the directories and compile and link modified files only. If there is a compilation error, the build will fail, so you'll need to debug.
+  </li>
+  <li>
+    The compilation commands are printed to stdout, so they can be copy-pasted and executed when editing the C++ file(s).
+  </li>
+</ol>
+
+
+<h5>Method 2</h5>
+<ol>
+  <li>
+    Go to build directory.
+  </li>
+  <li>
+    run <code>libtbx.configure --only iotbx</code>.<br>
+    This command tells libtbx.scons to build only a specific module, e.g. iotbx
+  </li>
+  <li>
+    Then libtbx.scons will run only iotbx build. It is important to switch the libtbx.scons behavior back when debugging is finished. To do this, run<br>
+    <code>libtbx.configure solve_resolve phaser phenix chem_data</code>
+  </li>
+</ol>
+
+
+<!----------------------- EDIT END ---------------------------->
+<!-- DO NOT EDIT ANYTHING BELOW!!!! -->
+</div> <!-- end col-sm-9 -->
+
+
+
+{% endblock %}

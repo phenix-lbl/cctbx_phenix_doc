@@ -9,7 +9,7 @@ $(document).ready(function () {
     $("a[href*="+templ_name+"]").addClass("active");
   };
 
-  if (templ_name=='overview' || templ_name=='restraint_jiffys' || templ_name=='directory_structure' || templ_name.startsWith("doc_") || templ_name.startsWith("prog")) {
+  if (templ_name=='overview' || templ_name=='restraint_jiffys' || templ_name=='directory_structure' || templ_name.startsWith("doc_") ) {
     $("#submenu-doc").addClass("show");
   };
 
@@ -18,7 +18,7 @@ $(document).ready(function () {
   };
 
   if (templ_name.startsWith("prog")) {
-    $("#subsubmenu2-doc").addClass("show");
+    $("#submenu-prog").addClass("show");
   };
 
   var shown = false

@@ -51,9 +51,10 @@ def doc_mb_sequence(request):
 
 # ------------------------------------------------------------------------------
 
-
 def restraint_jiffys(request):
   return render(request, 'phenix/restraint_jiffys.html')
+
+# ------------------------------------------------------------------------------
 
 def prog_program_template(request):
   return render(request, 'phenix/programming/prog_program_template.html')
@@ -63,6 +64,9 @@ def prog_runsnake(request):
 
 def prog_lineprofiler(request):
   return render(request, 'phenix/programming/prog_lineprofiler.html')
+
+def prog_cplusplus_fast_compile(request):
+  return render(request, 'phenix/programming/prog_cplusplus_fast_compile.html')
 
 # ------------------------------------------------------------------------------
 

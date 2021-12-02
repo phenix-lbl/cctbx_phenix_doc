@@ -26,6 +26,7 @@ urlpatterns = [
     path('prog_program_template/', views.prog_program_template, name='prog_program_template_phenix'),
     path('prog_runsnake/', views.prog_runsnake, name='prog_runsnake_phenix'),
     path('prog_lineprofiler/', views.prog_lineprofiler, name='prog_lineprofiler_phenix'),
+    path('prog_cplusplus_fast_compile/', views.prog_cplusplus_fast_compile, name='prog_cplusplus_fast_compile_phenix'),
     #
     path('template/', views.template, name='template_phenix'),
 ]
