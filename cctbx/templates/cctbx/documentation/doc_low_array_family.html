@@ -1,0 +1,578 @@
+{% extends "cctbx/header.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="col-sm-9 main">
+<!-- DO NOT EDIT ANYTHING ABOVE!!!! -->
+<!----------------------- EDIT START ---------------------------->
+
+<h2><center>Array family interface tour
+</center></h2>
+
+<p class="lead mt-4">This documentation builds on the scitbx-tour, adding some trivial functions and the wrappers needed for joint Python/C++ array access.</p>
+
+<!----------------------------------------------------------------------------->
+
+<h3 class="mt-4">Introduction</h3>
+
+<p>This tour includes</p>
+<ul>
+  <li>a general overview</li>
+  <li>simple example C++ code</li>
+  <li>its Python interface wrappers</li>
+  <li>examples of joint Python/C++ access to the C++ data</li>
+</ul>
+
+<p>It also contains Python I/O examples to further illustrate the benefits of using a Python/C++ hybrid system.<br>
+The version array-family-tour-0_1 of voea contains the complete corresponding code.</p>
+
+<p>Any module providing functionality for both C++ and Python consists of three parts: the main C++ files, the wrapper files, and a Python initializer for the wrapper.</p>
+
+<p>Customization of the conversions are thus handled by, and separate from, the primary C++ code.</p>
+
+<!----------------------------------------------------------------------------->
+
+<h3 class="mt-4">C++ array facilities</h3>
+
+
+<p>To accomodate a broad range of needs within C++, there are several ways of handling the same underlying array type. Briefly, the types involved are tiny, small, shared, and versa.</p>
+
+<p>All types have an array interface following <code>std::vector</code> as much as possible, e.g.</p>
+
+<pre class="CodeGreen"><code>.begin(), .end(), .size(), []
+</code></pre>
+
+<p>but there are tradeoffs between efficiency (space and time) and flexibility.
+Because the interface follows <code>std::vector</code>, refer to documentation of the latter when in doubt.</p>
+
+<!----------------------------------------------------------------------------->
+
+<h4 class="mt-4">Automatic types with memory management</h4>
+
+<p>No use of new for allocation of any of these -- they handle their own memory. All exceptions (size violations, memory problems, etc.) propagate to Python. [] is available for all types.</p>
+
+<ul>
+  <li>
+    <code>tiny</code><br>
+    On the stack. Size specified at compile time. Strictly 1d, zero-offset array. Full name is <code>scitbx::af::tiny</code>.<br>
+    Example C++:<br>
+    <pre class="CodeGreen"><code>tiny&lt;double, 3&gt; a;
+a[1];
+a[3];   // Error, but no bounds check, no exceptions.  Fast.
+tiny&lt;double, 3&gt; a(1,2,3);  // Up to ~10 args.</code></pre>
+  </li>
+  <li>
+    <code>small</code><br>
+    On the stack. Capacity at compile time (think IWORK), size at runtime, resizeable to capacity. Strictly 1d, zero-offset array. Full name is <code>scitbx::af::small</code>.
+  </li>
+  <li>
+    <code>shared</code><br>
+    On the heap Strictly 1d, zero-offset array. Run time size, resizeable beyond initial size (internal realloc pointer handling). Taken from <code>std::vector</code>, but copies of shared are by reference, with count. Full name <code>scitbx::af::shared</code>
+  </li>
+  <li>
+    <code>versa</code><br>
+    Inherited from shared, but multidimensional via policy for indexing through accessors ( AccessorType ). Thus, multi-dimensional access to the internal contiguous one-dimensional data is customized via accessors. The full name is <code>scitbx::af::versa</code>. Shared versa arrays resizing is subtle, see the example below. Accessors can be customized for special needs, such as the padding needed for FFTs. Padding is handled by c_grid_padded in scitbx/include/scitbx/array_family/accessors.<br><br>
+    Example:<br>
+    <pre class="CodeGreen"><code>// C indexing, homogeneous data.
+// Initial 11 by 22 array
+versa&lt;float, c_grid&lt;2&gt; &gt; va(c_grid&lt;2&gt;(11,22));
+// Same memory, now 2 by 5 array.
+va.resize( c_grid&lt;2&gt;(2,array) );
+</code></pre>
+  </li>
+</ul>
+
+<!----------------------------------------------------------------------------->
+
+<h4 class="mt-4">Automatic type examples</h4>
+
+<p>Using</p>
+
+<pre class="CodeGreen"><code>namespace array = scitbx::af;
+</code></pre>
+
+<p>for clarity, the easiest to use (and slowest) array type is</p>
+
+<pre class="CodeGreen"><code>array::shared&lt; type &gt;
+</code></pre>
+
+<p>The following forms a sequence of doubles from <code>m</code> to <code>n</code>.</p>
+
+<pre class="CodeGreen"><code>array::shared<double>
+range_inefficient(int m, int n)
+{
+    array::shared&lt;double&gt; result;
+    for(unsigned i = m; i < n; i++) {
+        result.push_back( static_cast&lt;double&gt;(i) );
+    }
+    return result;
+}
+</code></pre>
+
+<p>Here, the size of the array is known; by pre-allocating the space for the array, some work is saved:</p>
+
+<pre class="CodeGreen"><code>array::shared<double>
+range_better(int m, int n)
+{
+    array::shared&lt;double&gt; result;
+    result.reserve(n - m);      /* Avoid reallocation for known size. */
+    for (unsigned i = m; i &lt; n; i++) {
+        result.push_back( static_cast&lt;double&gt;(i) );
+    }
+    return result;
+}
+</code></pre>
+
+<p>Internally, there is still much checking going on. For most arrays, random access is desirable, so the indexing operator <code>[]</code> can be used. Also, initializing memory can take time and is not needed here, so the fastest <code>array::shared</code> version is
+</p>
+
+
+<pre class="CodeGreen"><code>array::shared&lt;double&gt;
+range_fast(int m, int n)
+{
+    /* Use correct initial size, do not initialize memory. */
+    array::shared&lt;double&gt; result(n - m, array::init_functor_null&lt;double&gt;());
+
+    for (unsigned i = m; i &lt; n; i++) {
+        /* Direct memory access */
+        result[i] = static_cast&lt;double&gt;(i);
+    }
+    return result;
+}
+</code></pre>
+
+<p>The use of <code>array::initfunctornull&lt;double&gt;()</code> is needed to convince C++ not to initialize the memory.</p>
+
+<!----------------------------------------------------------------------------->
+
+<h4 class="mt-4">Raw types, no memory handling at all</h4>
+
+<p>The fastest access for heap-based arrays is offered via the <code>ref</code> and <code>const_ref</code> types.</p>
+
+<ul>
+  <li>
+    ref<br>
+    Used for direct pointer-style access read/write access to array data for efficiency. In particular, there is no indirection as in shared or versa. The full name is <code>scitbx::af::ref.</code>
+  </li>
+  <li>
+    const_ref<br>
+    As ref, but for read only access. The full name is <code>scitbx::af::const_ref</code>
+  </li>
+</ul>
+
+
+<!----------------------------------------------------------------------------->
+
+<h4 class="mt-4">Raw type examples</h4>
+
+<p>The automatic types (shared, versa) still dereference memory on every access -- this is needed for cooperation between multiple "owners" of the array. For the most direct, C-like access, the range example can be done as follows</p>
+
+<pre class="CodeGreen"><code>array::shared&lt;double&gt;
+range_fastest(int m, int n)
+{
+    array::shared&lt;double&gt; result(n - m, array::init_functor_null&lt;double&gt;());
+
+    /* Local raw ref. */
+    array::ref&lt;double&gt; R = result.ref();
+    for (unsigned i = m; i &lt; n; i++) {
+        R[i] = static_cast&lt;double&gt;(i);
+    }
+
+    return result;
+}
+</code></pre>
+
+<p>Now, the array starting memory is dereferenced only once.</p>
+
+<!----------------------------------------------------------------------------->
+
+<h3 class="mt-4">Python connection and usage</h3>
+
+<p>The two C++/Python array conversion mechanisms are</p>
+
+<ol>
+  <li>
+    copy semantics (pass-by-value)
+  </li>
+  <li>
+    reference semantics (pass-by-reference)
+  </li>
+</ol>
+
+
+<p>Convenience operators are available in Python for both types.<br>
+For small objects, the content is used in forming a Python tuple or list, independent of the original. For larger objects, a handle to the original is made available in Python.<br>
+C++ produced return values correspond 1-1 to Python types; values passed from Python to C++ are many-to-1.</p>
+
+<!----------------------------------------------------------------------------->
+
+<h3 class="mt-4">Pass-by-value types</h3>
+
+<h4 class="mt-4">Behavior</h4>
+
+<p>In pass-by-value, conversion to Python is always as tuple, while conversion to C++ is done for tuples, lists, ranges, and iterators -- most sequence types.</p>
+
+<p>The tiny and small types use pass-by-value. C++ instances of these types do not exist as such in Python. They are all converted to a tuple, losing their type. E.g., the C++</p>
+
+<pre class="CodeGreen"><code>tiny&lt;double, 3&gt; a(1,2,3);  // Up to ~10 args.
+</code></pre>
+
+<p>becomes</p>
+
+<pre class="CodeGreen"><code>(1,2,3)
+</code></pre>
+
+<p>in Python; the type <code>tiny</code> is lost. Generally,</p>
+
+
+<pre class="CodeGreen"><code>tiny&lt;int, 3&gt; a;
+</code></pre>
+
+<p>becomes a tuple</p>
+
+<pre class="CodeGreen"><code>(int, int, int)
+</code></pre>
+
+<p>in python.<br>
+In the other direction, the C++ function signature determines the tuple/list conversion's target type. E.g., given</p>
+
+<pre class="CodeGreen"><code>foo(tiny&lt;int, 3&gt; x)
+</code></pre>
+
+<p>the list <code>1,2,3</code> is converted to a new</p>
+
+<pre class="CodeGreen"><code>tiny&lt;int, 3&gt;(1,2,3)
+</code></pre>
+
+<p>instance. Given</p>
+
+<pre class="CodeGreen"><code>foo(small&lt;float, 2&gt; x)
+</code></pre>
+
+<p>the list <code>2,3</code> is converted to a new</p>
+
+<pre class="CodeGreen"><code>small&lt;float, 2&gt;(2,3)
+</code></pre>
+
+<!----------------------------------------------------------------------------->
+
+<h4 class="mt-4">Examples using pre-wrapped types</h4>
+
+<p>The trivial function</p>
+
+
+<pre class="CodeGreen"><code>int
+tiny_to_cpp(array::tiny&lt;int, 2&gt; t)
+{
+    return (t[0] + t[1]);
+}
+</code></pre>
+
+<p>has an equally simple wrapper</p>
+
+<pre class="CodeGreen"><code>def("tiny_to_cpp", voea::tiny_to_cpp );
+</code></pre>
+
+<p>which, along with other wrappers for the module, is embedded in boilerplate code like</p>
+
+<pre class="CodeGreen"><code>BOOST_PYTHON_MODULE(voea_ext)
+{
+    using namespace boost::python;
+    ...
+    def("tiny_to_cpp", voea::tiny_to_cpp );
+    ...
+}
+</code></pre>
+
+<p>On the Python side,</p>
+
+<pre class="CodeGreen"><code>print voea.tiny_to_cpp( [1,2] )
+</code></pre>
+
+<p>then gives <code>3</code>.</p>
+
+<!----------------------------------------------------------------------------->
+
+<h4 class="mt-4">Introducing new template instantiations</h4>
+
+<p>The previous examples involve new functions using types already wrapped in the array toolbox.<br>
+When introducing new types, say</p>
+
+<pre class="CodeGreen"><code>array::tiny&lt;float, 2&gt;
+</code></pre>
+
+<p>new wrappers may be needed. This type is likely to be useful to many users, and introducing multiple wrappers for a single type introduces problems.<br>
+While the global boost::python registry can be queried to avoid overlaps/contradictions as needed, it is simpler and cleaner to centralize the wrapping of native types -- all modules will have consistent access to them.</p>
+
+<p>Here are the steps needed to add a new type to the central registry.</p>
+
+<p>As these wrappers are new, they can reside anywhere; for now, they are defined locally. Later, the main package owner (Ralf) can/may include them as needed for conflict resolution.</p>
+
+<p>Following</p>
+
+<pre class="CodeGreen"><code>$SCITBX_DIST/array_family/boost_python/flex_ext.cpp
+</code></pre>
+
+<p>the extension module, <code>voea_ext.cpp</code> additionally needs</p>
+
+<pre class="CodeGreen"><code>#include &lt;scitbx/boostpython/containerconversions.h&gt;
+</code></pre>
+
+<p>and</p>
+
+<pre class="CodeGreen"><code>scitbx::boost_python::container_conversions::tuple_mapping_fixed_size&lt;
+  scitbx::af::tiny&lt;float, 2&gt;
+  &gt;();
+</code></pre>
+
+<p>This makes the type <code>array::tiny&lt;float, 2&gt;</code> available for use via Python's tuple-to-tiny conversion.</p>
+
+<!----------------------------------------------------------------------------->
+
+<h4 class="mt-4">Overloaded C++ functions</h4>
+
+<p>Overloaded operators and functions are very common. To continue the previous sample, we want the function tinytocpp to also handle floats. Thus, in addition to the previous</p>
+
+<pre class="CodeGreen"><code>int tiny_to_cpp(array::tiny&lt;int, 2&gt; t)
+</code></pre>
+
+<p>we define</p>
+
+<pre class="CodeGreen"><code>float
+tiny_to_cpp(array::tiny&lt;float, 2&gt; t)
+{
+    return (t[0] + t[1]);
+}
+</code></pre>
+
+<p>for C++. The new <code>tiny&lt;float, 2&gt;</code> type is already wrapped. The wrappers for this pair of function need to be distinguished, and include full type casts. Thus, instead of</p>
+
+<pre class="CodeGreen"><code>def("tiny_to_cpp", voea::tiny_to_cpp );
+</code></pre>
+
+<p>they are now</p>
+
+<pre class="CodeGreen"><code>    def("tiny_to_cpp",
+        (float (&)(array::tiny&lt;float, 2&gt;) ) voea::tiny_to_cpp );
+
+    def("tiny_to_cpp",
+        (int (&)(array::tiny&lt;int, 2&gt;) ) voea::tiny_to_cpp );
+</code></pre>
+
+<p>With these, the Python session becomes</p>
+
+<pre class="CodeGreen"><code>>>> print voea.tiny_to_cpp( [1,2] )
+3
+>>> print voea.tiny_to_cpp( [1.1, 2] )
+3.10000002384
+</code></pre>
+
+<!----------------------------------------------------------------------------->
+
+<h3 class="mt-4">Pass-by-reference types</h3>
+
+<p>In pass-by-reference, exchanges in both directions use a wrapped C++ object.<br>
+The pass-by-reference types are shared and versa. However, these do not show up in Python directly. Instead, a C++ wrapper module, flex, is used to interface to these. E.g., an instance of the C++ type</p>
+
+<pre class="CodeGreen"><code>array::shared&lt; scitbx::vec3&lt;double&gt; &gt;
+</code></pre>
+
+<p>shows up as</p>
+
+<pre class="CodeGreen"><code>&lt;scitbx_array_family_flex_ext.vec3_double object&gt;
+</code></pre>
+
+<p>in Python.<br>
+The Python interface strongly resembles that of the Python list type; see list examples and documentation for details.</p>
+
+<!----------------------------------------------------------------------------->
+
+<h4 class="mt-4">C++ view</h4>
+
+<p>On the C++ side, flex is a module only; there is no C++ type flex. Only the file</p>
+
+<pre class="CodeGreen"><code>scitbx_array_family_flex_ext.cpp
+</code></pre>
+
+<p>exists; there is no scitbx::array_family::flex namespace or class. All main C++ code thus uses shared and versa, never flex.</p>
+
+<!----------------------------------------------------------------------------->
+
+<h4 class="mt-4">Python view</h4>
+
+<p>On the Python side, there is only</p>
+
+<pre class="CodeGreen"><code>scitbx.array_family.flex
+</code></pre>
+
+<p>The types shared and versa do not show up at all, so all main Python code uses the flex interface (and ignored the underlying versa).<br>
+To provide the type</p>
+
+<pre class="CodeGreen"><code>flex.double
+</code></pre>
+
+<p>in Python from an array of doubles in C++, the flex module defines a Python type double as a wrapper of the C++ type
+</p>
+
+<pre class="CodeGreen"><code>versa&lt;double, flex_grid&lt;&gt; &gt;
+</code></pre>
+
+<p>Hence the naming <code>flex::double</code>, <code>flex::vec3_double </code>etc.</p>
+
+
+<!----------------------------------------------------------------------------->
+
+<h3 class="mt-4">A note on implementation</h3>
+
+<p>The scitbx.array_family.flex Python module handles specific versa template instantiations.<br>
+Internal python array type is</p>
+
+<pre class="CodeGreen"><code>scitbx::af::versa&lt; ELEMENTTYPE, flex_grid&lt; af::small&lt;INDEXTYPE,10&gt; &gt; &gt;
+</code></pre>
+
+<p>where</p>
+
+<pre class="CodeGreen"><code>INDEXTYPE is usually long
+</code></pre>
+
+<p>Python instances of</p>
+
+<pre class="CodeGreen"><code>scitbx::af::versa&lt;double&gt;
+</code></pre>
+
+<p>can be used by C++ functions with signatures</p>
+
+<pre class="CodeGreen"><code>scitbx::af::shared&lt;double&gt;
+</code></pre>
+
+<p>In C++, this causes interference between boost, inheritance, and the (boost) flex extension module.<br>
+Python's accessors are ALL in the flex module. This means using</p>
+
+<pre class="CodeGreen"><code>typedef scitbx::af::versa&lt; scitbx::af::tiny&lt;double, 3 &gt; &gt; euler_angles;
+</code></pre>
+
+<p>in C++ is fine, but the simple boost wrapper</p>
+
+<pre class="CodeGreen"><code>class_&lt;voea::euler_angles &gt; ("euler_angles");
+</code></pre>
+
+<p>will NOT HAVE ANY of the <code>af::flex </code>accessors available in Python. However, the wrapper mechanism in <code>flex_wrapper.h</code> creates the boost python wrapper for a particular completed versa type: a chosen element type, and using <code>flex_grid</code> as accessor.</p>
+
+<!----------------------------------------------------------------------------->
+
+<h4 class="mt-4">A wrapper for shared</h4>
+
+<p>The previously written</p>
+
+<pre class="CodeGreen"><code>array::shared&lt;double&gt;
+range_inefficient(int m, int n)
+{
+    array::shared&lt;double&gt; result;
+    for(unsigned i = m; i &lt; n; i++) {
+        result.push_back( static_cast&lt;double&gt;(i) );
+    }
+    return result;
+}
+</code></pre>
+
+<p>uses already wrapped types; only the binding</p>
+
+<pre class="CodeGreen"><code>def("range_inefficient", voea::range_inefficient);
+</code></pre>
+
+<p>is needed.</p>
+
+<!----------------------------------------------------------------------------->
+
+<h4 class="mt-4">Using a shared in Python</h4>
+
+<p>Basic access as usual:</p>
+
+<pre class="CodeGreen"><code>arr = voea.range_inefficient(2,10)
+arr
+&lt;scitbx_array_family_flex_ext.double object at 0x4016e86c&gt;
+</code></pre>
+
+<p>By itself, this may not justify the connection effort. But some extra functionality, obtained without repeated programmer effort, does. First, there is direct conversion to Python types which makes vast functionality available immediately. Consider the printing problem. Instead of starting with</p>
+
+<pre class="CodeGreen"><code>for i in arr:
+  print i
+2.0
+3.0
+4.0
+5.0
+6.0
+7.0
+8.0
+9.0
+</code></pre>
+
+<p>and improving this in innumerable ways (pretty-printing, using a re-readable format, etc.), one can simply use</p>
+
+<pre class="CodeGreen"><code>list(arr)
+[2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0]
+</code></pre>
+
+<p>which could later be re-used via</p>
+
+<pre class="CodeGreen"><code>new_arr = eval('[2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0]')
+new_arr
+[2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0]
+</code></pre>
+
+<p>if the string was saved in a file.<br>
+Of course, data serialization is equally short:</p>
+
+<pre class="CodeGreen"><code>ps = pickle.dumps(arr)
+unpickled_arr = pickle.loads(ps)
+</code></pre>
+
+<p>This is also used for writing to and reading from files in binary form.
+Then, there is Matlab style slicing:</p>
+
+<pre class="CodeGreen"><code>print list(unpickled_arr[1:5])
+print list(unpickled_arr[1:5:2])
+</code></pre>
+
+<p>For complex structures, re-using existing facilities is mandatory; as a preview, the call</p>
+
+<pre class="CodeGreen"><code>angles = voea.py(15.0,
+                 [0.0, 90.0],
+                 [0.0, 359.0])
+</code></pre>
+
+<p>produces a vector of triples. Now, the single command</p>
+
+<pre class="CodeGreen"><code>pprint(list(angles))
+</code></pre>
+
+<p>provides a properly indented, delimited, trivially re-readable printout:</p>
+
+
+<pre class="CodeGreen"><code>from pprint import pprint
+pprint(list(arr))
+angles
+&lt;scitbx_array_family_flex_ext.vec3_double object at 0x407e35cc&gt;
+pprint(list(angles))
+[(0.0, 0.0, 0.0),
+ (0.0, 15.0, 0.0),
+ (0.0, 15.0, 71.799999999999997),
+ ...
+ (0.0, 90.0, 163.18181818181816),
+ (0.0, 90.0, 179.49999999999997)]
+</code></pre>
+
+<!----------------------- EDIT END ---------------------------->
+<!-- DO NOT EDIT ANYTHING BELOW!!!! -->
+</div> <!-- end col-sm-9 -->
+
+<!-- automatic table of contents
+     located in the sidebar; will move to the top on a small screen -->
+<div class="col-sm-3 mt-5">
+  <nav id="toc" data-toggle="toc"></nav>
+</div> <!-- end col-sm-3 -->
+
+
+{% endblock %}
