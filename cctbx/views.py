@@ -62,6 +62,9 @@ def doc_low_flex_advanced(request):
 def doc_low_array_family(request):
   return render(request, 'cctbx/documentation/doc_low_array_family.html')
 
+def doc_low_scitbx_tour(request):
+  return render(request, 'cctbx/documentation/doc_low_scitbx_tour.html')
+
 # ------------------------------------------------------------------------------
 #   subsubmenu3
 def doc_maps_intro(request):

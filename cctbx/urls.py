@@ -29,6 +29,7 @@ urlpatterns = [
     path('doc_low_flex_advanced/', views.doc_low_flex_advanced, name='doc_low_flex_advanced'),
     path('doc_low_phil/', views.doc_low_phil, name='doc_low_phil'),
     path('doc_low_array_family/', views.doc_low_array_family, name='doc_low_array_family'),
+    path('doc_low_scitbx_tour/', views.doc_low_scitbx_tour, name='doc_low_scitbx_tour'),
 
     path('doc_models_hierarchy/', views.doc_models_hierarchy, name='doc_models_hierarchy'),
 

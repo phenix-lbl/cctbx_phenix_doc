@@ -1,0 +1,316 @@
+{% extends "cctbx/header.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="col-sm-9 main">
+<!-- DO NOT EDIT ANYTHING ABOVE!!!! -->
+<!----------------------- EDIT START ---------------------------->
+
+<h2><center>Scitbx Tour: minimal framework add-on</center></h2>
+
+<p class="lead mt-4">This documentation gives a quick tour on the scitbx.</p>
+
+<!----------------------------------------------------------------------------->
+
+<h3 class="mt-4">Introduction</h3>
+
+<p>The scitbx contains libraries for general scientific computing (i.e. libraries that are not specific to crystallographic applications): a family of high-level C++ array types, a fast Fourier transform library, and a C++ port of the popular L-BFGS quasi-Newton minimizer, all including Python bindings.</p>
+
+<!----------------------------------------------------------------------------->
+
+<h3 class="mt-4">Extending with C++</h3>
+
+
+<p>The simplest thing is to add your own code into the framework. A complete component requires</p>
+
+<ol>
+  <li>The C++ code</li>
+  <li>The boost.python wrapper (potentially in the same file)</li>
+  <li>scons instructions for building</li>
+</ol>
+
+<p>The following sections contain cut-and-paste examples for a simple addition using existing facilities.</p>
+
+<!----------------------------------------------------------------------------->
+
+<h4 class="mt-4">Setup</h4>
+
+<p>Prepare the module tree:</p>
+
+<pre class="CodeGreen"><code>mkdir voea
+cd voea
+</code></pre>
+
+<p>Prepare a minimal top-level SConscript in voea:</p>
+
+<pre class="CodeGreen"><code>SConscript
+</code></pre>
+
+<p>Make a subdirectory (so you'll have the tree <code>voea/voea/</code>):</p>
+
+<pre class="CodeGreen"><code>mkdir voea
+cd voea
+</code></pre>
+
+<!----------------------------------------------------------------------------->
+
+<h4 class="mt-4">Standalone sample, statically linked</h4>
+
+<p>In <code>voea/voea/</code> prepare the following files.</p>
+
+<p>The C++ library file <code>voea.cpp</code></p>
+
+<pre class="CodeGreen"><code>#include "voea.h"
+namespace voea {
+        double
+        tiny_to_cpp(array::tiny&lt;double, 2&gt; t)
+        {
+                return (t[0] + t[1]);
+        }
+}
+</code></pre>
+
+<p>The header file <code>voea.h</code></p>
+
+<pre class="CodeGreen"><code>#ifndef VOEA_VOEA_H
+#define VOEA_VOEA_H
+
+#include &lt;scitbx/array_family/tiny_types.h&gt;
+
+namespace voea {
+namespace array = scitbx::af;
+
+double
+tiny_to_cpp(array::tiny&lt;double, 2&gt; t);
+}
+
+#endif
+</code></pre>
+
+<p>The (trivial) C++ main() function <code>test.cpp</code>:</p>
+
+<pre class="CodeGreen"><code>#include "voea.h"
+#include &lt;iostream&gt;
+
+using namespace std;
+namespace array = scitbx::af;
+
+int
+main(int argc, char **argv) {
+        cout << voea::tiny_to_cpp( array::tiny&lt;double, 2&gt;(1.1, 2.2) ) << endl;
+        return 0;
+}
+</code></pre>
+
+<p>Put the module's dependencies, enumerated, in <code>voea/libtbx_config</code></p>
+
+<pre class="CodeGreen"><code>{
+  "modules_required_for_build": ["scitbx", "boost"],
+  "modules_required_for_use": [],
+}
+</code></pre>
+
+<p>Put the module's SConscript in <code>voea/voea/SConscript</code></p>
+
+<pre class="CodeGreen"><code>
+import libtbx.load_env
+# env_etc is NOT a scons Environment, but a data dictionary.
+Import("env_base", "env_etc")
+
+env = env_base.Copy(
+  CXXFLAGS=env_etc.cxxflags_base,
+  LIBS=env_etc.libm,
+  LIBPATH=["#lib"]
+)
+
+# For later or external references via $VOEA_DIST.
+env_etc.voea_dist = libtbx.env.dist_path("voea")
+
+env_etc.voea_common_includes = [
+  env_etc.libtbx_include,
+  env_etc.scitbx_include,
+  env_etc.boost_include,
+]
+
+env_etc.include_registry.append(
+  env = env,
+  paths = env_etc.voea_common_includes)
+
+# Standalone test, no library.
+env.Program(source=["test.cpp", "voea.cpp"],
+                        target="test-static")
+</code></pre>
+
+<p>Include the new module in the system via</p>
+
+<pre class="CodeGreen"><code>pushd ../cctbx_build
+python ../cctbx_sources/libtbx/configure.py voea
+</code></pre>
+
+<p>Now, the simple test can be built and run by</p>
+
+<pre class="CodeGreen"><code>libtbx.scons voea/voea/test-static
+./voea/voea/test-static
+</code></pre>
+
+<!----------------------------------------------------------------------------->
+
+<h4 class="mt-4">A shared library version</h4>
+
+<p>Useful for larger projects, and needed later for the Python connection. The only addition is in the voea/voea/SConscript:</p>
+
+<pre class="CodeGreen"><code># Shared Library
+env.SharedLibrary(source=["voea.cpp"],
+                                  target="#lib/voea")
+# Shared library based test executable.
+env_test = env.Copy()
+env_test.Prepend(LIBS = ["voea"])
+env_test.Program(source=["test.cpp"],
+                                 target="test")
+</code></pre>
+
+<p>Compile and run via</p>
+
+<pre class="CodeGreen"><code>libtbx.scons voea/voea/test
+./voea/voea/test
+</code></pre>
+
+<p>This executable now uses the library; on linux,</p>
+
+<pre class="CodeGreen"><code>$ ldd ./voea/voea/test
+</code></pre>
+
+<p>shows</p>
+
+<pre class="CodeGreen"><code>...
+libvoea.so => ...cctbx_build/libtbx/libvoea.so (0x40017000)
+...
+</code></pre>
+
+<!----------------------------------------------------------------------------->
+
+<h4 class="mt-4">Python connection</h4>
+
+<p>The additional C++ part <code>voea/voea/voea_ext.cpp</code>:</p>
+
+<pre class="CodeGreen"><code>/*
+ * First include this !!!
+ */
+#include &lt;scitbx/array_family/boost_python/flex_fwd.h&gt;
+#include &lt;scitbx/boost_python/container_conversions.h&gt;
+#include &lt;scitbx/array_family/tiny_types.h&gt;
+#include &lt;boost/python.hpp&gt;
+#include "voea.h"
+BOOST_PYTHON_MODULE(voea_ext)
+{
+        using namespace boost::python;
+        namespace array = scitbx::af;
+        def("tiny_to_cpp",
+                (double (*)(array::tiny&lt;double, 2&gt;) ) voea::tiny_to_cpp );
+}
+</code></pre>
+
+<p>The Python module additions <code>voea/voea/__init__.py</code>:</p>
+
+<pre class="CodeGreen"><code>#* C++ import redirections.
+import scitbx.array_family.flex                 # register tuple mappings
+import boost.python
+ext = boost.python.import_ext("voea_ext")
+from voea_ext import *
+</code></pre>
+
+<p>The SConscript additions <code>/voea/voea/SConscript</code>:</p>
+
+<pre class="CodeGreen"><code>Import("env_scitbx_boost_python_ext")
+# Borrow configuration.
+env_bpl = env_scitbx_boost_python_ext.Copy()
+env_bpl.Prepend(LIBS = ["voea"])
+#
+env_etc.include_registry.append(
+  env=env_bpl,
+  paths=env_etc.voea_common_includes)
+#
+env_bpl.SharedLibrary(
+  target="#lib/voea_ext",
+  source=["voea_ext.cpp"])
+</code></pre>
+
+<p>where <code>#lib</code> is a reference for the top-level build directory.</p>
+
+<p>Compile everything</p>
+
+<pre class="CodeGreen"><code>libtbx.scons .
+</code></pre>
+
+<p>and test in Python</p>
+
+<pre class="CodeGreen"><code>$ python
+import voea
+print voea.tiny_to_cpp( [1,2] )
+print voea.tiny_to_cpp( [1.1, 2] )
+</code></pre>
+
+<!----------------------------------------------------------------------------->
+
+<h3 class="mt-4">Some SConscript details</h3>
+
+<ul>
+  <li>
+    <code>env_base</code>: instance of scons' Environment holding basic settings
+  </li>
+  <li>
+    <code>env_etc</code>: instance of empty class shared across SConscript hierarchy (levels irrelevant, topological ordering matters) physical tree structure, dag logical structure. For utility only.
+  </li>
+  <li>
+    <code>module dependencies</code>: Always in MODULE/libtbx_config. e.g.
+  </li>
+</ul>
+
+<pre class="CodeGreen"><code>{
+  "modules_required_for_build": ["boost"],
+  "modules_required_for_use": ["boost_adaptbx"],
+}
+</code></pre>
+
+<p>Here,</p>
+
+<ul>
+  <li>
+    <code>modules_required_for_build</code>: include C++ building, linking, libraries.
+  </li>
+  <li>
+    <code>modules_required_for_use</code>: are the Python dependencies -- modules.
+  </li>
+</ul>
+
+<p>After changing libtbx_config, re-run</p>
+
+<pre class="CodeGreen"><code>python ../cctbx_sources/libtbx/configure.py voea
+</code></pre>
+
+<p>in the build tree (the cwd becomes a build tree)</p>
+
+<pre class="CodeGreen"><code>source setpaths.csh
+libtbx.scons -j4
+</code></pre>
+
+<p>After rearrangements,</p>
+
+<pre class="CodeGreen"><code>source unsetpaths.csh
+</code></pre>
+
+
+
+<!----------------------- EDIT END ---------------------------->
+<!-- DO NOT EDIT ANYTHING BELOW!!!! -->
+</div> <!-- end col-sm-9 -->
+
+<!-- automatic table of contents
+     located in the sidebar; will move to the top on a small screen -->
+<div class="col-sm-3 mt-5">
+  <nav id="toc" data-toggle="toc"></nav>
+</div> <!-- end col-sm-3 -->
+
+{% endblock %}
