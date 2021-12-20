@@ -116,6 +116,9 @@ def script_lbfgs_no_curvature(request):
 def script_lbfgs_with_curvature(request):
   return render(request, 'cctbx/documentation/website_html/script_lbfgs_with_curvature.html')
 
+def script_rfactors(request):
+  return render(request, 'cctbx/documentation/website_html/script_rfactors.html')
+
 # ------------------------------------------------------------------------------
 
 def newsletter_artcls(request):
