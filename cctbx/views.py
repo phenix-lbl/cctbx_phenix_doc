@@ -23,8 +23,8 @@ def documentation_overview(request):
 
 # ------------------------------------------------------------------------------
 
-def doc_programming_tips(request):
-  return render(request, 'cctbx/documentation/website_html/doc_programming_tips.html')
+def doc_programming_tips_1(request):
+  return render(request, 'cctbx/documentation/website_html/doc_programming_tips_1.html')
 
 # ------------------------------------------------------------------------------
 

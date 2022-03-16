@@ -12,7 +12,7 @@ urlpatterns = [
 
     path('documentation_overview/', views.documentation_overview, name='documentation_overview'),
 
-    path('doc_programming_tips/', views.doc_programming_tips, name='doc_programming_tips'),
+    path('doc_programming_tips_1/', views.doc_programming_tips_1, name='doc_programming_tips_1'),
     path('doc_programming_tips_2/', views.doc_programming_tips_2, name='doc_programming_tips_2'),
     path('doc_programming_tips_3/', views.doc_programming_tips_3, name='doc_programming_tips_3'),
 
