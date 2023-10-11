@@ -15,22 +15,43 @@
 
 <h4>Install and set up RunSnakeRun</h4>
 
-<p>Due to a compatibility issue with wxPython, you need to install specific versions of runsnake and SquareMap:</p>
+<p>First, we create a separate conda environment for runsnake. We need to use Intel architecture since wxpython 4.0.7 is not available for arm, and runsnake does not work with newer wxpython (<a href='https://github.com/mcfletch/runsnakerun/issues/3'>https://github.com/mcfletch/runsnakerun/issues/3</a>), Py3.8 required for older wxpython.</p>
 
-<pre class="CodeGreen"><code>libtbx.python -m pip install runsnakerun==2.0.4 SquareMap==1.0.4
+<h5>1. Make sure you have conda installed</h5>
+
+<p>Install conda if necessary. For Apple Silicon, you need native conda, which you can get here: <a href='https://github.com/conda-forge/miniforge/releases'>https://github.com/conda-forge/miniforge/releases</a></p>
+
+<p>You can check if you have conda installed by simply typing <code>conda</code> in the terminal.<br>
+You can get the location of the base_environment for conda (not to be confused with the conda_base directory of your phenix installation!) with this command:</p>
+
+<pre class="CodeGreen"><code>conda info | grep base
+</code></pre>
+<p>The output is something like this:</p>
+<pre class="CodeGreen"><code>       base environment : /Users/dcliebschner/Software/miniforge3  (writable)
+</code></pre>
+<p>So the base_environment diretory is <code>/Users/dcliebschner/Software/miniforge3 </code>.</p>
+
+<p>Note: For x86_64 conda architecture one should be able to omit <code>CONDA_SUBDIR=osx-64</code> part of the commands and get the same result.</p>
+
+
+<h5>2. Install Runsnake</h5>
+
+<p>Execute these commands to install runsnake. You can do it anywhere.<code>snake_x86</code> is the name of the environment, so you can choose another name if you prefer.</p>
+
+<pre class="CodeGreen"><code>CONDA_SUBDIR=osx-64 conda create -n snake_x86 python=3.8
+conda activate snake_x86
+CONDA_SUBDIR=osx-64 conda install wxpython=4.0.7
+pip install runsnakerun
 </code></pre>
 
-<p>It is a good idea to use an alias:</p>
+<h5>3. Set up an alias</h5>
 
-<pre class="CodeGreen"><code>alias runsnake='libtbx.python &lt;conda_base&gt;/lib/python2.7/site-packages/runsnakerun/runsnake.py'
+<p>It is a good idea to use an alias. <code>your_base_environment_here</code> is the location of the base_environment for conda (see step 1 above).</p>
+
+<pre class="CodeGreen"><code>alias runsnake='your_base_environment_here/envs/snake_x86/bin/pythonw your_base_environment_here/envs/snake_x86/lib/python3.8/site-packages/runsnakerun/runsnake.py'
 </code></pre>
 
-<p>where <code>&lt;conda_base&gt;</code> is your "conda_base" directory location.</p>
 
-<p>For Python 3.7, the command becomes</p>
-
-<pre class="CodeGreen"><code>alias runsnake='libtbx.python &lt;conda_base&gt;/lib/python3.7/site-packages/runsnakerun/runsnake.py'
-</code></pre>
 
 <!-- ----------------------------------------------------------------------- -->
 
