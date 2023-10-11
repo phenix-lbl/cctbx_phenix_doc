@@ -15,14 +15,14 @@
 
 <h4>Install and set up RunSnakeRun</h4>
 
-<p>First, we create a separate conda environment for runsnake. We need to use Intel architecture since wxpython 4.0.7 is not available for arm, and runsnake does not work with newer wxpython (<a href='https://github.com/mcfletch/runsnakerun/issues/3'>https://github.com/mcfletch/runsnakerun/issues/3</a>), Py3.8 required for older wxpython.</p>
+<p>First, we create a separate conda environment for runsnake. We need to use Intel architecture since wxpython 4.0.7 is not available for arm, and runsnake does not work with newer wxpython (<a href='https://github.com/mcfletch/runsnakerun/issues/3'>https://github.com/mcfletch/runsnakerun/issues/3</a>), Py3.8 version is required for older wxpython.</p>
 
 <h5>1. Make sure you have conda installed</h5>
 
 <p>Install conda if necessary. For Apple Silicon, you need native conda, which you can get here: <a href='https://github.com/conda-forge/miniforge/releases'>https://github.com/conda-forge/miniforge/releases</a></p>
 
 <p>You can check if you have conda installed by simply typing <code>conda</code> in the terminal.<br>
-You can get the location of the base_environment for conda (not to be confused with the conda_base directory of your phenix installation!) with this command:</p>
+You can get the location of the <code>base_environment</code> for conda (not to be confused with the <code>conda_base</code> directory of your phenix installation!) with this command:</p>
 
 <pre class="CodeGreen"><code>conda info | grep base
 </code></pre>
@@ -30,8 +30,6 @@ You can get the location of the base_environment for conda (not to be confused w
 <pre class="CodeGreen"><code>       base environment : /Users/dcliebschner/Software/miniforge3  (writable)
 </code></pre>
 <p>So the base_environment diretory is <code>/Users/dcliebschner/Software/miniforge3 </code>.</p>
-
-<p>Note: For x86_64 conda architecture one should be able to omit <code>CONDA_SUBDIR=osx-64</code> part of the commands and get the same result.</p>
 
 
 <h5>2. Install Runsnake</h5>
@@ -44,18 +42,20 @@ CONDA_SUBDIR=osx-64 conda install wxpython=4.0.7
 pip install runsnakerun
 </code></pre>
 
+<p>Note: For x86_64 conda architecture one should be able to omit <code>CONDA_SUBDIR=osx-64</code> part of the commands and get the same result.</p>
+
+
 <h5>3. Set up an alias</h5>
 
-<p>It is a good idea to use an alias. <code>your_base_environment_here</code> is the location of the base_environment for conda (see step 1 above).</p>
+<p>It is a good idea to use an alias.  <code>your_base_environment_here</code> is the location of the base_environment for conda (see step 1 above).</p>
 
 <pre class="CodeGreen"><code>alias runsnake='your_base_environment_here/envs/snake_x86/bin/pythonw your_base_environment_here/envs/snake_x86/lib/python3.8/site-packages/runsnakerun/runsnake.py'
 </code></pre>
 
 
-
 <!-- ----------------------------------------------------------------------- -->
 
-<h4>Profiling a script</h4>
+<h4 class="mt-4">Profiling a script</h4>
 
 <pre class="CodeGreen"><code>libtbx.python -m cProfile -o prof.out myscript.py my_model.pdb
 </code></pre>
@@ -84,7 +84,7 @@ Note that if you customize how you run your program, then you would need to hand
 <pre class="CodeGreen"><code>runsnake prof.out
 </code></pre>
 
-<p>In the output of the above command, you will see many squares of different size. The size is proportional to runtime. In the square you can find what it is exactly (function name). When you hovering with mouse over a square, the same functions are highlighted as well, so it is easy to see if something is run from different places.</p>
+<p>In the output of the above command, you will see many squares of different size. The size is proportional to runtime. In the square you can find what it is exactly (function name). When you hover with mouse over a square, the same functions are highlighted as well, so it is easy to see if something is run from different places.</p>
 
 <img width="700" src="{% static 'phenix/img/fig_doc_runsnake.png' %}">
 
