@@ -13,7 +13,6 @@
 
     {% load static %}
 
-
     <!-- For Code Mirror -->
     <link rel="stylesheet" href="{% static 'phenix/css/codemirror.css' %}" type="text/css"/>
     <script type="text/javascript" src="{% static 'phenix/js/codemirror.js' %}"></script>
@@ -37,20 +36,14 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'cctbx/css/mystyle_new.css' %}" type="text/css">
 
-
     <!-- Font Awesome JS -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <!-- Font Awesome
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script> -->
 
     <!-- MathJax for writing formulas in html: https://www.mathjax.org-->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js"></script> <!-- had to be changed to this one per DOE order -->
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-
-    <!-- Our Custom CSS-->
-
+    <!-- Custom CSS-->
     <script type="text/javascript" src="{% static 'cctbx/js/myheaderjs.js' %}"></script>
     <script type="text/javascript" src="{% static 'cctbx/js/myjavascript.js' %}"></script>
 
