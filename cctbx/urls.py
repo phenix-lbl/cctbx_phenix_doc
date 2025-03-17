@@ -14,6 +14,7 @@ urlpatterns = [
     path('doc_programming_tips_1/', views.doc_programming_tips_1, name='doc_programming_tips_1'),
     path('doc_programming_tips_2/', views.doc_programming_tips_2, name='doc_programming_tips_2'),
     path('doc_programming_tips_3/', views.doc_programming_tips_3, name='doc_programming_tips_3'),
+    path('doc_programming_tips_4/', views.doc_programming_tips_4, name='doc_programming_tips_4'),
 
 
     path('doc_hklviewer/', views.doc_hklviewer, name='doc_hklviewer'),

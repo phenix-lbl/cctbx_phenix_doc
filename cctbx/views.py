@@ -38,6 +38,11 @@ def doc_programming_tips_3(request):
 
 # ------------------------------------------------------------------------------
 
+def doc_programming_tips_4(request):
+  return render(request, 'cctbx/documentation/doc_programming_tips_4.html')
+
+# ------------------------------------------------------------------------------
+
 def doc_hklviewer(request):
   return render(request, 'cctbx/documentation/doc_hklviewer.html')
 

@@ -350,6 +350,20 @@ print(better_function(2))   #  prints [2]...current_list was []
 
 <p>If your map is actually not wrapped, that is, your map does not repeat indefinitely, you need to make sure you do not use tricubic_interpolation to refer to any points outside the bounds of your map.  Additionally, be aware that tricubic_interpolation can give incorrect values for points that are near the edges of your map because it may use values from the opposite face of the map when it is interpolating.</p>
 
+
+<h3 class="mt-5">d_spacings() method of the miller array object has -1 for f000 term</h3>
+
+<p>The value of f_map.d_spacings().data() is -1 for f000 term and not infinity,where f_map is
+ a set of map coefficients (particularly note for those created from a map). Be sure
+ to have a special case for handling this if an f000 term may be present (as is
+ usually the case for cryo_EM maps). <br>
+ For example:</p>
+
+<pre class="bg-code-DL" style="font-size: 12px"><code># The d_spacings get a value of -1 for the f000 term. Set it to a big number
+ddd = f_map.d_spacings().data()
+ddd.set_selected(ddd < 0, 1.e+10)
+sphere_reciprocal = f_map.g_function(R=rad_smooth) # top hat function</code></pre>
+
 <!----------------------- EDIT END ---------------------------->
 <!-- DO NOT EDIT ANYTHING BELOW!!!! -->
 </div> <!-- end col-sm-9 -->

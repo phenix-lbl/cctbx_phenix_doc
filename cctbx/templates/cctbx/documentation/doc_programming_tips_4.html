@@ -1,0 +1,282 @@
+{% extends "cctbx/header.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="col-sm-9 main">
+<!-- DO NOT EDIT ANYTHING ABOVE!!!! -->
+<!----------------------- EDIT START ---------------------------->
+
+<h2><center>Phenix and CCTBX Programming Suggestions</center></h2>
+
+<p class="lead mt-4">This site gives helpful programming tips to get started with cctbx.</p>
+
+<h3 class="mt-4">Webpages</h3>
+
+<ul>
+  <li>
+    <a href="https://cci.lbl.gov/docs/phenix/prog_program_template/#creating-a-unit-test">Unit tests</a>
+  </li>
+  <li>
+    <a href="https://github.com/cctbx/cctbx_project/tree/master/CONTRIBUTING.md">Detailed expectations about contributing to CCTBX</a>
+  </li>
+  <li>
+    <a href="https://cci.lbl.gov/docs/phenix/prog_program_template/">How to make a Program template</a>
+  </li>
+  <li>
+    <a href="{% url 'doc_programming_tips_1' %}">cctbx programming tips</a>
+  </li>
+  <li>
+    Features of high-level cctbx managers:<br>
+    <ul>
+      <li>
+        <a href="{% url 'documentation_overview' %}">cctbx documentation overview</a>
+      </li>
+      <li>
+        <a href="https://cci.lbl.gov/docs/phenix/overview/">Phenix documentation overview</a>
+      </li>
+      <li>
+        <a href="https://cci.lbl.gov/docs/phenix/doc_quick_reference/">Phenix quick reference</a>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <a href="{% url 'doc_maps_intro' %}">Features of cctbx maps</a>
+  </li>
+  <li>
+    Read about conversion to mmCIF-compliant code <a href="{% static 'cctbx/files/pdb_cif_conversion' %}">here</a>.
+  </li>
+</ul>
+
+<h3 class="mt-4">Run tests on your code</h3>
+
+<p>Before committing anything to the Phenix or CCTBX repository, run all the tests and make sure they all pass.</p>
+
+<code>phenix_regression.test_all_parallel nproc=72 sort</code>
+
+<p>When done, test_1.log will have a summary of your tests. The "sort" runs slow tests first.</p>
+
+<p>If you are in a cycle of development where a lot of tests are failing and
+you want to run just tests that are affected by changes you have made
+and have not committed, use the keyword "git" instead of "sort". It will
+only run a subset of tests.<br>
+Note: be sure to run all tests before you commit your changes.</p>
+
+<h3 class="mt-4">Make tests for your code</h3>
+
+<ul>
+  <li>"If it isn't tested, it doesn't work"</li>
+  <li>CCTBX methods: Make a unit test for every functional unit.</li>
+  <li>Phenix methods (often high-level): Make unit tests if feasible, otherwise
+  make very quick-running tests that exercise all important functionalities.</li>
+  <li>
+    You can read how to make a unit test <a href="https://cci.lbl.gov/docs/phenix/prog_program_template/">here</a>
+  </li>
+  <li>
+    You can read detailed expectations about contributing to cctbx <a href="https://github.com/cctbx/cctbx_project/tree/master/CONTRIBUTING.md">here</a>
+  </li>
+</ul>
+
+<h3 class="mt-4">Write code that is compatible with mmCIF format</h3>
+
+<h4 class="mt-3">Overall suggestions</h4>
+
+<ul>
+  <li>
+    Use the Program template and do all other read/write with the data_manager
+present in the template. You can read how to make a Program template <a href="https://cci.lbl.gov/docs/phenix/prog_program_template/">here</a>:
+  </li>
+  <li>
+    When you write a file, capture the actual file name (which may end in .cif):<br>
+    <code>fn = self.data_manager.write_model_file(model, target_file_name)</code>
+  </li>
+  <li class="mt-3">
+    Create tests with models that cannot fit in PDB format. You can do this with pdbtools:<br>
+    <code>phenix.pdbtools model.pdb output.file_name=model.cif old_id=A new_id=AXZLONG</code>
+  </li>
+  <li>
+    When you have Phenix set up, you can see details of how to write mmCIF-compliant code by typing<br>
+    <code>phenix.pdb_cif_conversion</code>
+  </li>
+</ul>
+
+<h4 class="mt-3">Notes for existing code</h4>
+<ul>
+  <li>
+    Convert to using the <a href="https://cci.lbl.gov/docs/phenix/prog_program_template/">Program template</a> and the data_manager if possible.
+  </li>
+  <li>
+    Convert all the following to use the data_manager (none are mmCIF-compliant):
+  </li>
+  <ul>
+    <li>model.model_as_pdb()</li>
+    <li>hierarchy.as_pdb_string()</li>
+    <li>hierarchy.write_pdb_file()</li>
+    <li>
+      For models, use:<br>
+      <code>fn = self.data_manager.write_model_file(model, target_file_name)</code>
+    </li>
+    <li>For hierarchies, write out the model that it is part of instead.</li>
+    <li>
+      If your hierarchy is not part of a model, you can use:<br>
+      <code>m = hierarchy.as_model_manager(crystal_symmetry = crystal_symmetry)</code><br>
+      <code>file_name = 'mypdb.pdb'</code><br>
+      <code>fn = self.data_manager.write_model_file(m, file_name)</code>
+    </li>
+  </ul>
+  <li>
+    Find and fix problems in myfile.py with:<br>
+    <code>libtbx.find_pdb_mmcif_problems myfile.py</code>
+  </li>
+  <li>
+    Code that parses PDB-formatted text should be rewritten as it is not mmCIF-compatible.
+  </li>
+</ul>
+
+<h3 class="mt-4">Be aware of how the objects in Phenix/cctbx work</h3>
+
+<p>"Is it a new object or a pointer to the old one?"" This is an important
+but subtle feature of Python programming. Any time you make an object
+you need to be able to answer this question.</p>
+
+<p>Member functions of cctbx objects sometimes return a new object and
+other times return a pointer to the old one. This makes a difference
+because if it is a pointer when you change the object it also changes
+the original.</p>
+
+<p>CCTBX functions may change the object itself, or return a part of the
+object, or return something entirely new.</p>
+
+<p>You can read all about this <a href="{% url 'doc_programming_tips_1' %}">here</a>. </p>
+
+
+
+<h3 class="mt-4">Safe use of map_model_manager, map_manager, and model in Phenix</h3>
+
+<p>These managers are available when you use the Program template for your
+programming and your parameters include maps and models.</p>
+
+<h4 class="mt-3">Get your manager with the Program template and data_manager</h4>
+<ul>
+  <li>The data_manager automatically provides access to a map, model, and two
+ half maps if the user supplies them</li>
+  <li>
+    Normally just get a map_model_manager. This will be ready to use:<br>
+    <code>mmm = self.data_manager.get_map_model_manager(from_phil=True)</code>
+  </li>
+  <li>
+    if you have just a model, get a model manager<br>
+    <code>m = self.data_manager.get_model(self.params.input_files.model_file)</code>
+  </li>
+</ul>
+
+<h4 class="mt-3">Use the methods of a manager to do what you want to do</h4>
+<ul>
+  <li>
+    Mask all the maps around atoms in the model:<br>
+    <code>map_model_manager.mask_all_maps_around_atoms()</code>
+  </li>
+  <li>
+    Get a model-building object that knows about the map and model:<br>
+    <code>mb = map_model_manager.model_building()</code>
+  </li>
+  <li>
+    Get the model and map<br>
+    <code>m = map_model_manager.model()</code>
+    <code>mm = map_model_manager.map_manager()</code>
+  </li>
+  <li>
+    You can see all the features of these managers <a href="{% url 'documentation_overview' %}">here</a>.
+  </li>
+  <li>
+    You can also see many specific ways to use these managers <a href="https://cci.lbl.gov/docs/phenix/overview/">here</a> and <a href="https://cci.lbl.gov/docs/phenix/doc_quick_reference/">here</a>.
+  </li>
+</ul>
+
+<h4 class="mt-3">The model or map you get from a map_model_manager is the same model or map
+that is still in the manager</h4>
+
+<ul>
+  <li>
+    If you change a model or map you are changing the ones in the map_model_manager too
+  </li>
+  <li>
+    If you want an unattached copy, you need to make a deep_copy().
+  </li>
+  <li>
+    Some attributes of a model you might reasonably change: sites_cart, occ, b, u.
+    These do not affect compatibility with other objects in a map_model_manager
+  </li>
+  <li>
+    Some attributes of a model you should not change if it is part of a ap_model_manager:
+crystal_symmetry, unit_cell_crystal_symmetry, shift_cart. These are handled in the map_model_manager and affect
+all objects in the manager.
+  </li>
+  <li>
+    You can check to make sure your map_model_manager is in sync using
+the method: <code>map_model_manager.check_consistency()</code> which will stop if
+there is anything not consistent.
+  </li>
+</ul>
+
+<h4 class="mt-3">Boxed maps and origin shifts</h4>
+
+<p>Some maps have their origin at xyz = (0,0,0), but others may have
+an origin at some other location, usually because they have been cut out
+of a larger map (they have been boxed).</p>
+<p>You can read all about this <a href="{% url 'doc_maps_intro' %}">here</a>.</p>
+
+<ul>
+  <li>
+    If you have a model all by itself, or a map which has its origin on
+xyz = (0,0,0), origin shift is (0,0,0). All coordinates are the
+same as in an mmCIF or PDB file.
+  </li>
+  <li>
+    The origin shift comes up if you have a map that does not have its
+origin at xyz = (0,0,0). If the map has an origin at xyz=(100.,0,0)
+then the origin shift is (-100.0,0,0). The origin shift is applied
+to all coordinates in all models and to the map.<br>
+In effect, the models and maps are all shifted to place their new
+origin at xyz=(0,0,0). Then you can work with them and the maps
+and models will have the right relationships. Origin shifts in Phenix
+always correspond to an integral number of grid units in the map.
+  </li>
+  <li>
+    The map_model_manager, model manager, and map_manager all keep track of the
+    origin shift. You can get it with mmm.shift_cart(), model.shift_cart(), etc.
+  </li>
+  <li>
+    If you write out a model or map it will be shifted back to its original
+place when written to your output file unless you specify otherwise.
+  </li>
+  <li>
+    The hierarchy object does not know about origin shifts. If you extract
+a hierarchy from a model and write it out like this (not recommended):<br>
+  <code>text = model.get_hierarchy().as_pdb_or_mmcif_string()</code>
+then it will write the internal coordinates without shifting them back
+to their original location. Better to make this clear with the model
+object which does know about origin shifts and specifying if you want
+to shift back (to original location; this example does not shift back):<br>
+<code>text = model.as_pdb_or_mmcif_string(do_not_shift_back=True)</code>
+  </li>
+</ul>
+
+
+
+
+
+
+<!----------------------- EDIT END ---------------------------->
+<!-- DO NOT EDIT ANYTHING BELOW!!!! -->
+</div> <!-- end col-sm-9 -->
+
+<!-- automatic table of contents
+     located in the sidebar; will move to the top on a small screen -->
+<div class="col-sm-3 mt-5">
+  <nav id="toc" data-toggle="toc"></nav>
+</div> <!-- end col-sm-3 -->
+
+
+{% endblock %}
